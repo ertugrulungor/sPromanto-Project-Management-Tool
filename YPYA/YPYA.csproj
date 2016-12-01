@@ -159,6 +159,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SignController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -176,17 +177,42 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\avatar.jpg" />
+    <Content Include="Content\images\face1.jpg" />
+    <Content Include="Content\images\logo-icon.png" />
+    <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\logo_white.png" />
+    <Content Include="Content\scripts\constants.js" />
+    <Content Include="Content\scripts\main.js" />
+    <Content Include="Content\styles\app.css" />
+    <Content Include="Content\styles\app.skins.css" />
+    <Content Include="Content\vendor\animate.css\animate.css" />
+    <Content Include="Content\vendor\bootstrap\dist\css\bootstrap.css" />
+    <Content Include="Content\vendor\bootstrap\dist\js\bootstrap.js" />
+    <Content Include="Content\vendor\fastclick\lib\fastclick.js" />
+    <Content Include="Content\vendor\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\vendor\jquery-validation\dist\jquery.validate.js" />
+    <Content Include="Content\vendor\jquery\dist\jquery.js" />
+    <Content Include="Content\vendor\pace\pace.js" />
+    <Content Include="Content\vendor\pace\themes\blue\pace-theme-minimal.css" />
+    <Content Include="Content\vendor\tether\dist\js\tether.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\fonts\material\MaterialIcons-Regular.ttf" />
+    <Content Include="Content\fonts\material\MaterialIcons-Regular.woff" />
+    <Content Include="Content\fonts\material\MaterialIcons-Regular.woff2" />
+    <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\vendor\font-awesome\fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -211,6 +237,10 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_SignLayout.cshtml" />
+    <Content Include="Views\Sign\Login.cshtml" />
+    <Content Include="Views\Sign\Register.cshtml" />
+    <Content Include="Views\Sign\ForgotPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Giriş";
+    Layout = "~/Views/Shared/_SignLayout.cshtml";
+}
+
+<div class="card card-block form-layout">
+    <form role="form" action="index.html" id="validate">
+        <div class="text-xs-center m-b-3">
+            <img src="~/Content/images/logo-icon.png" height="80" alt="" class="m-b-1" />
+            <h5>
+                Tekrar Hoşgeldin!
+            </h5>
+            <p class="text-muted">
+                Kullanıcı adı yada eposta adresinizle giriş yapın
+            </p>
+        </div>
+        <fieldset class="form-group">
+            <label for="username">
+                Kullanıcı adı yada eposta girin
+            </label>
+            <input type="text" class="form-control form-control-lg" id="username" placeholder="Kullanıcı adı yada eposta" required />
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="password">
+                Şifrenizi girin
+            </label>
+            <input type="password" class="form-control form-control-lg" id="password" placeholder="********" required />
+        </fieldset>
+        <label class="custom-control custom-checkbox m-b-1">
+            <input type="checkbox" class="custom-control-input">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">Sürekli bağlı kal</span>
+        </label>
+        <button class="btn btn-primary btn-block btn-lg" type="submit">
+            Giriş Yap
+        </button>
+        <div class="divider">
+            <span>
+                yada
+            </span>
+        </div>
+        <div class="text-xs-center">
+            <p>
+                Sosyal hesapları kullanarak giriş yap
+            </p>
+            <button href="javascript:;" class="btn btn-icon-icon btn-facebook btn-lg m-b-1 m-r-1">
+                <i class="fa fa-facebook">
+                </i>
+            </button>
+            <button href="javascript:;" class="btn btn-icon-icon btn-github btn-lg m-b-1 m-r-1">
+                <i class="fa fa-github">
+                </i>
+            </button>
+            <button href="javascript:;" class="btn btn-icon-icon btn-google btn-lg m-b-1 m-r-1">
+                <i class="fa fa-google-plus">
+                </i>
+            </button>
+            <button href="javascript:;" class="btn btn-icon-icon btn-linkedin btn-lg m-b-1 m-r-1">
+                <i class="fa fa-linkedin">
+                </i>
+            </button>
+        </div>
+    </form>
+</div>
+
+@section footer{
+    <p>
+    <a href="~/Sign/ForgotPassword">
+        Şifreni mi unuttun?
+    </a>
+    &nbsp;&nbsp;·&nbsp;&nbsp;
+    <a href="~/Sign/Register">
+        Yeni hesap oluştur
+    </a>
+</p>
+}
