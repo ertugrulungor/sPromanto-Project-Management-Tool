@@ -1,0 +1,49 @@
+﻿.projects span{
+    margin-right: 16px;
+    font-size: 20px;
+    color:#b2b2b2;
+}
+
+.projects .material-icons{
+    font-size: 32px;
+    margin-right: 10px;
+    color:#b2b2b2;
+}
+
+.newproject .card-block{
+    background: transparent;
+    border: 3px dashed #ccc;
+    box-shadow: none;
+    padding: 45px;
+    color:#ccc;
+}
+
+.newproject .fa-plus{
+    font-size: 50px;
+    margin-left: 42%;
+}
+
+.newproject .card-block:hover{
+    border: 3px dashed #b6b6b6;
+    color:#b6b6b6 !important;
+}
+
+.process{
+    margin-left:70px;
+}
+
+.subprocess{
+    margin-left:140px;
+}
+
+.btnSil {
+    position: absolute;
+    right: 0;
+    margin-right: 14px;
+    margin-top: -2px;
+    color: #e2e2e2;
+}
+
+.btnSil:hover{
+    color:#a8a8a8;
+}

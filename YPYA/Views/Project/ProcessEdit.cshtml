@@ -1,0 +1,382 @@
+﻿
+@{
+    ViewBag.Title = "ProcessEdit";
+}
+
+@model IEnumerable<YPYA.Models.Surec>
+
+@section ustBaslik{
+<a class="navbar-item navbar-spacer-right navbar-heading hidden-md-down" href="~/Project/Index/@Model.FirstOrDefault().Proje.Id">
+    <span>@Model.FirstOrDefault().Proje.Baslik</span>
+</a>
+}
+
+@section pagestyle{
+    <style>
+        .main-panel > .header {
+            color: #fff !important;
+            background-color: #f32c1e !important;
+        }
+
+        .main-panel > .main-content > .content-view {
+            padding: 0px !important;
+        }
+
+        .main-process {
+            padding: 12px !important;
+        }
+
+        .proces {
+            padding: 5px 43px !important;
+        }
+
+        .sub-process {
+            padding: 5px 74px !important;
+        }
+
+        .notification-bar-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+            .notification-bar-icon div {
+                width: 1.8rem;
+                height: 1.8rem;
+            }
+
+            .notification-bar-icon i {
+                top: 78%;
+                width: 1rem;
+                height: 1rem;
+                left: 78%;
+            }
+
+        .main-process .notification-bar-icon i {
+            background-color: #7fc35c;
+        }
+
+        .proces .notification-bar-icon i {
+            background-color: #d26d54;
+        }
+
+        .sub-process .notification-bar-icon i {
+            background-color: #4cc3f0;
+        }
+
+        .content-footer {
+            display: none !important;
+        }
+
+        .main-content {
+            overflow-y: hidden !important;
+        }
+
+        tbody tr th {
+            padding-top: 24px !important;
+        }
+    </style>
+}
+
+@section menu{
+    @Html.Action("ProjectMenu", "Project", new { id = Model.FirstOrDefault().Proje.Id })
+}
+
+@section script{
+    <!-- page scripts -->
+    <script src="~/Content/vendor/jquery.ui/ui/core.js"></script>
+    <script src="~/Content/vendor/jquery.ui/ui/widget.js"></script>
+    <script src="~/Content/vendor/jquery.ui/ui/mouse.js"></script>
+    <script src="~/Content/vendor/jquery.ui/ui/slider.js"></script>
+    <script src="~/Content/vendor/jqueryui-touch-punch/jquery.ui.touch-punch.js"></script>
+    <!-- end page scripts -->
+    <!-- initialize page scripts -->
+    <script type="text/javascript">
+        $(function () {
+            $('.slider').each(function () {
+                var data = $(this).data();
+                $(this).slider(data);
+            });
+            $(".app").addClass("expanding");
+        });
+    </script>
+    <!-- end initialize page scripts -->
+
+}
+
+<div class="layout-xs contacts-container">
+    <div class="flexbox-xs layout-column-xs contacts-list b-r">
+        <div class="contact-header bg-default">
+            <div class="contact-toolbar">
+                <form class="form-inline">
+                    <input class="form-control" type="text" placeholder="Search" />
+                </form>
+            </div>
+        </div>
+        <div class="flex-xs scroll-y">
+            <!--Contact list item-->
+            @foreach (YPYA.Models.Surec i in Model.Where(x => x.ParentSurecId == null))
+            {
+                <a href="javascript:;" class="column-equal main-process" data-toggle="contact">
+                    <div href="#" class="notification-bar-icon">
+                        <div><i></i></div>
+                    </div>
+                    <div class="col v-align-middle contact-details p-l-1">
+                        <span class="bold">@i.Baslik</span>
+                        <span class="small">@i.OlusturmaTarihi.Value.ToString("dd-MM-yyyy")</span>
+                    </div>
+                </a>
+                foreach (YPYA.Models.Surec j in Model.Where(y => y.ParentSurecId == i.Id))
+                {
+                    <a href="javascript:;" class="column-equal proces" data-toggle="contact">
+                        <div href="#" class="notification-bar-icon">
+                            <div><i></i></div>
+                        </div>
+                        <div class="col v-align-middle contact-details p-l-1">
+                            <span class="bold">@j.Baslik</span>
+                            <span class="small">@j.OlusturmaTarihi.Value.ToString("dd-MM-yyyy")</span>
+                        </div>
+                    </a>
+                    foreach (YPYA.Models.Surec k in Model.Where(z => z.ParentSurecId == j.Id))
+                    {
+                        <a href="javascript:;" class="column-equal sub-process" data-toggle="contact">
+                            <div href="#" class="notification-bar-icon">
+                                <div><i></i></div>
+                            </div>
+                            <div class="col v-align-middle contact-details p-l-1">
+                                <span class="bold">@k.Baslik</span>
+                                <span class="small">@k.OlusturmaTarihi.Value.ToString("dd-MM-yyyy")</span>
+                            </div>
+                        </a>
+                    }
+                }
+            }
+
+        </div>
+    </div>
+    <div class="flexbox-xs layout-column-xs contact-view">
+        <div class="contact-header hidden-lg-up">
+            <div class="contact-toolbar">
+                <a href="javascript:;" data-toggle="contact">
+                    <i class="material-icons visible-xs m-r-1">arrow_back</i>
+                </a>
+            </div>
+        </div>
+        <div class="flex-xs scroll-y p-a-1" style="background-color: #f7f0f0;">
+            <div class="card">
+                <div class="card-block">
+                    <form>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <fieldset class="form-group">
+                                    <label for="formGroupExampleInput">
+                                        Başlık
+                                    </label>
+                                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Başlığı düzenleyin">
+                                </fieldset>
+                            </div>
+                            <div class="col-sm-4">
+                                <fieldset class="form-group" disabled>
+                                    <label for="formGroupExampleInput">
+                                        Proje Adı
+                                    </label>
+                                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Proje Adı">
+                                </fieldset>
+                            </div>
+                            <div class="col-sm-4">
+                                <fieldset class="form-group" disabled>
+                                    <label for="formGroupExampleInput">
+                                        Süreci oluşturan
+                                    </label>
+                                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Süreci oluşturan">
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <fieldset class="form-group">
+                                    <label for="formGroupExampleInput">
+                                        Planlanan başlangıç
+                                    </label>
+                                    <input type="date" class="form-control" id="formGroupExampleInput">
+                                </fieldset>
+                            </div>
+                            <div class="col-sm-6">
+                                <fieldset class="form-group">
+                                    <label for="formGroupExampleInput">
+                                        Planlanan bitiş
+                                    </label>
+                                    <input type="date" class="form-control" id="formGroupExampleInput">
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <fieldset class="form-group">
+                                    <label for="formGroupExampleInput">
+                                        Süreç tamamlanma
+                                    </label>
+                                    <progress class="progress progress-success" style="margin-bottom: 0px;" value="10" max="100"></progress>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-block">
+                    <form class="form">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Kişi</th>
+                                        <th>Başlangıç tarihi</th>
+                                        <th>Bitiş tarihi</th>
+                                        <th>Tamamlanma tarihi</th>
+                                        <th>Tamamlanma oranı</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>Analiz</th>
+                                        <td>
+                                            <select class="form-control">
+                                                <option value="value">text</option>
+                                            </select>
+                                        </td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><div class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Table</th>
+                                        <td>
+                                            <select class="form-control">
+                                                <option value="value">text</option>
+                                            </select>
+                                        </td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><div class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Procedure</th>
+                                        <td>
+                                            <select class="form-control">
+                                                <option value="value">text</option>
+                                            </select>
+                                        </td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><div class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Dll list</th>
+                                        <td>
+                                            <select class="form-control">
+                                                <option value="value">text</option>
+                                            </select>
+                                        </td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><div class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Dll işlem</th>
+                                        <td>
+                                            <select class="form-control">
+                                                <option value="value">text</option>
+                                            </select>
+                                        </td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><div class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Arayüz</th>
+                                        <td>
+                                            <select class="form-control">
+                                                <option value="value">text</option>
+                                            </select>
+                                        </td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><div class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Test 1</th>
+                                        <td>
+                                            <select class="form-control">
+                                                <option value="value">text</option>
+                                            </select>
+                                        </td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><div class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Test 2</th>
+                                        <td>
+                                            <select class="form-control">
+                                                <option value="value">text</option>
+                                            </select>
+                                        </td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><div class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Test 3</th>
+                                        <td>
+                                            <select class="form-control">
+                                                <option value="value">text</option>
+                                            </select>
+                                        </td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><div class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Test 4</th>
+                                        <td>
+                                            <select class="form-control">
+                                                <option value="value">text</option>
+                                            </select>
+                                        </td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><div class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Test 5</th>
+                                        <td>
+                                            <select class="form-control">
+                                                <option value="value">text</option>
+                                            </select>
+                                        </td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><input class="form-control" type="date" /></td>
+                                        <td><div class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

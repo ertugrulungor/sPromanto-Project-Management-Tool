@@ -1,0 +1,400 @@
+﻿
+@{
+    ViewBag.Title = "Yeni Proje";
+    string ad = "", baslangic = "", bitis = "";
+    int projeId=0;
+    if(ViewBag.projGuncelle != null)
+    {
+        YPYA.Models.Proje p = ViewBag.projGuncelle;
+        ad = p.Baslik;
+        baslangic = p.PlanBaslangic.Value.ToString("yyyy-MM-dd");
+        bitis = p.PlanBitis.Value.ToString("yyyy-MM-dd");
+        projeId = p.Id;
+    }
+}
+<div class="wizards">
+    <!-- BEGIN STEP FORM WIZARD -->
+    <div class="tsf-wizard tsf-wizard-1">
+        <!-- BEGIN NAV STEP-->
+        <div class="tsf-nav-step">
+            <!-- BEGIN STEP INDICATOR-->
+            <ul class="gsi-step-indicator triangle gsi-style-1 gsi-transition ">
+                <li class="current" data-target="step-1">
+                    <a href="javascript:;">
+                        <div class="number">
+                            1
+                        </div>
+                        <div class="desc">
+                            <label>
+                                Proje Detayları
+                            </label>
+                            <span>
+                                Proje Detayları
+                            </span>
+                        </div>
+                    </a>
+                </li>
+                <li id="ikinci" data-target="step-2">
+                    <a href="javascript:;">
+                        <div class="number">2</div>
+                        <div class="desc">
+                            <label>
+                                Süreçleri belirle
+                            </label>
+                            <span>
+                                Süreçleri belirle
+                            </span>
+                        </div>
+                    </a>
+                </li>
+                <li id="ucuncu" data-target="step-4">
+                    <a href="javascript:;">
+                        <div class="number">4</div>
+                        <div class="desc">
+                            <label>
+                                Bitir&nbsp;&nbsp;&nbsp;
+                            </label>
+                            <span>
+                                Bitir&nbsp;&nbsp;&nbsp;
+                            </span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <!-- END STEP INDICATOR -->
+        </div>
+        <!-- END NAV STEP-->
+        <!-- BEGIN STEP CONTAINER -->
+        <div class="tsf-container">
+            <!-- BEGIN CONTENT-->
+            <form class="tsf-content" id="validate" role="form">
+                <!-- BEGIN STEP 1-->
+                <div class="tsf-step step-1 active">
+                    <fieldset>
+                        <legend>
+                            Proje detaylarını belirleyin
+                        </legend>
+                        <div class="row">
+                            <!-- BEGIN STEP CONTENT-->
+                            <div class="tsf-step-content">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">
+                                            Proje adı
+                                        </label>
+                                        <input class="form-control" id="projeadi" value="@ad" placeholder="Proje adını girin" type="text" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">
+                                            Planlanan başlangıç tarihi
+                                        </label>
+                                        <input class="form-control" value="@baslangic" id="projebaslangic" type="date" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">
+                                            Planlanan bitis tarihi
+                                        </label>
+                                        <input class="form-control" value="@bitis" id="projebitis" type="date" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END STEP CONTENT-->
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- END STEP 1-->
+                <!-- BEGIN STEP 2-->
+                <div class="tsf-step step-2">
+                    <fieldset>
+                        <legend>
+                            Proje süreçlerini belirleyin
+                        </legend>
+                        <!-- BEGIN STEP CONTENT-->
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">
+                                Başlık
+                            </label>
+                            <input class="form-control" id="surecBaslik" placeholder="Süreç başlığını girin" required="" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">
+                                Planlanan başlangıç tarihi
+                            </label>
+                            <input class="form-control" id="surecbaslangic" type="date" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">
+                                Planlanan bitis tarihi
+                            </label>
+                            <input class="form-control" id="surecbitis" type="date" required />
+                        </div>
+                        <div class="form-group">
+                            <label id="altSurecSecim" class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">Bu bir alt süreçtir</span>
+                            </label>
+                        </div>
+                        <div class="form-group altsurec">
+                            <label for="exampleInputPassword1">
+                                Aşağıdakilerden hangisin alt süreci?
+                            </label>
+                            <select class="form-control" id="surecSelect">
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button id="surecKayit" type="button" class="btn btn-success pull-right">Kaydet</button>
+                        </div>
+                        <!-- END STEP CONTENT-->
+                    </fieldset>
+                </div>
+                <!-- END STEP 2-->
+                
+                <!-- BEGIN STEP 4-->
+                <div class="tsf-step step-4">
+                    <fieldset>
+                        <legend>
+                            <i class="fa fa-check" style="color:#449d48;" aria-hidden="true"></i> Projenizi başarıyla oluşturdunuz!
+                        </legend>
+                        <!-- BEGIN STEP CONTENT-->
+                        <div class="tsf-step-content">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <p>
+                                        Lütfen aşağıda yer alan bitir butonuna tıklayın ve projenizi yönetmeye başlayın..
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END STEP CONTENT-->
+                    </fieldset>
+                </div>
+                <!-- END STEP 4-->
+            </form>
+            <div id="sureccek">
+                
+            </div>
+            <!-- END CONTENT-->
+            <!-- BEGIN CONTROLS-->
+            <div class="tsf-controls">
+                <!-- BEGIN PREV BUTTTON-->
+                <button class="btn btn-primary btn-icon btn-left tsf-wizard-btn" id="prev" type="button">
+                    <i class="material-icons">arrow_back</i>
+                    <span>Geri</span>
+                </button>
+                <!-- END PREV BUTTTON-->
+                <!-- BEGIN NEXT BUTTTON-->
+                <button class="btn btn-primary btn-icon btn-right tsf-wizard-btn" count="1" id="next" type="button">
+                    <i class="material-icons">arrow_forward</i>
+                    <span>İleri</span>
+                </button>
+                <!-- END NEXT BUTTTON-->
+                <!-- BEGIN FINISH BUTTTON-->
+                <button class="btn btn-right tsf-wizard-btn" id="finish" type="button">
+                    Bitir
+                </button>
+                <!-- END FINISH BUTTTON-->
+            </div>
+            <!-- END CONTROLS-->
+        </div>
+        <!-- END STEP CONTAINER -->
+    </div>
+    <!-- END STEP FORM WIZARD -->
+</div>
+@section pagestyle{
+    <link href="~/Content/styles/gsi-step-indicator.css" rel="stylesheet" />
+    <link href="~/Content/styles/tsf-step-form-wizard.css" rel="stylesheet" />
+}
+
+@section script{
+    <script>
+        $(function () {
+            function antixss(deger) {
+                if (deger.indexOf("<script>") != -1 || deger.indexOf("</scrip") != -1) return false
+                else return true;
+            }
+
+            function noti(message, type, pos) {
+                var msg = message,
+                  type = type.toLowerCase(),
+                  position = pos;
+                noty({
+                    theme: 'app-noty',
+                    text: msg,
+                    type: type,
+                    timeout: 3000,
+                    layout: position,
+                    closeWith: ['button', 'click'],
+                    animation: {
+                        open: 'animated fadeInDown', // Animate.css class names
+                        close: 'animated fadeOutUp', // Animate.css class names
+                    }
+                });
+            }
+
+            function bosGecme(deger) {
+                if (deger.length > 0) return true;
+                else return false;
+            }
+
+            function dateKontrol(deger,deger2) {
+                var zaman = new Date(deger2);
+                var gelenZaman = new Date(deger);
+                if (gelenZaman.setHours(0, 0, 0, 0) < zaman.setHours(0, 0, 0, 0)) return false;
+                else return true;
+            }
+
+            function surecleriCek(id) {
+                $("#surecSelect").html("");
+                $.post(surecUrl, { projeId: id }, function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        $("#surecSelect").append('<option level="1" value="' + data[i].surecId + '">' + data[i].surecAdi + '</option>');
+                        for (var j = 0; j < data[i].altSurec.length; j++) {
+                            $("#surecSelect").append('<option level="2" value="' + data[i].altSurec[j].surecId + '">&nbsp&nbsp--' + data[i].altSurec[j].surecAdi + '</option>');
+                            for (var k = 0; k < data[i].altSurec[j].altSurec.length; k++) {
+                                $("#surecSelect").append('<option level="3" value="' + data[i].altSurec[j].altSurec[k].surecId + '">&nbsp&nbsp&nbsp&nbsp&nbsp-' + data[i].altSurec[j].altSurec[k].surecAdi + '</option>');
+                            }
+                        }
+                    }
+                    RefreshContent(id);
+                });
+            }
+
+            var surecUrl, projeOlustur,surecOlustur;
+            var projeId = @projeId;
+            if(projeId==0){
+                surecUrl = "../Home/SurecleriCek";
+                projeOlustur = "../Home/ProjeOlustur";
+                surecOlustur = "../Home/SurecOlustur";
+            }else{
+                surecUrl = "../../Home/SurecleriCek";
+                projeOlustur = "../../Home/ProjeOlustur";
+                surecOlustur = "../../Home/SurecOlustur";
+            }
+            var next = $("#next");
+            var prev = $("#prev");
+            var finish = $("#finish");
+            surecleriCek(projeId);
+            RefreshContent(projeId);
+
+            $("#sureccek").hide();
+            $(".altsurec").hide();
+            prev.hide();
+            finish.hide();
+
+            next.click(function () {
+                var c = $(this).attr("count");
+                if (c == 1) {
+                    var ad = $("#projeadi").val();
+                    var baslangic = $("#projebaslangic").val();
+                    var bitis = $("#projebitis").val();
+
+                    if (bosGecme(ad) && bosGecme(baslangic) && bosGecme(bitis) && antixss(ad) && antixss(baslangic) && antixss(bitis)) {
+                        if (dateKontrol(baslangic, new Date())) {
+                            if (dateKontrol(bitis, baslangic)) {
+                                $.post(projeOlustur, { projeAdi: ad, baslangic: baslangic, bitis: bitis, projeId : projeId }, function (data) {
+                                    if (data.basari == 1) {
+                                        projeId = data.projeId;
+                                        $("#ikinci").addClass("current");
+                                        $(".step-1").removeClass("active");
+                                        $(".step-2").addClass("active");
+                                        $("#sureccek").show();
+                                        $(next).attr("count", "2");
+                                    }
+                                    else {
+                                        noti("Beklenmeyen bir hata oluştu", "error", "top");
+                                    }
+                                });
+                            } else {
+                                noti("Bitiş tarihi başlangıç tarihinden önce olamaz", "error", "top");
+                            }
+                        } else {
+                            noti("Başlangıç tarihi bugünden önce olamaz", "error", "top");
+                        }
+                    } else {
+                        noti("Alanlar boş geçilemez", "error", "top");
+                    }
+                }
+                else if(c==2){
+                    $("#ucuncu").addClass("current");
+                    $(".step-2").removeClass("active");
+                    $(".step-4").addClass("active");
+                    $("#sureccek").hide();
+                    $(next).attr("count", "3");
+                    next.hide();
+                    finish.show();
+                }
+            });
+
+            $("#altSurecSecim").click(function () {
+                if ($(".custom-control-input").is(':checked')) {
+                    $(".altsurec").show();
+                } else {
+                    $(".altsurec").hide();
+                }
+            });
+
+            var level = 1;
+            $("#surecSelect").change(function () {
+                level = $(this).find('option:selected').attr('level');
+            });
+
+            function RefreshContent(id) {
+                $.ajax({
+                    type: 'POST',
+                    data: { id: id },
+                    url: '@Url.Content("~/Home/SurecCek")',
+                    success: function (data) {
+                        $("#sureccek").html(data);
+                    }
+                });
+            }
+
+            $("#surecKayit").click(function () {
+                var baslik = $("#surecBaslik").val();
+                var baslangic = $("#surecbaslangic").val();
+                var bitis = $("#surecbitis").val();
+                var parentSurecId = 0;
+                var levelKontrol = true;
+
+                if (bosGecme(baslik) && bosGecme(baslangic) && bosGecme(bitis) && antixss(baslik) && antixss(baslangic) && antixss(bitis)) {
+                    if (dateKontrol(baslangic, new Date())) {
+                        if (dateKontrol(bitis, baslangic)) {
+                            if ($(".custom-control-input").is(':checked')) {
+                                parentSurecId = $("#surecSelect").val();
+                                console.log(level);
+                                if (level == 3) {
+                                    levelKontrol = false;
+                                }
+                            }
+
+                            if (levelKontrol) {
+                                $.post(surecOlustur, { baslik: baslik, baslangic: baslangic, bitis: bitis, parentSurecId: parentSurecId, projeId: projeId }, function (data) {
+                                    if (data.basari == 1) {
+                                        surecleriCek(projeId);
+                                        $("#surecBaslik").val("");
+                                        $("#surecbaslangic").val("");
+                                        $("#surecbitis").val("");
+                                        $(".custom-control-input").prop("checked", false);
+                                        $(".altsurec").hide();
+                                    } else {
+                                        noti("Beklenmeyen bir hata oluştu", "error", "top");
+                                    }
+                                });
+                            } else {
+                                noti("En fazla üçüncü seviye alt süreç ekleyebilirsiniz", "error", "top");
+                            }
+                        } else {
+                            noti("Bitiş tarihi başlangıç tarihinden önce olamaz", "error", "top");
+                        }
+                    } else {
+                        noti("Başlangıç tarihi bugünden önce olamaz", "error", "top");
+                    }
+                } else {
+                    noti("Alanlar boş geçilemez", "error", "top");
+                }
+            });
+        })
+    </script>
+}

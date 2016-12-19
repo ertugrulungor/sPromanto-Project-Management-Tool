@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /*
 *   Template name: Milestone Bootstrap 4 Dashboard Template
 *   Demo URL: htp://milestone.nyasha.me
@@ -5000,8 +5000,8 @@ a.text-bluegrey:focus, a.text-bluegrey:hover {
   .contacts-sidebar {
     width: 250px; }
   .contacts-list {
-    min-width: 240px;
-    max-width: 240px; } }
+    min-width: 270px;
+    max-width: 270px; } }
 
 @media (max-width: 991px) {
   .message-view,

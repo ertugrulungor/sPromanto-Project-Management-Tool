@@ -32,7 +32,7 @@
             <span class="custom-control-indicator"></span>
             <span class="custom-control-description">Sürekli bağlı kal</span>
         </label>
-        <button class="btn btn-primary btn-block btn-lg" type="submit">
+        <button class="btn btn-primary btn-block btn-lg" type="button" id="giris">
             Giriş Yap
         </button>
         <div class="divider">
@@ -74,4 +74,53 @@
         Yeni hesap oluştur
     </a>
 </p>
+}
+
+@section script{
+    <script>
+        $(function () {
+            function noti(message, type, pos) {
+                var msg = message,
+                  type = type.toLowerCase(),
+                  position = pos;
+                noty({
+                    theme: 'app-noty',
+                    text: msg,
+                    type: type,
+                    timeout: 3000,
+                    layout: position,
+                    closeWith: ['button', 'click'],
+                    animation: {
+                        open: 'animated fadeInDown', // Animate.css class names
+                        close: 'animated fadeOutUp', // Animate.css class names
+                    }
+                });
+            }
+
+            function bosGecme(deger) {
+                if (deger.length > 0) return true;
+                else return false;
+            }
+            $("#giris").click(function () {
+                $(this).html('<img src="/Content/images/spin.svg" width="20"/>');
+                var kuladi = $("#username").val();
+                var password = $("#password").val();
+                if (bosGecme(kuladi) && bosGecme(password) && antixss(kuladi) && antixss(password)) {
+                    $.post("../Sign/GirisYap", { kullanici: kuladi, sifre: password }, function (data) {
+                        if (data.basari == 1) {
+                            location.href = "/Home/Index";
+                        } else {
+                            noti("Beklenmeyen bir hata oluştu", "error", "topLeft");
+                            $("#giris").html("Giriş Yap");
+                        }
+                    });
+                }
+                else {
+                    noti("Alanlar boş geçilemez", "error", "topLeft");
+                    $("#giris").html("Giriş Yap");
+                }
+
+            });
+        })
+    </script>
 }

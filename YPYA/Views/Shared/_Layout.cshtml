@@ -19,7 +19,9 @@
     <title>@ViewBag.Title - sPromanto</title>
 
     <!-- page stylesheets -->
+    <link href="~/Content/vendor/sweetalert/dist/sweetalert.css" rel="stylesheet" />
     <!-- end page stylesheets -->
+
     <!-- build:css({.tmp,app}) styles/app.min.css -->
     <link href="~/Content/vendor/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/vendor/pace/themes/blue/pace-theme-minimal.css" rel="stylesheet" />
@@ -27,10 +29,16 @@
     <link href="~/Content/vendor/animate.css/animate.css" rel="stylesheet" />
     <link href="~/Content/styles/app.css" rel="stylesheet" id="load_styles_before"/>
     <link href="~/Content/styles/app.skins.css" rel="stylesheet" />
+    <link href="~/Content/styles/style.css" rel="stylesheet" />
+    <link href="~/Content/styles/loaders.css" rel="stylesheet" />
+
     <!-- endbuild -->
+    @RenderSection("pagestyle", required: false)
 </head>
 <body>
-
+    @{
+        YPYA.Models.Kullanici k = ViewBag.k;
+    }
     <div class="app fixed-header">
         <!--sidebar panel-->
         <div class="off-canvas-overlay" data-toggle="sidebar"></div>
@@ -43,7 +51,7 @@
                 <!-- /toggle offscreen menu -->
                 <!-- logo -->
                 <a class="brand-logo">
-                    <img class="expanding-hidden" src="~/Content/images/logo.png" alt="" />
+                    <img class="expanding-hidden" src="~/Content/images/slogo.png" alt="" />
                 </a>
                 <!-- /logo -->
             </div>
@@ -53,8 +61,8 @@
                         <img src="~/Content/images/avatar.jpg" class="avatar img-circle" alt="user" title="user" />
                     </div>
                     <div class="user-info expanding-hidden">
-                        Betty Simmons
-                        <small class="bold">Administrator</small>
+                        @k.Adsoyad
+                        <small class="bold">@@@k.KullaniciAdi</small>
                     </div>
                 </a>
                 <div class="dropdown-menu">
@@ -75,12 +83,13 @@
                 <ul class="nav">
                     <!-- dashboard -->
                     <li>
-                        <a href="index.html">
+                        <a href="~/Home/Index">
                             <i class="material-icons text-primary">home</i>
-                            <span>Home</span>
+                            <span>Anasayfa</span>
                         </a>
                     </li>
                     <!-- /dashboard -->
+                    @RenderSection("menu",required:false)
                     <!-- apps -->
                     <li>
                         <a href="javascript:;">
@@ -484,59 +493,7 @@
                         </ul>
                     </li>
                     <!-- /extras -->
-                    <!-- menu levels -->
-                    <li>
-                        <a href="javascript:;">
-                            <span class="menu-caret">
-                                <i class="material-icons">arrow_drop_down</i>
-                            </span>
-                            <i class="material-icons">line_weight</i>
-                            <span>Menu levels</span>
-                        </a>
-                        <ul class="sub-menu">
-                            <li>
-                                <a href="javascript:;">
-                                    <span class="menu-caret">
-                                        <i class="material-icons">arrow_drop_down</i>
-                                    </span>
-                                    <span>Menu Item 1.1</span>
-                                </a>
-                                <ul class="sub-menu">
-                                    <li>
-                                        <a href="javascript:;">
-                                            <span class="menu-caret">
-                                                <i class="material-icons">arrow_drop_down</i>
-                                            </span>
-                                            <span>Menu Item 2.1</span>
-                                        </a>
-                                        <ul class="sub-menu">
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span>Menu Item 3.1</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span>Menu Item 3.1</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <span>Menu Item 2.2</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="javascript:;">
-                                    <span>Menu Item 1.2</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- menu levels -->
+                    
                     <li><hr /></li>
                     <!-- static -->
                     <li>
@@ -572,27 +529,27 @@
                         <!-- /toggle offscreen menu -->
                         <!-- logo -->
                         <a class="brand-logo hidden-xs-down">
-                            <img src="~/Content/images/logo_white.png" alt="logo" />
+                            <img src="~/Content/images/slogo_white.png" alt="logo" />
                         </a>
                         <!-- /logo -->
                     </div>
-                    <a class="navbar-item navbar-spacer-right navbar-heading hidden-md-down" href="#">
-                        <span>Blank</span>
-                    </a>
+                   
+                        @RenderSection("ustBaslik",required:false)
+
                     <div class="navbar-search navbar-item">
                         <form class="search-form">
                             <i class="material-icons">search</i>
-                            <input class="form-control" type="text" placeholder="Search" />
+                            <input class="form-control" type="text" placeholder="Arama yap" />
                         </form>
                     </div>
                     <div class="navbar-item nav navbar-nav">
                         <div class="nav-item nav-link dropdown">
                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                                <span>English</span>
+                                <span>Türkçe</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="javascript:;">Türkçe</a>
                                 <a class="dropdown-item" href="javascript:;">English</a>
-                                <a class="dropdown-item" href="javascript:;">Russian</a>
                             </div>
                         </div>
                         <div class="nav-item nav-link dropdown">
@@ -912,15 +869,15 @@
 
     </div>
     <script type="text/javascript">
-      window.paceOptions = {
-        document: true,
-        eventLag: true,
-        restartOnPushState: true,
-        restartOnRequestAfter: true,
-        ajax: {
-          trackMethods: [ 'POST','GET']
-        }
-      };
+        window.paceOptions = {
+            document: true,
+            eventLag: true,
+            restartOnPushState: true,
+            restartOnRequestAfter: true,
+            ajax: {
+                trackMethods: ['POST', 'GET']
+            }
+        };
     </script>
 
     <!-- build:js({.tmp,app}) scripts/app.min.js -->
@@ -931,10 +888,15 @@
     <script src="~/Content/vendor/fastclick/lib/fastclick.js"></script>
     <script src="~/Content/scripts/constants.js"></script>
     <script src="~/Content/scripts/main.js"></script>
+    <script src="~/Content/vendor/noty/js/noty/packaged/jquery.noty.packaged.min.js"></script>
+    <script src="~/Content/scripts/noty-defaults.js"></script>
     <!-- endbuild -->
     <!-- page scripts -->
+    <script src="~/Content/vendor/sweetalert/dist/sweetalert.min.js"></script>
     <!-- end page scripts -->
     <!-- initialize page scripts -->
+    <script src="~/Content/scripts/ui/alert.js"></script>
+    @RenderSection("script", required: false)
     <!-- end initialize page scripts -->
 
 </body>

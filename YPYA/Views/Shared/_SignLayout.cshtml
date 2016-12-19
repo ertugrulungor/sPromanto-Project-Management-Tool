@@ -65,6 +65,8 @@
     <script src="~/Content/vendor/fastclick/lib/fastclick.js"></script>
     <script src="~/Content/scripts/constants.js"></script>
     <script src="~/Content/scripts/main.js"></script>
+    <script src="~/Content/vendor/noty/js/noty/packaged/jquery.noty.packaged.min.js"></script>
+    <script src="~/Content/scripts/noty-defaults.js"></script>
     <!-- endbuild -->
     <!-- page scripts -->
     <script src="~/Content/vendor/jquery-validation/dist/jquery.validate.js"></script>
@@ -74,6 +76,6 @@
       $('#validate').validate();
     </script>
     <!-- end initialize page scripts -->
-
+    @RenderSection("script",required:false)
 </body>
 </html>

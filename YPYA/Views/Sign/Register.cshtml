@@ -17,9 +17,15 @@
         </div>
         <fieldset class="form-group">
             <label for="email">
+                Adınızı ve soyadınızı girin
+            </label>
+            <input type="text" class="form-control form-control-lg" id="adsoyad" placeholder="Ad Soyad" required />
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="email">
                 Kullanıcı adı girin
             </label>
-            <input type="email" class="form-control form-control-lg" id="email" placeholder="Kullanıcı adı" required />
+            <input type="text" class="form-control form-control-lg" id="kuladi" placeholder="Kullanıcı adı" required />
         </fieldset>
         <fieldset class="form-group">
             <label for="email">
@@ -39,7 +45,7 @@
             </label>
             <input type="password" class="form-control form-control-lg" id="cpassword" placeholder="Şifre(tekrar)" required minlength="6" />
         </fieldset>
-        <button class="btn btn-primary btn-block btn-lg" type="submit">
+        <button class="btn btn-primary btn-block btn-lg" id="kayit" type="button">
             Hesap Oluştur
         </button>
         <div class="divider">
@@ -81,4 +87,67 @@
             Zaten bir hesabım var
         </a>
     </p>
+}
+
+@section script{
+<script>
+    $(function () {
+        function antixss(deger) {
+            if (deger.indexOf("<script>") != -1 || deger.indexOf("</scrip") != -1) return false
+            else return true;
+        }
+
+        function noti(message, type, pos) {
+            var msg = message,
+              type = type.toLowerCase(),
+              position = pos;
+            noty({
+                theme: 'app-noty',
+                text: msg,
+                type: type,
+                timeout: 3000,
+                layout: position,
+                closeWith: ['button', 'click'],
+                animation: {
+                    open: 'animated fadeInDown', // Animate.css class names
+                    close: 'animated fadeOutUp', // Animate.css class names
+                }
+            });
+        }
+
+        function bosGecme(deger){
+            if(deger.length>0) return true;
+            else return false;
+        }
+        $("#kayit").click(function () {
+            $(this).html('<img src="/Content/images/spin.svg" width="20"/>');
+            var adsoyad = $("#adsoyad").val();
+            var kuladi = $("#kuladi").val();
+            var email = $("#email").val();
+            var password = $("#password").val();
+            var cpassword = $("#cpassword").val();
+            if (bosGecme(kuladi) && bosGecme(adsoyad) && bosGecme(email) && bosGecme(password) && bosGecme(cpassword) && antixss(kuladi) && antixss(adsoyad) && antixss(email) && antixss(password) && antixss(cpassword)) {
+                if (password == cpassword) {
+                    $.post("../Sign/KayitOl", { adsoyad: adsoyad ,kuladi: kuladi, mail: email, sifre: password }, function (data) {
+                        if (data.basari == 1) {
+                            location.href = "/Home/Index";
+                        } else {
+                            noti("Beklenmeyen bir hata oluştu", "error", "topLeft");
+                            $("#kayit").html("Hesap Oluştur");
+                        }
+                    });
+                }
+                else {
+                    noti("Şifreler birbiriyle uyuşmuyor", "error", "topLeft");
+                    $("#kayit").html("Hesap Oluştur");
+                }
+            }
+            else {
+                noti("Alanlar boş geçilemez", "error", "topLeft");
+                $("#kayit").html("Hesap Oluştur");
+            }
+
+        });
+    })
+</script>
 }

@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+@model YPYA.Models.Proje
+
+@section ustBaslik{
+<a class="navbar-item navbar-spacer-right navbar-heading hidden-md-down" href="~/Project/Index/@Model.Id">
+    <span>@Model.Baslik</span>
+</a>
+}
+
+@section pagestyle{
+    <style>
+        .main-panel > .header {
+            color: #fff !important;
+            background-color: #f32c1e !important;
+        }
+    </style>
+}
+
+@section menu{
+    @Html.Action("ProjectMenu", "Project", new { id = Model.Id })
+}

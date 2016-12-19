@@ -1,0 +1,67 @@
+﻿
+@{
+    Layout = null;
+}
+@section ustBaslik{
+    <a class="navbar-item navbar-spacer-right navbar-heading hidden-md-down" href="#">
+
+    </a>
+}
+@model IEnumerable<YPYA.Models.Surec>
+
+<h4 style="margin-bottom: 15px;" class="ikincicontent">Eklediğim Süreçler</h4>
+
+@foreach (YPYA.Models.Surec i in Model.Where(x => x.ParentSurecId == null))
+{
+    <ul class="list-group m-b-1 ikincicontent">
+        <li class="list-group-item notification-bar-success">
+            <div href="#" class="notification-bar-icon">
+                <div><i></i></div>
+            </div>
+            <div class="notification-bar-details">
+                <a href="#" class="notification-bar-title">
+                    @i.Baslik
+                </a>
+                <span class="text-muted">
+                    @i.OlusturmaTarihi
+                </span>
+            </div>
+        </li>
+    </ul>
+    foreach (YPYA.Models.Surec j in Model.Where(y => y.ParentSurecId == i.Id))
+    {
+        <ul class="list-group m-b-1 ikincicontent process">
+            <li class="list-group-item notification-bar-fail">
+                <div href="#" class="notification-bar-icon">
+                    <div><i></i></div>
+                </div>
+                <div class="notification-bar-details">
+                    <a href="#" class="notification-bar-title">
+                        @j.Baslik
+                    </a>
+                    <span class="text-muted">
+                        @j.OlusturmaTarihi
+                    </span>
+                </div>
+            </li>
+        </ul>
+        foreach (YPYA.Models.Surec k in Model.Where(z => z.ParentSurecId == j.Id))
+        {
+            <ul class="list-group m-b-1 ikincicontent subprocess">
+                <li class="list-group-item notification-bar-info">
+                    <div href="#" class="notification-bar-icon">
+                        <div><i></i></div>
+                    </div>
+                    <div class="notification-bar-details">
+                        <a href="#" class="notification-bar-title">
+                            @k.Baslik
+                        </a>
+                        <span class="text-muted">
+                            @k.OlusturmaTarihi
+                        </span>
+                    </div>
+                </li>
+            </ul>
+        }
+    }
+}

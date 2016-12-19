@@ -1,7 +1,52 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Anasayfa";
 }
+@section ustBaslik{
+    <a class="navbar-item navbar-spacer-right navbar-heading hidden-md-down" href="#">
+       
+    </a>
+}
+<h6 style="font-weight:600">Benim oluşturduğum projeler</h6>
+<div class="row">
+    @foreach (YPYA.Models.Proje i in ViewBag.olusturulan)
+    {
+        <div class="col-xl-4 col-lg-12">
+            <div class="card card-block">
+                <a class="btnSil demo5" projeId="@i.Id" href="#"><i class="fa fa-times" aria-hidden="true"></i></a>
+                <h4 class="card-title">
+                    @i.Baslik
+                </h4>
+                <p class="card-text projects">
+                    <i class="material-icons">group</i> <span>6</span>
+                    <i class="material-icons">timelapse</i> <span>26%</span>
+                </p>
 
-<h2>Index</h2>
-
+                @if (i.Surecs.Any())
+                {
+                    <a href="~/Project/Index/@i.Id" class="btn btn-danger">
+                        Projeye Git
+                    </a>
+                    <a href="~/Home/NewProject/@i.Id" class="btn btn-info">
+                        Düzenle
+                    </a>
+                }
+                else
+                {
+                    <a href="~/Home/NewProject/@i.Id" class="btn btn-success">
+                        Oluşturmaya devam et
+                    </a>
+                }
+            </div>
+        </div>
+    }
+    <div class="col-xl-4 col-lg-12">
+        <a href="~/Home/NewProject">
+            <div class="newproject">
+                <div class="card card-block">
+                    <i class="fa fa-plus"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

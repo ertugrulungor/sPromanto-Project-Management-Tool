@@ -1,0 +1,17 @@
+﻿
+@{
+    Layout = null;
+    YPYA.Models.Proje p = ViewBag.menuKisi;
+}
+
+ <!-- menu levels -->
+<li>
+    <a href="~/Project/ProcessEdit/@p.Id">
+        <i style="color:#566f7c" class="material-icons">line_weight</i>
+        <span>@p.Baslik süreçleri</span>
+    </a>
+    <a href="~/Project/ProcessEdit/@p.Id">
+        <i style="color: #d26d54;" class="material-icons">people</i>
+        <span>Kişi davet et</span>
+    </a>
+</li>

@@ -159,21 +159,54 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\SignController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Durum.cs" />
-    <Compile Include="Models\Kullanici.cs" />
-    <Compile Include="Models\KullaniciSurec.cs" />
-    <Compile Include="Models\MusteriIsteri.cs" />
-    <Compile Include="Models\Oncelik.cs" />
-    <Compile Include="Models\Proje.cs" />
-    <Compile Include="Models\ProjeKullanici.cs" />
-    <Compile Include="Models\Rol.cs" />
-    <Compile Include="Models\Surec.cs" />
-    <Compile Include="Models\sysdiagram.cs" />
-    <Compile Include="Models\yonetimDB.cs" />
+    <Compile Include="helper\Yardimci.cs" />
+    <Compile Include="Models\Durum.cs">
+      <DependentUpon>projeyonetim.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Kullanici.cs">
+      <DependentUpon>projeyonetim.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\KullaniciSurec.cs">
+      <DependentUpon>projeyonetim.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MusteriIsteri.cs">
+      <DependentUpon>projeyonetim.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Oncelik.cs">
+      <DependentUpon>projeyonetim.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Proje.cs">
+      <DependentUpon>projeyonetim.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProjeKullanici.cs">
+      <DependentUpon>projeyonetim.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\projeyonetim.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>projeyonetim.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\projeyonetim.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>projeyonetim.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\projeyonetim.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>projeyonetim.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Rol.cs">
+      <DependentUpon>projeyonetim.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Surec.cs">
+      <DependentUpon>projeyonetim.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -182,10 +215,20 @@
     <Content Include="Content\images\logo-icon.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\logo_white.png" />
+    <Content Include="Content\images\slogo.png" />
+    <Content Include="Content\images\slogo_white.png" />
+    <Content Include="Content\images\spin.svg" />
     <Content Include="Content\scripts\constants.js" />
+    <Content Include="Content\scripts\helpers\tsf\js\tsf-wizard-plugin.js" />
     <Content Include="Content\scripts\main.js" />
+    <Content Include="Content\scripts\noty-defaults.js" />
+    <Content Include="Content\scripts\ui\alert.js" />
     <Content Include="Content\styles\app.css" />
     <Content Include="Content\styles\app.skins.css" />
+    <Content Include="Content\styles\gsi-step-indicator.css" />
+    <Content Include="Content\styles\loaders.css" />
+    <Content Include="Content\styles\style.css" />
+    <Content Include="Content\styles\tsf-step-form-wizard.css" />
     <Content Include="Content\vendor\animate.css\animate.css" />
     <Content Include="Content\vendor\bootstrap\dist\css\bootstrap.css" />
     <Content Include="Content\vendor\bootstrap\dist\js\bootstrap.js" />
@@ -193,13 +236,32 @@
     <Content Include="Content\vendor\font-awesome\css\font-awesome.css" />
     <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\vendor\jquery-validation\dist\jquery.validate.js" />
+    <Content Include="Content\vendor\jquery.ui\ui\mouse.js" />
+    <Content Include="Content\vendor\jquery.ui\ui\slider.js" />
+    <Content Include="Content\vendor\jquery.ui\ui\core.js" />
+    <Content Include="Content\vendor\jquery.ui\ui\widget.js" />
+    <Content Include="Content\vendor\jqueryui-touch-punch\jquery.ui.touch-punch.js" />
     <Content Include="Content\vendor\jquery\dist\jquery.js" />
+    <Content Include="Content\vendor\noty\js\noty\packaged\jquery.noty.packaged.min.js" />
     <Content Include="Content\vendor\pace\pace.js" />
     <Content Include="Content\vendor\pace\themes\blue\pace-theme-minimal.css" />
+    <Content Include="Content\vendor\parsleyjs\dist\parsley.min.js" />
+    <Content Include="Content\vendor\sweetalert\dist\sweetalert.css" />
+    <Content Include="Content\vendor\sweetalert\dist\sweetalert.min.js" />
     <Content Include="Content\vendor\tether\dist\js\tether.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Models\projeyonetim.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>projeyonetim.edmx</DependentUpon>
+      <LastGenOutput>projeyonetim.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\projeyonetim.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>projeyonetim.edmx</DependentUpon>
+      <LastGenOutput>projeyonetim.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -213,6 +275,13 @@
     <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\vendor\font-awesome\fonts\FontAwesome.otf" />
+    <EntityDeploy Include="Models\projeyonetim.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>projeyonetim.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\projeyonetim.edmx.diagram">
+      <DependentUpon>projeyonetim.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -241,6 +310,11 @@
     <Content Include="Views\Sign\Login.cshtml" />
     <Content Include="Views\Sign\Register.cshtml" />
     <Content Include="Views\Sign\ForgotPassword.cshtml" />
+    <Content Include="Views\Home\NewProject.cshtml" />
+    <Content Include="Views\Home\SurecCek.cshtml" />
+    <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\Project\ProcessEdit.cshtml" />
+    <Content Include="Views\Project\ProjectMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -252,6 +326,9 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
