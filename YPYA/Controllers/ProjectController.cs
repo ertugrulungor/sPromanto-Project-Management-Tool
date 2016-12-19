@@ -99,7 +99,7 @@ namespace YPYA.Controllers
 
         public JsonResult AddPeopleProject(int id,int projeId)
         {
-            if (!db.ProjeKullanicis.Any(x => x.KullaniciId == id && x.ProjeId == projeId))
+            if (!db.ProjeKullanicis.Any(x => x.KullaniciId == id && x.ProjeId == projeId) && db.Projes.Find(projeId).Kullanici.Id != id)
             {
                 ProjeKullanici pk = new ProjeKullanici()
                 {
@@ -126,9 +126,12 @@ namespace YPYA.Controllers
             }
             else
             {
+                Kullanici k = db.Kullanicis.Find(id);
+
                 var jsonModel = new
                 {
-                    durum = 0
+                    durum = 0,
+                    kulAdSoyad = k.Adsoyad
                 };
 
                 return Json(jsonModel, JsonRequestBehavior.AllowGet);
