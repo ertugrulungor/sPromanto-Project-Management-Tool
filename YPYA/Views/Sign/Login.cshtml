@@ -79,6 +79,11 @@
 @section script{
     <script>
         $(function () {
+            function antixss(deger) {
+                if (deger.indexOf("<script>") != -1 || deger.indexOf("</scrip") != -1) return false
+                else return true;
+            }
+
             function noti(message, type, pos) {
                 var msg = message,
                   type = type.toLowerCase(),

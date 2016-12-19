@@ -315,6 +315,7 @@
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Project\ProcessEdit.cshtml" />
     <Content Include="Views\Project\ProjectMenu.cshtml" />
+    <Content Include="Views\Project\InvitePeople.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
