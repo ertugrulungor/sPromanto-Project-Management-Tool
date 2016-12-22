@@ -1,0 +1,236 @@
+﻿
+@{
+    ViewBag.Title = "Invite People";
+}
+
+@model IEnumerable<YPYA.Models.ProjeKullanici>
+
+@section ustBaslik{
+    <a class="navbar-item navbar-spacer-right navbar-heading hidden-md-down" href="~/Project/Index/@ViewBag.projeId">
+        <span>@ViewBag.projeAdi</span>
+    </a>
+}
+
+@section pagestyle{
+    <style>
+        .main-panel > .header {
+            color: #fff !important;
+            background-color: #f32c1e !important;
+        }
+
+
+        .main-process {
+            padding: 12px !important;
+        }
+
+        .proces {
+            padding: 5px 43px !important;
+        }
+
+        .sub-process {
+            padding: 5px 74px !important;
+        }
+
+        .notification-bar-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        .notification-bar-icon div {
+            width: 1.8rem;
+            height: 1.8rem;
+        }
+
+        .notification-bar-icon i {
+            top: 78%;
+            width: 1rem;
+            height: 1rem;
+            left: 78%;
+        }
+
+        .main-process .notification-bar-icon i {
+            background-color: #7fc35c;
+        }
+
+        .proces .notification-bar-icon i {
+            background-color: #d26d54;
+        }
+
+        .sub-process .notification-bar-icon i {
+            background-color: #4cc3f0;
+        }
+
+        .content-footer {
+            display: none !important;
+        }
+
+        .main-content {
+            overflow-y: hidden !important;
+        }
+
+        tbody tr th {
+            padding-top: 24px !important;
+        }
+
+        .search-box{
+            border: 1px solid #e6e6e6;
+            border-top: 0px;
+            padding: 10px 25px;
+        }
+
+        .search-box:hover{
+            background-color:#f3f3f3;
+        }
+
+        .gizle{
+            display:none;
+        }
+    </style>
+}
+
+@section menu{
+    @Html.Action("ProjectMenu", "Project", new { id = ViewBag.projeId })
+}
+
+@section script{
+    <script type="text/javascript">
+        $(function () {
+            function antixss(deger) {
+                if (deger.indexOf("<script>") != -1 || deger.indexOf("</scrip") != -1) return false
+                else return true;
+            }
+
+            function noti(message, type, pos) {
+                var msg = message,
+                  type = type.toLowerCase(),
+                  position = pos;
+                noty({
+                    theme: 'app-noty',
+                    text: msg,
+                    type: type,
+                    timeout: 3000,
+                    layout: position,
+                    closeWith: ['button', 'click'],
+                    animation: {
+                        open: 'animated fadeInDown', // Animate.css class names
+                        close: 'animated fadeOutUp', // Animate.css class names
+                    }
+                });
+            }
+
+            $("#KulAra").keyup(function () {
+                var icerik = $("#KulAra").val();
+                if (antixss(icerik)) {
+                    if (icerik.length > 3) {
+                        $("#searchbox").show();
+                        $.post("/Project/SearchPeople", { content: icerik }, function (data) {
+                            $("#searchbox").html("");
+                            $.each(data, function (i) {
+                                $("#searchbox").append('<a class="kulsecim" style="cursor:pointer;" kulId="' + data[i].kulId + '"><div class="search-box"><b>' + data[i].kulAdSoyad + '</b> - @@' + data[i].kulAdi + '</div></a>');
+                            })
+                        });
+                    } else {
+                        $("#searchbox").html("");
+                        $("#searchbox").hide();
+                    }
+                }
+            });
+
+            $("body").on("click",".kulsecim", function () {
+                var kulId = $(this).attr("kulId");
+                var projeId = @ViewBag.projeId;
+                $.post("/Project/AddPeopleProject",{id:kulId,projeId:projeId},function(data){
+                    console.log(data);
+                    if(data.durum == 1){
+                        noti(data.kulAdSoyad + " projeye eklendi ve onay bekleniyor","success","topRight");
+                        $(".card").show();
+                        $("#table-user").append('<tr><td>'+data.kulAdSoyad+'</td><td>'+data.kulMail+'</td><td>'+data.kulAdi+'</td><td><span>Onaylanmadı</span></td></tr>');
+                        $("#KulAra").val("");
+                        $("#searchbox").hide();
+                    } else{
+                        noti(data.kulAdSoyad + " projeye zaten eklenmiş!","error","topRight");
+                    }
+                });
+            });
+        });
+    </script>
+    <!-- end initialize page scripts -->
+
+}
+
+<h6>Projeye kişi davet et</h6>
+<div class="card">
+    <div class="card-block">
+        <fieldset class="form-group">
+            <label for="formGroupExampleInput">
+                Kullanıcı adı yada mail
+            </label>
+            <input type="text" class="form-control" id="KulAra" placeholder="Arama yapın">
+            <div class="row">
+                <div class="col-xs-12" id="searchbox" style="display:none;">
+                    
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+
+@{
+    string sinif = "";
+    if (Model.Count() == 0)
+    {
+      sinif = "gizle";
+    }
+}
+<div class="card @sinif">
+    <div class="card-block">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Ad Soyad
+                        </th>
+                        <th>
+                            Mail
+                        </th>
+                        <th>
+                            Kullanıcı Adı
+                        </th>
+                        <th>
+                            Durum
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="table-user">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.Kullanici.Adsoyad
+                            </td>
+                            <td>
+                                @item.Kullanici.Mail
+                            </td>
+                            <td>
+                                @item.Kullanici.KullaniciAdi
+                            </td>
+                            <td>
+                                @if (item.Durum == true)
+                                {
+                                    <span>Onaylandı</span>
+                                }
+                                else
+                                {
+                                    <span>Onaylanmadı</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
