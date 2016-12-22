@@ -165,7 +165,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="helper\Yardimci.cs" />
+    <Compile Include="Models\Bildirim.cs">
+      <DependentUpon>projeyonetim.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Durum.cs">
+      <DependentUpon>projeyonetim.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IsTakibi.cs">
       <DependentUpon>projeyonetim.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Kullanici.cs">

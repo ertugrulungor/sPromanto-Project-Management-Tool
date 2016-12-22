@@ -27,6 +27,10 @@
         <AssociationConnector Association="projeyonetimvtModel.FK_ProjeKullanici_Proje" ManuallyRouted="false" />
         <AssociationConnector Association="projeyonetimvtModel.FK_Surec_Proje" ManuallyRouted="false" />
         <AssociationConnector Association="projeyonetimvtModel.FK_Surec_Surec" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="projeyonetimvtModel.Bildirim" Width="1.5" PointX="3.375" PointY="3.5" />
+        <EntityTypeShape EntityType="projeyonetimvtModel.IsTakibi" PointX="6.625" PointY="3.375" Width="1.5" />
+        <AssociationConnector Association="projeyonetimvtModel.fk_a" />
+        <AssociationConnector Association="projeyonetimvtModel.fk_istakibi" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

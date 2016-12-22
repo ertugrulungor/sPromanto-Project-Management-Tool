@@ -34,6 +34,7 @@ namespace YPYA.Models
         public Nullable<int> ParentSurecId { get; set; }
         public Nullable<System.DateTime> OlusturmaTarihi { get; set; }
         public Nullable<int> ProjeId { get; set; }
+        public Nullable<bool> haveChild { get; set; }
     
         public virtual Durum Durum { get; set; }
         public virtual Kullanici Kullanici { get; set; }

@@ -22,6 +22,7 @@ namespace YPYA.Models
             this.Projes = new HashSet<Proje>();
             this.ProjeKullanicis = new HashSet<ProjeKullanici>();
             this.Surecs = new HashSet<Surec>();
+            this.Bildirims = new HashSet<Bildirim>();
         }
     
         public int Id { get; set; }
@@ -41,5 +42,7 @@ namespace YPYA.Models
         public virtual ICollection<ProjeKullanici> ProjeKullanicis { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Surec> Surecs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Bildirim> Bildirims { get; set; }
     }
 }

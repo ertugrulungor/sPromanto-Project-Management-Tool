@@ -30,6 +30,7 @@ namespace YPYA.Models
         public Nullable<System.DateTime> GercekBaslangic { get; set; }
         public Nullable<System.DateTime> GercekBitis { get; set; }
         public Nullable<System.DateTime> Olusturulma { get; set; }
+        public Nullable<decimal> Butce { get; set; }
     
         public virtual Kullanici Kullanici { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
