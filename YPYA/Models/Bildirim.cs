@@ -12,17 +12,15 @@ namespace YPYA.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class KullaniciSurec
+    public partial class Bildirim
     {
         public int Id { get; set; }
         public Nullable<int> KullaniciId { get; set; }
-        public Nullable<int> SurecId { get; set; }
-        public Nullable<int> RolId { get; set; }
-        public Nullable<int> IstakibiId { get; set; }
+        public string Icerik { get; set; }
+        public Nullable<bool> Okundu { get; set; }
+        public string Link { get; set; }
+        public Nullable<System.DateTime> Tarih { get; set; }
     
         public virtual Kullanici Kullanici { get; set; }
-        public virtual Rol Rol { get; set; }
-        public virtual Surec Surec { get; set; }
-        public virtual IsTakibi IsTakibi { get; set; }
     }
 }

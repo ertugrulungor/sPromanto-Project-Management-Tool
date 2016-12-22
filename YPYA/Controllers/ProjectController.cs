@@ -10,14 +10,20 @@ namespace YPYA.Controllers
     public class ProjectController : Controller
     {
         projeyonetimvtEntities db = new projeyonetimvtEntities();
-        public ActionResult Index(int? id)
+
+        private void sesAta()
         {
             Session["id"] = 1;
+
+        }
+
+        public ActionResult Index(int? id)
+        {
+            sesAta();
             if (Session["id"] != null)
             {
                 int kulId = Convert.ToInt32(Session["id"]);
                 ViewBag.k = db.Kullanicis.FirstOrDefault(x => x.Id == kulId);
-                ViewBag.olusturulan = db.Projes.Where(x => x.OlusturanKullaniciId == id);
 
                 if (id != null)
                 {
@@ -35,7 +41,7 @@ namespace YPYA.Controllers
 
         public ActionResult ProcessEdit(int? id)
         {
-            Session["id"] = 1;
+            sesAta();
             if (Session["id"] != null)
             {
                 int kulId = Convert.ToInt32(Session["id"]);
@@ -56,7 +62,7 @@ namespace YPYA.Controllers
 
         public ActionResult InvitePeople(int? id)
         {
-            Session["id"] = 1;
+            sesAta();
             if (Session["id"] != null)
             {
                 int kulId = Convert.ToInt32(Session["id"]);
@@ -110,8 +116,17 @@ namespace YPYA.Controllers
                 };
 
                 db.ProjeKullanicis.Add(pk);
-                db.SaveChanges();
 
+                Bildirim b = new Bildirim();
+                b.KullaniciId = id;
+                b.Okundu = false;
+                b.Link = "Home/Index";
+                b.Icerik = db.Kullanicis.Find(Convert.ToInt32(Session["id"])).Adsoyad + " sizi " + db.Projes.Find(projeId).Baslik + " adlı projeye davet etti";
+                b.Tarih = DateTime.Now;
+
+                db.Bildirims.Add(b);
+
+                db.SaveChanges();
                 Kullanici k = db.Kullanicis.Find(id);
 
                 var jsonModel = new

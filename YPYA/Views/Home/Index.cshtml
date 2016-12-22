@@ -4,8 +4,32 @@
 }
 @section ustBaslik{
     <a class="navbar-item navbar-spacer-right navbar-heading hidden-md-down" href="#">
-       
+
     </a>
+}
+@section pagestyle{
+    <style>
+        .gizle {
+            display: none;
+        }
+    </style>
+}
+
+@section script{
+    <script type="text/javascript">
+        $(function () {
+            $("#katil").click(function () {
+                var secili = $(this);
+                var projeId = secili.attr("projeId");
+                $.post("../Home/AcceptProject", { projeId: projeId }, function () {
+                    secili.remove();
+                    $(".demo11").remove();
+                    $("#projKatil").append('<a href="~/Project/Index/'+projeId+'" class="btn btn-danger">Projeye Git</a>');
+
+                });
+            });
+        });
+    </script>
 }
 <h6 style="font-weight:600">Benim oluşturduğum projeler</h6>
 <div class="row">
@@ -18,7 +42,7 @@
                     @i.Baslik
                 </h4>
                 <p class="card-text projects">
-                    <i class="material-icons">group</i> <span>6</span>
+                    <i class="material-icons">group</i> <span>@(i.ProjeKullanicis.Count(x => x.Durum == true) + 1)</span>
                     <i class="material-icons">timelapse</i> <span>26%</span>
                 </p>
 
@@ -49,4 +73,45 @@
             </div>
         </a>
     </div>
+</div>
+
+@{
+    string sinif = "";
+    if (ViewBag.dahilOlunanSayi == 0)
+    {
+        sinif = "gizle";
+    }
+}
+<h6 class="@sinif" style="font-weight:600">Dahil olduğum projeler</h6>
+<div class="row">
+    @foreach (YPYA.Models.ProjeKullanici i in ViewBag.dahilOlunan)
+    {
+        <div class="col-xl-4 col-lg-12">
+            <div id="projKatil" class="card card-block">
+                <h4 class="card-title">
+                    @i.Proje.Baslik
+                </h4>
+                <p class="card-text projects">
+                    <i class="material-icons">group</i> <span>@(i.Proje.ProjeKullanicis.Count(x => x.Durum == true) + 1)</span>
+                    <i class="material-icons">timelapse</i> <span>26%</span>
+                </p>
+                @if (i.Durum == true)
+                {
+                    <a href="~/Project/Index/@i.Proje.Id" class="btn btn-danger">
+                        Projeye Git
+                    </a>
+                }
+                else
+                {
+                    <a projeId="@i.Proje.Id" id="katil" href="#" class="btn btn-success">
+                        Projeye Katıl
+                    </a>
+                    <a projeId="@i.Proje.Id" href="#" class="btn btn-danger demo11">
+                        Reddet
+                    </a>
+                }
+
+            </div>
+        </div>
+    }
 </div>

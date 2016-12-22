@@ -96,6 +96,13 @@
                                         </label>
                                         <input class="form-control" value="@bitis" id="projebitis" type="date" required />
                                     </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputAmount">Bütçe</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon">₺</div>
+                                            <input type="number" class="form-control" id="butce" placeholder="Bütçe">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <!-- END STEP CONTENT-->
@@ -289,11 +296,12 @@
                     var ad = $("#projeadi").val();
                     var baslangic = $("#projebaslangic").val();
                     var bitis = $("#projebitis").val();
+                    var butce = $("#butce").val();
 
-                    if (bosGecme(ad) && bosGecme(baslangic) && bosGecme(bitis) && antixss(ad) && antixss(baslangic) && antixss(bitis)) {
+                    if (bosGecme(ad) && bosGecme(baslangic) && bosGecme(bitis) && bosGecme(butce) && antixss(ad) && antixss(baslangic) && antixss(bitis) && antixss(butce)) {
                         if (dateKontrol(baslangic, new Date())) {
                             if (dateKontrol(bitis, baslangic)) {
-                                $.post(projeOlustur, { projeAdi: ad, baslangic: baslangic, bitis: bitis, projeId : projeId }, function (data) {
+                                $.post(projeOlustur, { projeAdi: ad, baslangic: baslangic, bitis: bitis, projeId : projeId, butce: butce}, function (data) {
                                     if (data.basari == 1) {
                                         projeId = data.projeId;
                                         $("#ikinci").addClass("current");
