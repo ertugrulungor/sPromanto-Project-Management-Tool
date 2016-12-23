@@ -92,31 +92,42 @@
     @Html.Action("ProjectMenu", "Project", new { id = ViewBag.projeId })
 }
 
+@{
+    YPYA.Models.Proje p = ViewBag.proje;
+}
+
 @section script{
     <script type="text/javascript">
         $(function () {
-            function antixss(deger) {
-                if (deger.indexOf("<script>") != -1 || deger.indexOf("</scrip") != -1) return false
-                else return true;
+            function IcerikCek(isterId) {
+                $.post("../../Project/IstekCek",{isterId:isterId}, function (data) {
+                    $("#icerik").html(unescape(data.icerik));
+                    $(".message-sender p").html('<b>' + data.kullanici + '</b> tarafından gönderildi');
+                    $("#baslik").html(data.baslik);
+                    $("#tarih").html(data.tarih); 
+                })
             }
 
-            function noti(message, type, pos) {
-                var msg = message,
-                  type = type.toLowerCase(),
-                  position = pos;
-                noty({
-                    theme: 'app-noty',
-                    text: msg,
-                    type: type,
-                    timeout: 3000,
-                    layout: position,
-                    closeWith: ['button', 'click'],
-                    animation: {
-                        open: 'animated fadeInDown', // Animate.css class names
-                        close: 'animated fadeOutUp', // Animate.css class names
+            IcerikCek(0);
+            
+            $.post("../../Project/TumIstekler", { projectId: @p.Id }, function (data) {
+                $.each(data,function(b,a){
+                    var kisaIcerik;
+                    if(a.icerik.length>76){
+                        kisaIcerik =unescape(a.icerik).substring(0,75) + "...";
+                    }else{
+                        kisaIcerik = unescape(a.icerik);
                     }
-                });
-            }
+
+
+                    $(".message-list").prepend(' <li class="message-list-item" msgId="'+a.id+'"><a href="javascript:;" class="b-b" data-toggle="message"><div class="notification-bar-icon"><div><i></i></div></div><div class="message-list-item-header"><div class="time" id="listDate">'+a.tarih+'</div><span class="bold" id="listKullanici">'+a.kullanici+'</span></div><p class="overflow-hidden" id="kisaIcerik">'+kisaIcerik+'</p></a></li>');
+                })
+            });
+
+
+            $("body").on("click",".message-list-item", function(){
+                IcerikCek($(this).attr("msgId"));
+            });
 
             $("#musteriSec").click(function () {
                 var customerId = $("option:selected", "#kullanici").attr("kulid");
@@ -143,9 +154,6 @@
 
 }
 
-@{
-    YPYA.Models.Proje p = ViewBag.proje;
-}
 
 @if (p.MusteriId == null)
 {
@@ -207,41 +215,12 @@ else
                             </form>
                         </div>
                     </div>
-                    @{
-                        List<YPYA.Models.MusteriIsteri> musteriIsteri = ViewBag.MusteriIsteri;
-                    }
                     <div class="flex-xs scroll-y">
                         <ul class="message-list">
                             <!--Message list item-->
-                            @foreach (YPYA.Models.MusteriIsteri m in musteriIsteri)
-                            {
-                                <li class="message-list-item">
-                                    <a href="javascript:;" class="b-b" data-toggle="message">
-                                        <div class="notification-bar-icon">
-                                            <div><i></i></div>
-                                        </div>
-                                        <div class="message-list-item-header">
-                                            <div class="time">
-                                                @m.Tarih.Value.ToString("dd-MM-yyyy")
-                                            </div>
-                                            <span class="bold">
-                                                @m.Kullanici.Adsoyad
-                                            </span>
-                                        </div>
-                                        <p class="overflow-hidden">
-                                            @if (m.Icerik.Length > 76)
-                                            {
-                                                <span>@m.Icerik.Substring(0, 75)...</span>
-                                            }
-                                            else
-                                            {
-                                                <span>@m.Icerik</span>
-                                            }
-
-                                        </p>
-                                    </a>
-                                </li>
-                            }
+                           
+                               
+                            
                         </ul>
                     </div>
                 </div>
@@ -287,24 +266,21 @@ else
                         </div>
                     </div>
                     <div class="overflow-hidden">
-                        <div class="date">
-                            @musteriIsteri.FirstOrDefault().Tarih
+                        <div class="date" id="tarih">
+                           
                         </div>
-                        <h4 class="lead m-t-0">
-                            @musteriIsteri.FirstOrDefault().Baslik
+                        <h4 class="lead m-t-0" id="baslik">
+
                         </h4>
                         <div class="message-sender">
                             <p>
-                                <b>
-                                    @musteriIsteri.FirstOrDefault().Kullanici.Adsoyad
-                                </b>
-                                tarafından gönderildi
+                               
                             </p>
                         </div>
                     </div>
                 </div>
-                <div class="p-a-1">
-                    @musteriIsteri.FirstOrDefault().Icerik
+                <div class="p-a-1" id="icerik">
+                    
                 </div>
             </div>
         </div>

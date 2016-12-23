@@ -229,6 +229,7 @@
     <Content Include="Content\scripts\main.js" />
     <Content Include="Content\scripts\noty-defaults.js" />
     <Content Include="Content\scripts\ui\alert.js" />
+    <Content Include="Content\scripts\vendor\summernote\dist\summernote.js" />
     <Content Include="Content\styles\app.css" />
     <Content Include="Content\styles\app.skins.css" />
     <Content Include="Content\styles\gsi-step-indicator.css" />
@@ -252,6 +253,7 @@
     <Content Include="Content\vendor\pace\pace.js" />
     <Content Include="Content\vendor\pace\themes\blue\pace-theme-minimal.css" />
     <Content Include="Content\vendor\parsleyjs\dist\parsley.min.js" />
+    <Content Include="Content\vendor\summernote\dist\summernote.css" />
     <Content Include="Content\vendor\sweetalert\dist\sweetalert.css" />
     <Content Include="Content\vendor\sweetalert\dist\sweetalert.min.js" />
     <Content Include="Content\vendor\tether\dist\js\tether.js" />
@@ -288,6 +290,9 @@
     <Content Include="Models\projeyonetim.edmx.diagram">
       <DependentUpon>projeyonetim.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\vendor\summernote\dist\font\summernote.ttf" />
+    <Content Include="Content\vendor\summernote\dist\font\summernote.eot" />
+    <Content Include="Content\vendor\summernote\dist\font\summernote.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -99,8 +99,6 @@ namespace YPYA.Controllers
                     ViewBag.projeId = p.Id;
                     ViewBag.projeAdi = p.Baslik;
 
-                    ViewBag.MusteriIsteri = db.MusteriIsteris.Where(x=>x.ProjeId == p.Id).OrderByDescending(x=>x.Id).ToList();
-
                     return View(db.ProjeKullanicis.Where(x => x.ProjeId == id));
                 }
                 else
@@ -109,9 +107,26 @@ namespace YPYA.Controllers
             else return RedirectToAction("Login", "Sign");
         }
 
-        public ActionResult AddRequest(int projectId)
+        public ActionResult AddRequest(int? id)
         {
-            return View();
+            sesAta();
+            if (Session["id"] != null)
+            {
+                int kulId = Convert.ToInt32(Session["id"]);
+                ViewBag.k = db.Kullanicis.FirstOrDefault(x => x.Id == kulId);
+
+                if (id != null)
+                {
+                    Proje p = db.Projes.FirstOrDefault(x => x.Id == id);
+                    ViewBag.proje = p;
+                    ViewBag.projeId = p.Id;
+                    ViewBag.projeAdi = p.Baslik;
+                    return View();
+                }
+                else
+                    return RedirectToAction("Index", "Home");
+            }
+            else return RedirectToAction("Login", "Sign");
         }
 
         public PartialViewResult ProjectMenu(int id)
@@ -200,6 +215,64 @@ namespace YPYA.Controllers
 
                 return Json(jsonModel, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        public int IstekEkle(int projectId, string content, string header)
+        {
+            int musteriId = Convert.ToInt32(Session["id"]);
+            MusteriIsteri m = new MusteriIsteri();
+            m.Baslik = header;
+            m.ProjeId = projectId;
+            m.Icerik = content;
+            m.MusteriId = musteriId;
+            m.Tarih = DateTime.Now;
+
+            db.MusteriIsteris.Add(m);
+
+            
+            Bildirim b = new Bildirim();
+            b.Icerik = db.Kullanicis.Find(musteriId).Adsoyad + ", " + db.Projes.Find(projectId).Baslik + " projesine yeni bir istek ekledi";
+            b.KullaniciId = db.Projes.Find(projectId).OlusturanKullaniciId;
+            b.Okundu = false;
+            b.Tarih = DateTime.Now;
+
+            db.Bildirims.Add(b);
+
+            db.SaveChanges();
+            
+            return 1;
+        }
+
+        public JsonResult TumIstekler(int projectId)
+        {
+            List<object> jsonList = new List<object>();
+            foreach (MusteriIsteri m in db.MusteriIsteris.Where(x=>x.ProjeId == projectId))
+            {
+                var jsonModel = new {
+                    icerik = m.Icerik,
+                    id = m.Id,
+                    kullanici = m.Kullanici.Adsoyad,
+                    tarih = m.Tarih.Value.ToString("dd-MM-yyyy")
+                };
+                jsonList.Add(jsonModel);
+            }
+            return Json(jsonList);
+        }
+
+        public JsonResult IstekCek(int isterId)
+        {
+            MusteriIsteri m;
+            if(isterId == 0) m = db.MusteriIsteris.OrderByDescending(x=>x.Id).FirstOrDefault();
+            else m = db.MusteriIsteris.Find(isterId);
+            var jsonModel = new
+            {
+                baslik = m.Baslik,
+                icerik = m.Icerik,
+                id = m.Id,
+                kullanici = m.Kullanici.Adsoyad,
+                tarih = m.Tarih.Value.ToString("dd-MM-yyyy")
+            };
+            return Json(jsonModel);
         }
     }
 }

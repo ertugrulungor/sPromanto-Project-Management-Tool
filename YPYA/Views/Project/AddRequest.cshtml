@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "AddRequest";
+    ViewBag.Title = "Add Request";
 }
 
 @model IEnumerable<YPYA.Models.ProjeKullanici>
@@ -85,6 +85,10 @@
             -ms-flex: 1;
             flex: 1;
         }
+
+        #gonder-buton{
+            margin-top:10px;
+        }
     </style>
 }
 
@@ -93,16 +97,92 @@
 }
 
 @section script{
+    <script src="~/Content/scripts/vendor/summernote/dist/summernote.js"></script>
     <script type="text/javascript">
         $(function () {
+            $('.summernote').summernote({
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']]
+                ],
+                placeholder: 'İçeriği buraya yazınız'
+            });
+
             function antixss(deger) {
                 if (deger.indexOf("<script>") != -1 || deger.indexOf("</scrip") != -1) return false
                 else return true;
             }
 
+            function bosGecme(deger) {
+                if (deger.length > 0) return true;
+                else return false;
+            }
+
+            function noti(message, type, pos) {
+                var msg = message,
+                  type = type.toLowerCase(),
+                  position = pos;
+                noty({
+                    theme: 'app-noty',
+                    text: msg,
+                    type: type,
+                    timeout: 3000,
+                    layout: position,
+                    closeWith: ['button', 'click'],
+                    animation: {
+                        open: 'animated fadeInDown', // Animate.css class names
+                        close: 'animated fadeOutUp', // Animate.css class names
+                    }
+                });
+            }
+
+            $("#gonder-buton").click(function () {
+                noti("İsteğiniz gönderiliyor", "information", "topRight");
+                var projectId = $(this).attr("projectId");
+                var content = $('.panel-body').html();
+                var header = $("#baslik").val();
+                if (bosGecme(content) && bosGecme(header) && antixss(content) && antixss(header)) {
+                    $.post("../../Project/IstekEkle", { projectId: projectId, content: escape(content), header: header }, function (data) {
+                        noti("İsteğiniz gönderildi", "success", "topRight");
+                        location.href = "../../Project/AddRequest/" + projectId;
+                    });
+                } else {
+                    noti("Alanlar boş geçilemez", "error", "topRight");
+                }
+            });
+
         })
     </script>
-    <!-- end initialize page scripts -->
-
 }
 
+@section stylesheet{
+    <link href="~/Content/vendor/summernote/dist/summernote.css" rel="stylesheet" />
+}
+
+@{ 
+    YPYA.Models.Proje p = ViewBag.proje;
+}
+
+<div class="m-b-3">
+    <fieldset class="form-group">
+        <label for="formGroupExampleInput">
+            Başlık
+        </label>
+        <input type="text" class="form-control" id="baslik" placeholder="Başlığı yazın">
+        <div class="row">
+            <div class="col-xs-12" id="searchbox" style="display:none;">
+
+            </div>
+        </div>
+    </fieldset>
+    <label for="formGroupExampleInput">
+        İçerik
+    </label>
+    <div class="summernote">
+
+    </div>
+    <a href="#" class="btn btn-danger" projectId="@p.Id" id="gonder-buton">Gönder</a>
+</div>

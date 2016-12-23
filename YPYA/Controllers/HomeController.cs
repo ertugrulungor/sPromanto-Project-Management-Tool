@@ -41,7 +41,7 @@ namespace YPYA.Controllers
             {
                 int kulId = Convert.ToInt32(Session["id"]);
                 ViewBag.k = db.Kullanicis.FirstOrDefault(x => x.Id == kulId);
-                if(id != null && db.Projes.Find(id).Kullanici.Id == kulId)
+                if(id != null && db.Projes.Find(id).Kullanici1.Id == kulId)
                     ViewBag.projGuncelle = db.Projes.FirstOrDefault(x => x.Id == id);
                 return View();
             }
