@@ -1,0 +1,313 @@
+﻿
+@{
+    ViewBag.Title = "Customer";
+}
+
+@model IEnumerable<YPYA.Models.ProjeKullanici>
+
+@section ustBaslik{
+    <a class="navbar-item navbar-spacer-right navbar-heading hidden-md-down" href="~/Project/Index/@ViewBag.projeId">
+        <span>@ViewBag.projeAdi</span>
+    </a>
+}
+
+@section pagestyle{
+    <style>
+        .main-panel > .header {
+            color: #fff !important;
+            background-color: #f32c1e !important;
+        }
+
+
+        .main-process {
+            padding: 12px !important;
+        }
+
+        .proces {
+            padding: 5px 43px !important;
+        }
+
+        .sub-process {
+            padding: 5px 74px !important;
+        }
+
+        .notification-bar-icon {
+            float: left;
+            width: 2.5rem;
+            height: 1.5rem;
+        }
+
+            .notification-bar-icon div {
+                width: 1.8rem;
+                height: 1.8rem;
+            }
+
+            .notification-bar-icon i {
+                top: 76%;
+                width: 1rem;
+                height: 1rem;
+                left: 78%;
+            }
+
+        .main-process .notification-bar-icon i {
+            background-color: #7fc35c;
+        }
+
+        .proces .notification-bar-icon i {
+            background-color: #d26d54;
+        }
+
+        .sub-process .notification-bar-icon i {
+            background-color: #4cc3f0;
+        }
+
+        tbody tr th {
+            padding-top: 24px !important;
+        }
+
+        .search-box {
+            border: 1px solid #e6e6e6;
+            border-top: 0px;
+            padding: 10px 25px;
+        }
+
+            .search-box:hover {
+                background-color: #f3f3f3;
+            }
+
+        .gizle {
+            display: none;
+        }
+
+        .mesaj-duzen {
+            -webkit-box-flex: 1;
+            -moz-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+        }
+    </style>
+}
+
+@section menu{
+    @Html.Action("ProjectMenu", "Project", new { id = ViewBag.projeId })
+}
+
+@section script{
+    <script type="text/javascript">
+        $(function () {
+            function antixss(deger) {
+                if (deger.indexOf("<script>") != -1 || deger.indexOf("</scrip") != -1) return false
+                else return true;
+            }
+
+            function noti(message, type, pos) {
+                var msg = message,
+                  type = type.toLowerCase(),
+                  position = pos;
+                noty({
+                    theme: 'app-noty',
+                    text: msg,
+                    type: type,
+                    timeout: 3000,
+                    layout: position,
+                    closeWith: ['button', 'click'],
+                    animation: {
+                        open: 'animated fadeInDown', // Animate.css class names
+                        close: 'animated fadeOutUp', // Animate.css class names
+                    }
+                });
+            }
+
+            $("#musteriSec").click(function () {
+                var customerId = $("option:selected", "#kullanici").attr("kulid");
+                var projectId = $(this).attr("projectId");
+                console.log(customerId + " - " + projectId);
+                $.post("../../Project/AddCustomer", { projectId: projectId, customerId: customerId }, function (data) {
+                    if (data == 1) {
+                        location.href = "../../Project/Customer/" + projectId;
+                    }
+                });
+            });
+
+            $("#musteriSil").click(function () {
+                var projectId = $(this).attr("projectId");
+                $.post("../../Project/RemoveCustomer", { projectId: projectId }, function (data) {
+                    if (data == 1) {
+                        location.href = "../../Project/Customer/" + projectId;
+                    }
+                });
+            });
+        });
+    </script>
+    <!-- end initialize page scripts -->
+
+}
+
+@{
+    YPYA.Models.Proje p = ViewBag.proje;
+}
+
+@if (p.MusteriId == null)
+{
+    if (Model.Any(x => x.Durum == true))
+    {
+        <h6>Projenin müşterisini belirle</h6>
+        <div class="card">
+            <div class="card-block">
+                <fieldset class="form-group">
+                    <label for="formGroupExampleInput">
+                        Müşteri seçimini yapınız
+                    </label>
+                    <select class="form-control" id="kullanici">
+                        @foreach (YPYA.Models.ProjeKullanici i in Model.Where(x => x.Durum == true))
+                        {
+                            <option kulid="@i.KullaniciId">@i.Kullanici.Adsoyad</option>
+                        }
+                    </select>
+                </fieldset>
+                <a href="#" id="musteriSec" projectId="@p.Id" style="cursor:pointer" class="btn btn-success">Müşteri olarak belirle</a>
+
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="card card-block">
+            <h5 class="card-title">
+                Herhangi bir kişiniz bulunmuyor!
+            </h5>
+            <p class="card-text">
+                Projeye henüz kimseyi davet etmemişken müşteri olarak kimseyi belirleyemezsiniz. Lütfen aşağıdaki butonu kullanarak projeye birisini davet edin ve onaylandıktan sonra buraya uğrayın.
+            </p>
+            <a href="~/Project/InvitePeople/@p.Id" class="btn btn-primary">
+                Projeye kişi ekle
+            </a>
+        </div>
+    }
+}
+else
+{
+    <div class="card card-block">
+        <h5 class="card-title">
+            Proje müşteriniz <b>@p.Kullanici.Adsoyad</b> olarak belirlendi
+        </h5>
+        <a href="#" id="musteriSil" projectId="@p.Id" class="btn btn-danger">
+            Müşteriyi sil
+        </a>
+    </div>
+
+    <div class="fill-container layout-xs b-b">
+        <div class="layout-column-xs overflow-hidden mesaj-duzen">
+            <div class="row m-x-0 fill-container">
+                <div class="col-lg-12 p-a-0 messages-list bg-white b-r flexbox-xs layout-column-xs full-height">
+                    <div class="message-header">
+                        <div class="message-toolbar">
+                            <form class="form-inline">
+                                <input class="form-control" type="text" placeholder="Müşteri isteri ara" />
+                            </form>
+                        </div>
+                    </div>
+                    @{
+                        List<YPYA.Models.MusteriIsteri> musteriIsteri = ViewBag.MusteriIsteri;
+                    }
+                    <div class="flex-xs scroll-y">
+                        <ul class="message-list">
+                            <!--Message list item-->
+                            @foreach (YPYA.Models.MusteriIsteri m in musteriIsteri)
+                            {
+                                <li class="message-list-item">
+                                    <a href="javascript:;" class="b-b" data-toggle="message">
+                                        <div class="notification-bar-icon">
+                                            <div><i></i></div>
+                                        </div>
+                                        <div class="message-list-item-header">
+                                            <div class="time">
+                                                @m.Tarih.Value.ToString("dd-MM-yyyy")
+                                            </div>
+                                            <span class="bold">
+                                                @m.Kullanici.Adsoyad
+                                            </span>
+                                        </div>
+                                        <p class="overflow-hidden">
+                                            @if (m.Icerik.Length > 76)
+                                            {
+                                                <span>@m.Icerik.Substring(0, 75)...</span>
+                                            }
+                                            else
+                                            {
+                                                <span>@m.Icerik</span>
+                                            }
+
+                                        </p>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flexbox-xs layout-column-xs message-view">
+            <div class="message-header">
+                <div class="message-toolbar">
+                    <div class="pull-right">
+                        <a href="javascript:;" class="m-l-1" tooltip-placement="bottom" uib-tooltip="Reply to sender">
+                            <i class="material-icons">
+                                reply
+                            </i>
+                        </a>
+                        <a href="javascript:;" class="m-l-1" tooltip-placement="bottom" uib-tooltip="Reply to all recipients">
+                            <i class="material-icons">
+                                reply_all
+                            </i>
+                        </a>
+                        <a href="javascript:;" class="m-l-1" tooltip-placement="bottom" uib-tooltip="Forward message">
+                            <i class="material-icons">
+                                forward
+                            </i>
+                        </a>
+                        <a href="javascript:;" class="m-l-1" tooltip-placement="left" uib-tooltip="Flag message">
+                            <i class="material-icons">
+                                flag
+                            </i>
+                        </a>
+                    </div>
+                    <a href="javascript:;" class="hidden-lg-up" data-toggle="message">
+                        <i class="material-icons m-r-1">
+                            arrow_back
+                        </i>
+                    </a>
+                </div>
+            </div>
+            <div class="message-body flex-xs scroll-y">
+                <div class="p-a-1">
+                    <div class="pull-left m-r-1">
+                        <div class="notification-bar-icon">
+                            <div><i></i></div>
+                        </div>
+                    </div>
+                    <div class="overflow-hidden">
+                        <div class="date">
+                            @musteriIsteri.FirstOrDefault().Tarih
+                        </div>
+                        <h4 class="lead m-t-0">
+                            @musteriIsteri.FirstOrDefault().Baslik
+                        </h4>
+                        <div class="message-sender">
+                            <p>
+                                <b>
+                                    @musteriIsteri.FirstOrDefault().Kullanici.Adsoyad
+                                </b>
+                                tarafından gönderildi
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-a-1">
+                    @musteriIsteri.FirstOrDefault().Icerik
+                </div>
+            </div>
+        </div>
+    </div>
+
+                        }

@@ -28,6 +28,7 @@ namespace YPYA.Controllers
                 if (id != null)
                 {
                     Proje p = db.Projes.FirstOrDefault(x => x.Id == id);
+                    ViewBag.proje = p;
                     ViewBag.projeId = p.Id;
                     ViewBag.projeAdi = p.Baslik;
                     return View(db.Projes.FirstOrDefault(x => x.Id == id));
@@ -50,6 +51,7 @@ namespace YPYA.Controllers
                 if (id != null)
                 {
                     Proje p = db.Projes.FirstOrDefault(x=>x.Id == id);
+                    ViewBag.proje = p;
                     ViewBag.projeId = p.Id;
                     ViewBag.projeAdi = p.Baslik;
                     return View(db.Surecs.Where(x=>x.ProjeId == id && x.Kullanici.Id == kulId));
@@ -71,6 +73,7 @@ namespace YPYA.Controllers
                 if (id != null)
                 {
                     Proje p = db.Projes.FirstOrDefault(x => x.Id == id);
+                    ViewBag.proje = p;
                     ViewBag.projeId = p.Id;
                     ViewBag.projeAdi = p.Baslik;
                     return View(db.ProjeKullanicis.Where(x=>x.ProjeId == id));
@@ -79,6 +82,36 @@ namespace YPYA.Controllers
                     return RedirectToAction("Index", "Home");
             }
             else return RedirectToAction("Login", "Sign");
+        }
+
+        public ActionResult Customer(int? id)
+        {
+            sesAta();
+            if (Session["id"] != null)
+            {
+                int kulId = Convert.ToInt32(Session["id"]);
+                ViewBag.k = db.Kullanicis.FirstOrDefault(x => x.Id == kulId);
+
+                if (id != null)
+                {
+                    Proje p = db.Projes.FirstOrDefault(x => x.Id == id);
+                    ViewBag.proje = p;
+                    ViewBag.projeId = p.Id;
+                    ViewBag.projeAdi = p.Baslik;
+
+                    ViewBag.MusteriIsteri = db.MusteriIsteris.Where(x=>x.ProjeId == p.Id).OrderByDescending(x=>x.Id).ToList();
+
+                    return View(db.ProjeKullanicis.Where(x => x.ProjeId == id));
+                }
+                else
+                    return RedirectToAction("Index", "Home");
+            }
+            else return RedirectToAction("Login", "Sign");
+        }
+
+        public ActionResult AddRequest(int projectId)
+        {
+            return View();
         }
 
         public PartialViewResult ProjectMenu(int id)
@@ -101,6 +134,22 @@ namespace YPYA.Controllers
                 JsonList.Add(jsonModel);
             }
             return Json(JsonList);
+        }
+
+        public int AddCustomer(int projectId, int customerId)
+        {
+            Proje p = db.Projes.Find(projectId);
+            p.MusteriId = customerId;
+            db.SaveChanges();
+            return 1;
+        }
+
+        public int RemoveCustomer(int projectId)
+        {
+            Proje p = db.Projes.Find(projectId);
+            p.MusteriId = null;
+            db.SaveChanges();
+            return 1;
         }
 
         public JsonResult AddPeopleProject(int id,int projeId)
