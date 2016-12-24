@@ -20,6 +20,7 @@
 
     <!-- page stylesheets -->
     <link href="~/Content/vendor/sweetalert/dist/sweetalert.css" rel="stylesheet" />
+    @RenderSection("stylesheet",required:false)
     <!-- end page stylesheets -->
 
     <!-- build:css({.tmp,app}) styles/app.min.css -->
@@ -553,71 +554,18 @@
                             </div>
                         </div>
                         <div class="nav-item nav-link dropdown">
-                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                            <a href="javascript:;" id="bildirimOku" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="material-icons">notifications</i>
-                                <span class="tag tag-danger">4</span>
+                                <span class="tag tag-danger" id="bldCount"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right notifications">
                                 <div class="dropdown-item">
                                     <div class="notifications-wrapper">
-                                        <ul class="notifications-list">
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <div class="notification-icon">
-                                                        <div class="circle-icon bg-success text-white">
-                                                            <i class="material-icons">arrow_upward</i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="notification-message">
-                                                        <b>Sean</b>
-                                                        launched a new application
-                                                        <span class="time">2 seconds ago</span>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <div class="notification-icon">
-                                                        <div class="circle-icon bg-danger text-white">
-                                                            <i class="material-icons">check</i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="notification-message">
-                                                        <b>Removed calendar</b>
-                                                        from app list
-                                                        <span class="time">4 hours ago</span>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="notification-icon">
-                                                        <span class="circle-icon bg-info text-white">J</span>
-                                                    </span>
-                                                    <div class="notification-message">
-                                                        <b>Jack Hunt</b>
-                                                        has
-                                                        <b>joined</b>
-                                                        mailing list
-                                                        <span class="time">9 days ago</span>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="notification-icon">
-                                                        <span class="circle-icon bg-primary text-white">C</span>
-                                                    </span>
-                                                    <div class="notification-message">
-                                                        <b>Conan Johns</b>
-                                                        created a new list
-                                                        <span class="time">9 days ago</span>
-                                                    </div>
-                                                </a>
-                                            </li>
+                                        <ul class="notifications-list" id="bld">
+                                           
                                         </ul>
                                     </div>
-                                    <div class="notification-footer">Notifications</div>
+                                    <div class="notification-footer">Bildirimler</div>
                                 </div>
                             </div>
                         </div>
@@ -897,6 +845,31 @@
     <!-- initialize page scripts -->
     <script src="~/Content/scripts/ui/alert.js"></script>
     @RenderSection("script", required: false)
+    <script>
+        $(function () {
+            function BildirimCek() {
+                $.post("../Home/BildirimCek", function (data) {
+                    $("#bldCount").html(data.toplam);
+
+                    $.each(data.icerikler, function (i) {
+                        $("#bld").append('<li><a href="../' + data.icerikler[i].link + '"><div class="notification-message"><span id="bldIcerik">' + data.icerikler[i].icerik + '</span><span class="time" id="bldTime">' + data.icerikler[i].tarih + '</span></div> </a></li>');
+                    });
+                });
+            }
+
+            BildirimCek();
+
+            var otomatik_yenile = setInterval(function () {
+                BildirimCek();
+            }, 60000);
+
+            $("#bildirimOku").click(function () {
+                $.post("../Home/BildirimOku", function () {
+                    $("#bldCount").html(0);
+                });
+            });
+        });
+    </script>
     <!-- end initialize page scripts -->
 
 </body>

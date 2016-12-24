@@ -4,17 +4,35 @@
     YPYA.Models.Proje p = ViewBag.menuKisi;
 }
 
- <!-- menu levels -->
-<li>
-    <a href="~/Project/ProcessEdit/@p.Id">
-        <i style="color:#566f7c" class="material-icons">line_weight</i>
-        <span>@p.Baslik süreçleri</span>
-    </a>
-    @if (p.Kullanici.Id == (int) Session["id"])
-    {
+ <!-- menu levels --> 
+
+@if (p.Kullanici1.Id == (int)Session["id"])
+{
+    <li>
+        <a href="~/Project/ProcessEdit/@p.Id">
+            <i style="color:#566f7c" class="material-icons">line_weight</i>
+            <span>@p.Baslik süreçleri</span>
+        </a>
+    </li>
+    <li>
         <a href="~/Project/InvitePeople/@p.Id">
             <i style="color: #d26d54;" class="material-icons">people</i>
             <span>Kişi davet et</span>
         </a>
-    }
-</li>
+    </li>
+    <li>
+        <a href="~/Project/Customer/@p.Id">
+            <i class="material-icons">local_library</i>
+            <span>Müşteri işlemleri</span>
+        </a>
+    </li>
+}
+else if (p.Kullanici.Id == (int)Session["id"])
+{
+    <li>
+        <a href="~/Project/AddRequest/@p.Id">
+            <i class="material-icons">add_box</i>
+            <span>Yeni ister ekle</span>
+        </a>
+    </li>
+}

@@ -47,5 +47,6 @@ namespace YPYA.Models
         public virtual ICollection<ProjeKullanici> ProjeKullanicis { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Surec> Surecs { get; set; }
+       
     }
 }

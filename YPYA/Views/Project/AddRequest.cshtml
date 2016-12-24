@@ -1,0 +1,188 @@
+﻿
+@{
+    ViewBag.Title = "Add Request";
+}
+
+@model IEnumerable<YPYA.Models.ProjeKullanici>
+
+@section ustBaslik{
+    <a class="navbar-item navbar-spacer-right navbar-heading hidden-md-down" href="~/Project/Index/@ViewBag.projeId">
+        <span>@ViewBag.projeAdi</span>
+    </a>
+}
+
+@section pagestyle{
+    <style>
+        .main-panel > .header {
+            color: #fff !important;
+            background-color: #f32c1e !important;
+        }
+
+
+        .main-process {
+            padding: 12px !important;
+        }
+
+        .proces {
+            padding: 5px 43px !important;
+        }
+
+        .sub-process {
+            padding: 5px 74px !important;
+        }
+
+        .notification-bar-icon {
+            float: left;
+            width: 2.5rem;
+            height: 1.5rem;
+        }
+
+            .notification-bar-icon div {
+                width: 1.8rem;
+                height: 1.8rem;
+            }
+
+            .notification-bar-icon i {
+                top: 76%;
+                width: 1rem;
+                height: 1rem;
+                left: 78%;
+            }
+
+        .main-process .notification-bar-icon i {
+            background-color: #7fc35c;
+        }
+
+        .proces .notification-bar-icon i {
+            background-color: #d26d54;
+        }
+
+        .sub-process .notification-bar-icon i {
+            background-color: #4cc3f0;
+        }
+
+        tbody tr th {
+            padding-top: 24px !important;
+        }
+
+        .search-box {
+            border: 1px solid #e6e6e6;
+            border-top: 0px;
+            padding: 10px 25px;
+        }
+
+            .search-box:hover {
+                background-color: #f3f3f3;
+            }
+
+        .gizle {
+            display: none;
+        }
+
+        .mesaj-duzen {
+            -webkit-box-flex: 1;
+            -moz-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+        }
+
+        #gonder-buton{
+            margin-top:10px;
+        }
+    </style>
+}
+
+@section menu{
+    @Html.Action("ProjectMenu", "Project", new { id = ViewBag.projeId })
+}
+
+@section script{
+    <script src="~/Content/scripts/vendor/summernote/dist/summernote.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.summernote').summernote({
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']]
+                ],
+                placeholder: 'İçeriği buraya yazınız'
+            });
+
+            function antixss(deger) {
+                if (deger.indexOf("<script>") != -1 || deger.indexOf("</scrip") != -1) return false
+                else return true;
+            }
+
+            function bosGecme(deger) {
+                if (deger.length > 0) return true;
+                else return false;
+            }
+
+            function noti(message, type, pos) {
+                var msg = message,
+                  type = type.toLowerCase(),
+                  position = pos;
+                noty({
+                    theme: 'app-noty',
+                    text: msg,
+                    type: type,
+                    timeout: 3000,
+                    layout: position,
+                    closeWith: ['button', 'click'],
+                    animation: {
+                        open: 'animated fadeInDown', // Animate.css class names
+                        close: 'animated fadeOutUp', // Animate.css class names
+                    }
+                });
+            }
+
+            $("#gonder-buton").click(function () {
+                noti("İsteğiniz gönderiliyor", "information", "topRight");
+                var projectId = $(this).attr("projectId");
+                var content = $('.panel-body').html();
+                var header = $("#baslik").val();
+                if (bosGecme(content) && bosGecme(header) && antixss(content) && antixss(header)) {
+                    $.post("../../Project/IstekEkle", { projectId: projectId, content: escape(content), header: header }, function (data) {
+                        noti("İsteğiniz gönderildi", "success", "topRight");
+                        location.href = "../../Project/AddRequest/" + projectId;
+                    });
+                } else {
+                    noti("Alanlar boş geçilemez", "error", "topRight");
+                }
+            });
+
+        })
+    </script>
+}
+
+@section stylesheet{
+    <link href="~/Content/vendor/summernote/dist/summernote.css" rel="stylesheet" />
+}
+
+@{ 
+    YPYA.Models.Proje p = ViewBag.proje;
+}
+
+<div class="m-b-3">
+    <fieldset class="form-group">
+        <label for="formGroupExampleInput">
+            Başlık
+        </label>
+        <input type="text" class="form-control" id="baslik" placeholder="Başlığı yazın">
+        <div class="row">
+            <div class="col-xs-12" id="searchbox" style="display:none;">
+
+            </div>
+        </div>
+    </fieldset>
+    <label for="formGroupExampleInput">
+        İçerik
+    </label>
+    <div class="summernote">
+
+    </div>
+    <a href="#" class="btn btn-danger" projectId="@p.Id" id="gonder-buton">Gönder</a>
+</div>

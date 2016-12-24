@@ -50,6 +50,32 @@
     });
   });
 
+  $('.demo11').on('click', function () {
+      var secili = $(this);
+      var projeId = $(this).attr("projeId");
+      swal({
+          title: 'Emin misin?',
+          text: 'Reddet tu\u015funa basarsanız teklifi geri çevireceksiniz!',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#DD6B55',
+          confirmButtonText: 'Evet Reddet!',
+          cancelButtonText: 'İptal',
+          closeOnConfirm: false,
+          html: true
+      }, function () {
+          $.post("../Home/ProjeRed", { projeId: projeId }, function () {
+              secili.parent().parent().remove();
+              swal({
+                  title: 'Reddedildi!',
+                  text: 'Proje ba\u015farıyla reddedildi!',
+                  type: 'success',
+                  confirmButtonText: 'Tamam'
+              });
+          });
+      });
+  });
+
   $('.demo6').on('click', function() {
     swal({
       title: 'Are you sure?',
