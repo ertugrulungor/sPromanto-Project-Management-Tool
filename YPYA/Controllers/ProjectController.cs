@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -216,7 +217,7 @@ namespace YPYA.Controllers
                 return Json(jsonModel, JsonRequestBehavior.AllowGet);
             }
         }
-
+        
         public int IstekEkle(int projectId, string content, string header)
         {
             int musteriId = Convert.ToInt32(Session["id"]);
@@ -274,5 +275,61 @@ namespace YPYA.Controllers
             };
             return Json(jsonModel);
         }
+
+        public JsonResult SurecBilgileri(int surecID)
+        {
+            Surec surecBilgi = new Surec();
+            surecBilgi = db.Surecs.Where(x => x.Id == surecID).FirstOrDefault();
+
+            string baslangic = surecBilgi.PlanBaslangic?.ToString("yyyy-MM-dd");           
+            string bitis = surecBilgi.PlanBitis?.ToString("yyyy-MM-dd");
+            var jsonmodel = new {
+                
+                surecBaslik = surecBilgi.Baslik,
+                projeBaslik = surecBilgi.Proje.Baslik,
+                sureciOlusturan = surecBilgi.Proje.Kullanici.Adsoyad,
+                surecPlanlananBaslangic = baslangic,
+                surecPlanlananBitis = bitis,
+                surecTamamlanma = surecBilgi.Tamamlanan,
+                
+                
+            };
+
+            return Json(jsonmodel);
+        }
+        public JsonResult IsTakibiBilgileri(int surecID)
+        {
+            List<object> surecKullaniciler = new List<object>();
+            foreach (KullaniciSurec item in db.KullaniciSurecs.Where(x => x.SurecId == surecID))
+            {
+
+
+                string surecBaslangic = item.IsTakibi.BaslangicTarihi?.ToString("yyyy-MM-dd");
+                string surecBitis = item.IsTakibi.BitisTarihi?.ToString("yyyy-MM-dd");
+                string surecTamamlanma = item.IsTakibi.TamamlanmaTarihi?.ToString("yyyy-MM-dd");
+          
+                var jsonmodel = new
+                {
+
+                    surecDetayRolAdi = item.Rol.RolAdi,
+                    surecDetayKisi = item.Kullanici.Adsoyad,
+                    surecDetayBaslangic = surecBaslangic,
+                    surecDetayBitis = surecBitis,
+                    surecDetayTamamlanma = surecTamamlanma,
+                    surecDetayTamamlanmaOrani = item.IsTakibi.TamamlanmaOranı,
+
+                };
+
+                surecKullaniciler.Add(jsonmodel);
+            }
+            return Json(surecKullaniciler);
+          
+        }
+        public JsonResult IsTakibiKaydet(string istakibiBilgi)
+        {
+            var jsonn = new { };
+            return Json(jsonn);
+        }
+        
     }
 }

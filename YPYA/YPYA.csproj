@@ -166,52 +166,52 @@
     </Compile>
     <Compile Include="helper\Yardimci.cs" />
     <Compile Include="Models\Bildirim.cs">
-      <DependentUpon>projeyonetim.tt</DependentUpon>
+      <DependentUpon>projeyonetimvt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Durum.cs">
-      <DependentUpon>projeyonetim.tt</DependentUpon>
+      <DependentUpon>projeyonetimvt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IsTakibi.cs">
-      <DependentUpon>projeyonetim.tt</DependentUpon>
+      <DependentUpon>projeyonetimvt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Kullanici.cs">
-      <DependentUpon>projeyonetim.tt</DependentUpon>
+      <DependentUpon>projeyonetimvt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\KullaniciSurec.cs">
-      <DependentUpon>projeyonetim.tt</DependentUpon>
+      <DependentUpon>projeyonetimvt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MusteriIsteri.cs">
-      <DependentUpon>projeyonetim.tt</DependentUpon>
+      <DependentUpon>projeyonetimvt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Oncelik.cs">
-      <DependentUpon>projeyonetim.tt</DependentUpon>
+      <DependentUpon>projeyonetimvt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Proje.cs">
-      <DependentUpon>projeyonetim.tt</DependentUpon>
+      <DependentUpon>projeyonetimvt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProjeKullanici.cs">
-      <DependentUpon>projeyonetim.tt</DependentUpon>
+      <DependentUpon>projeyonetimvt.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\projeyonetim.Context.cs">
+    <Compile Include="Models\projeyonetimvt.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>projeyonetim.Context.tt</DependentUpon>
+      <DependentUpon>projeyonetimvt.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\projeyonetim.cs">
+    <Compile Include="Models\projeyonetimvt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>projeyonetim.tt</DependentUpon>
+      <DependentUpon>projeyonetimvt.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\projeyonetim.Designer.cs">
+    <Compile Include="Models\projeyonetimvt.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>projeyonetim.edmx</DependentUpon>
+      <DependentUpon>projeyonetimvt.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Rol.cs">
-      <DependentUpon>projeyonetim.tt</DependentUpon>
+      <DependentUpon>projeyonetimvt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Surec.cs">
-      <DependentUpon>projeyonetim.tt</DependentUpon>
+      <DependentUpon>projeyonetimvt.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -260,15 +260,15 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Models\projeyonetim.Context.tt">
+    <Content Include="Models\projeyonetimvt.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>projeyonetim.edmx</DependentUpon>
-      <LastGenOutput>projeyonetim.Context.cs</LastGenOutput>
+      <DependentUpon>projeyonetimvt.edmx</DependentUpon>
+      <LastGenOutput>projeyonetimvt.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\projeyonetim.tt">
+    <Content Include="Models\projeyonetimvt.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>projeyonetim.edmx</DependentUpon>
-      <LastGenOutput>projeyonetim.cs</LastGenOutput>
+      <DependentUpon>projeyonetimvt.edmx</DependentUpon>
+      <LastGenOutput>projeyonetimvt.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -283,16 +283,16 @@
     <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\vendor\font-awesome\fonts\FontAwesome.otf" />
-    <EntityDeploy Include="Models\projeyonetim.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>projeyonetim.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\projeyonetim.edmx.diagram">
-      <DependentUpon>projeyonetim.edmx</DependentUpon>
-    </Content>
     <Content Include="Content\vendor\summernote\dist\font\summernote.ttf" />
     <Content Include="Content\vendor\summernote\dist\font\summernote.eot" />
     <Content Include="Content\vendor\summernote\dist\font\summernote.woff" />
+    <EntityDeploy Include="Models\projeyonetimvt.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>projeyonetimvt.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\projeyonetimvt.edmx.diagram">
+      <DependentUpon>projeyonetimvt.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

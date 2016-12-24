@@ -1,6 +1,7 @@
 ﻿
 @{
-    ViewBag.Title = "Process Edit";
+    ViewBag.Title = "ProcessEdit";
+    string drm;
 }
 
 @model IEnumerable<YPYA.Models.Surec>
@@ -83,7 +84,7 @@
 
 @section script{
     <!-- page scripts -->
-    <script src="~/Content/vendor/jquery.ui/ui/core.js"></script>
+    @*<script src="~/Content/vendor/jquery.ui/ui/core.js"></script>*@
     <script src="~/Content/vendor/jquery.ui/ui/widget.js"></script>
     <script src="~/Content/vendor/jquery.ui/ui/mouse.js"></script>
     <script src="~/Content/vendor/jquery.ui/ui/slider.js"></script>
@@ -92,12 +93,180 @@
     <!-- initialize page scripts -->
     <script type="text/javascript">
         $(function () {
+            var surecID;
+
             $('.slider').each(function () {
                 var data = $(this).data();
                 $(this).slider(data);
             });
             $(".app").addClass("expanding");
+
+            $(".surec").click(function () {
+                
+                console.log("tıklama");
+               
+                surecID = $(this).attr("id");
+                $("#isTakibiCek").attr("surecID", surecID);
+                $("#isTakibiKaydet").attr("surecID", surecID);
+                console.log(surecID);
+                $.ajax({
+                    type: "POST",//Metodu belirliyoruz POST veya GET olabilir.
+                    url: "/Project/SurecBilgileri",//Nereye post edileceğini belirliyoruz. Home controller altında "IndexPost" adlı metodumuza gideceğini söyledik
+                    data: { surecID: surecID },
+                    datatype: "json",//Geri dönecek değerin tipini belirliyoruz. xml, json, script, html bunlardan birini belirleyebiliriz.
+                    success: function (data) {//Eğer ajax post işlemi başarılı ise çalışacak fonksiyonumuz. function(data) kısmında ise data dönen değerimiz oluyor.
+                        // $('#result').html(data);//Burda ise dönen değeri $('#result') divini seçip .html(data) ile içine basıyoruz.
+                        //alert(data);  
+                       
+
+                        $("#surecBaslik").val(data.surecBaslik);
+                        $("#projeAdi").val(data.projeBaslik);
+                        $("#sureciOlusturan").val(data.sureciOlusturan);
+                        $("#planlananBaslangic").val(data.surecPlanlananBaslangic);
+                        $("#planlananBitis").val(data.surecPlanlananBitis);
+                        $("#surecTamamlama").val(data.surecTamamlanma);
+
+                    }
+
+                });
+
+            });
+            $("#isTakibiKaydet").click(function () {
+                var istakibi = new {
+                    analizKisi: $("#analizKisi").text(),
+                    analizBaslangicTarihi: $("#analizBaslangicTarihi").val(),
+                    analizBitisTarihi: $("#analizBitisTarihi").val(),
+                    analizTamamlanmaTarihi: $("#analizTamamlanmaTarihi").val(),
+                    analizTamamlanmaOrani: $("#analizTamamlanmaOrani").val(),//bu daha işi var
+
+                    tableKisi: $("#tableKisi").text(),
+                    tableBaslangicTarihi: $("#tableBaslangicTarihi").val(),
+                    tableBitisTarihi: $("#tableBitisTarihi").val(),
+                    tableTamamlanmaTarihi: $("#tableTamamlanmaTarihi").val(),
+                    tableTamamlanmaOrani: $("#tableTamamlanmaOrani").val(),
+
+                    procedureKisi: $("#procedureKisi").text(),
+                    procedureBaslangicTarihi: $("#procedureBaslangicTarihi").val(),
+                    procedureBitisTarihi: $("#procedureBitisTarihi").val(),
+                    procedureTamamlanmaTarihi: $("#procedureTamamlanmaTarihi").val(),
+                    procedureTamamlanmaOrani: $("#procedureTamamlanmaOrani").val(),
+
+
+                    dllListKisi: $("#dllListKisi").text(),
+                    dllListBaslangicTarihi: $("#dllListBaslangicTarihi").val(),
+                    dllListBitisTarihi: $("#dllListBitisTarihi").val(),
+                    dllListTamamlanmaTarihi: $("#dllListTamamlanmaTarihi").val(),
+                    dllListTamamlanmaOrani: $("#dllListTamamlanmaOrani").val(),
+
+                    dllIslemKisi: $("#dllIslemKisi").text(),
+                    dllIslemBaslangicTarihi: $("#dllIslemBaslangicTarihi").val(),
+                    dllIslemBitisTarihi: $("#dllIslemBitisTarihi").val(),
+                    dllIslemTamamlanmaTarihi: $("#dllIslemTamamlanmaTarihi").val(),
+                    dllIslemTamamlanmaOrani: $("#dllIslemTamamlanmaOrani").val(),
+
+                    arayuzKisi: $("#arayuzKisi").text(),
+                    arayuzBaslangicTarihi: $("#arayuzBaslangicTarihi").val(),
+                    arayuzBitisTarihi: $("#arayuzBitisTarihi").val(),
+                    arayuzTamamlanmaTarihi: $("#arayuzTamamlanmaTarihi").val(),
+                    arayuzTamamlanmaOrani: $("#arayuzTamamlanmaOrani").val(),
+
+                    testKisi: $("#testKisi").text(),
+                    testBaslangicTarihi: $("#testBaslangicTarihi").val(),
+                    testBitisTarihi: $("#testBitisTarihi").val(),
+                    testTamamlanmaTarihi: $("#testTamamlanmaTarihi").val(),
+                    testTamamlanmaOrani: $("#testTamamlanmaOrani").val(),
+                };
+                $.ajax({
+                    type: "POST",//Metodu belirliyoruz POST veya GET olabilir.
+                    url: "/Project/IsTakibiKaydet",//Nereye post edileceğini belirliyoruz. Home controller altında "IndexPost" adlı metodumuza gideceğini söyledik
+                    data: { istakibiBilgi: istakibi },
+                    datatype: "json",//Geri dönecek değerin tipini belirliyoruz. xml, json, script, html bunlardan birini belirleyebiliriz.
+                    success: function (data) {//Eğer ajax post işlemi başarılı ise çalışacak fonksiyonumuz. function(data) kısmında ise data dönen değerimiz oluyor.
+                        // $('#result').html(data);//Burda ise dönen değeri $('#result') divini seçip .html(data) ile içine basıyoruz.
+                       
+
+                    }
+
+                });
+
+
+
+            });
+
+            $("#isTakibiCek").click(function () {
+                var surecID = $(this).attr("surecID");
+                $.ajax({
+                    type: "POST",//Metodu belirliyoruz POST veya GET olabilir.
+                    url: "/Project/IsTakibiBilgileri",//Nereye post edileceğini belirliyoruz. Home controller altında "IndexPost" adlı metodumuza gideceğini söyledik
+                    data: { surecID: surecID },
+                    datatype: "json",//Geri dönecek değerin tipini belirliyoruz. xml, json, script, html bunlardan birini belirleyebiliriz.
+                    success: function (data) {//Eğer ajax post işlemi başarılı ise çalışacak fonksiyonumuz. function(data) kısmında ise data dönen değerimiz oluyor.
+                        // $('#result').html(data);//Burda ise dönen değeri $('#result') divini seçip .html(data) ile içine basıyoruz.
+                        
+                        data.forEach(function (dt) {
+                            if (dt.surecDetayRolAdi == "Analiz") {
+                                $("#analizKisi").text(dt.surecDetayKisi);
+                                $("#analizBaslangicTarihi").val(dt.surecDetayBaslangic);
+                                $("#analizBitisTarihi").val(dt.surecDetayBitis);
+                                $("#analizTamamlanmaTarihi").val(dt.surecDetayTamamlanma);
+                                $("div.ui-slider-range").css("width", dt.surecDetayTamamlanmaOrani);
+                                $("span.ui-slider-handle").css("left", dt.surecDetayTamamlanmaOrani);
+                                $("#analizTamamlanmaOrani").attr("data-value", dt.surecDetayTamamlanmaOrani);
+                            } else if (dt.surecDetayRolAdi == "Table") {
+                                $("#tableKisi").text(dt.surecDetayKisi);
+                                $("#tableBaslangicTarihi").val(dt.surecDetayBaslangic);
+                                $("#tableBitisTarihi").val(dt.surecDetayBitis);
+                                $("#tableTamamlanmaTarihi").val(dt.surecDetayTamamlanma);
+                                $("#tableTamamlanmaOrani").attr("data-value",dt.surecDetayTamamlanmaOrani);
+                            } else if (dt.surecDetayRolAdi == "Procedure") {
+                                $("#procedureKisi").text(dt.surecDetayKisi);
+                                $("#procedureBaslangicTarihi").val(dt.surecDetayBaslangic);
+                                $("#procedureBitisTarihi").val(dt.surecDetayBitis);
+                                $("#procedureTamamlanmaTarihi").val(dt.surecDetayTamamlanma);
+                                $("#procedureTamamlanmaOrani").val(dt.surecDetayTamamlanmaOrani);
+                            } else if (dt.surecDetayRolAdi == "DLL List") {
+                                $("#dllListKisi").text(dt.surecDetayKisi);
+                                $("#dllListBaslangicTarihi").val(dt.surecDetayBaslangic);
+                                $("#dllListBitisTarihi").val(dt.surecDetayBitis);
+                                $("#dllListTamamlanmaTarihi").val(dt.surecDetayTamamlanma);
+                                $("#dllListTamamlanmaOrani").val(dt.surecDetayTamamlanmaOrani);
+                            } else if (dt.surecDetayRolAdi == "DLL Islem") {
+                                $("#dllIslemKisi").text(dt.surecDetayKisi);
+                                $("#dllIslemBaslangicTarihi").val(dt.surecDetayBaslangic);
+                                $("#dllIslemBitisTarihi").val(dt.surecDetayBitis);
+                                $("#dllIslemTamamlanmaTarihi").val(dt.surecDetayTamamlanma);
+                                $("#dllIslemTamamlanmaOrani").val(dt.surecDetayTamamlanmaOrani);
+                            } else if (dt.surecDetayRolAdi == "Arayüz") {
+                                $("#arayuzKisi").text(dt.surecDetayKisi);
+                                $("#arayuzBaslangicTarihi").val(dt.surecDetayBaslangic);
+                                $("#arayuzBitisTarihi").val(dt.surecDetayBitis);
+                                $("#arayuzTamamlanmaTarihi").val(dt.surecDetayTamamlanma);
+                                $("#arayuzTamamlanmaOrani").val(dt.surecDetayTamamlanmaOrani);
+                            } else if (dt.surecDetayRolAdi == "Test") {
+                                $("#testKisi").text(dt.surecDetayKisi);
+                                $("#testBaslangicTarihi").val(dt.surecDetayBaslangic);
+                                $("#testBitisTarihi").val(dt.surecDetayBitis);
+                                $("#testTamamlanmaTarihi").val(dt.surecDetayTamamlanma);
+                                $("#testTamamlanmaOrani").val(dt.surecDetayTamamlanmaOrani);
+                            }
+                            
+           
+                    
+                        });
+                    }
+
+                });
+
+
+            });
+
+       
+
+
+
+
         });
+
     </script>
     <!-- end initialize page scripts -->
 
@@ -116,7 +285,15 @@
             <!--Contact list item-->
             @foreach (YPYA.Models.Surec i in Model.Where(x => x.ParentSurecId == null))
             {
-                <a href="javascript:;" class="column-equal main-process" data-toggle="contact">
+                if (i.haveChild == true)
+                {
+                    drm = "";
+                }
+                else
+                {
+                    drm = "surec";
+                }
+                <a id="@i.Id" href="javascript:;" class="column-equal main-process @drm" data-toggle="contact">
                     <div href="#" class="notification-bar-icon">
                         <div><i></i></div>
                     </div>
@@ -127,7 +304,15 @@
                 </a>
                 foreach (YPYA.Models.Surec j in Model.Where(y => y.ParentSurecId == i.Id))
                 {
-                    <a href="javascript:;" class="column-equal proces" data-toggle="contact">
+                    if (j.haveChild == true)
+                    {
+                        drm = "";
+                    }
+                    else
+                    {
+                        drm = "surec";
+                    }
+                    <a id="@j.Id" href="javascript:;" class="column-equal proces @drm" data-toggle="contact">
                         <div href="#" class="notification-bar-icon">
                             <div><i></i></div>
                         </div>
@@ -138,7 +323,15 @@
                     </a>
                     foreach (YPYA.Models.Surec k in Model.Where(z => z.ParentSurecId == j.Id))
                     {
-                        <a href="javascript:;" class="column-equal sub-process" data-toggle="contact">
+                        if (k.haveChild == true)
+                        {
+                            drm = "";
+                        }
+                        else
+                        {
+                            drm = "surec";
+                        }
+                        <a id="@k.Id" href="javascript:;" class="column-equal sub-process @drm" data-toggle="contact">
                             <div href="#" class="notification-bar-icon">
                                 <div><i></i></div>
                             </div>
@@ -171,7 +364,7 @@
                                     <label for="formGroupExampleInput">
                                         Başlık
                                     </label>
-                                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Başlığı düzenleyin">
+                                    <input type="text" class="form-control" id="surecBaslik" placeholder="Başlığı düzenleyin">
                                 </fieldset>
                             </div>
                             <div class="col-sm-4">
@@ -179,7 +372,7 @@
                                     <label for="formGroupExampleInput">
                                         Proje Adı
                                     </label>
-                                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Proje Adı">
+                                    <input type="text" class="form-control" id="projeAdi" placeholder="Proje Adı">
                                 </fieldset>
                             </div>
                             <div class="col-sm-4">
@@ -187,7 +380,7 @@
                                     <label for="formGroupExampleInput">
                                         Süreci oluşturan
                                     </label>
-                                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Süreci oluşturan">
+                                    <input type="text" class="form-control" id="sureciOlusturan" placeholder="Süreci oluşturan">
                                 </fieldset>
                             </div>
                         </div>
@@ -197,7 +390,7 @@
                                     <label for="formGroupExampleInput">
                                         Planlanan başlangıç
                                     </label>
-                                    <input type="date" class="form-control" id="formGroupExampleInput">
+                                    <input type="date" class="form-control" id="planlananBaslangic">
                                 </fieldset>
                             </div>
                             <div class="col-sm-6">
@@ -205,7 +398,7 @@
                                     <label for="formGroupExampleInput">
                                         Planlanan bitiş
                                     </label>
-                                    <input type="date" class="form-control" id="formGroupExampleInput">
+                                    <input type="date" class="form-control" id="planlananBitis">
                                 </fieldset>
                             </div>
                         </div>
@@ -215,11 +408,17 @@
                                     <label for="formGroupExampleInput">
                                         Süreç tamamlanma
                                     </label>
-                                    <progress class="progress progress-success" style="margin-bottom: 0px;" value="10" max="100"></progress>
+                                    <progress id="surecTamamlama" class="progress progress-success" style="margin-bottom: 0px;" value="10" max="100"></progress>
                                 </fieldset>
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-block">
+                    <button class="btn btn-success" id="isTakibiCek" >İş Takibi Çek</button>
+                    <button class="btn btn-danger" id="isTakibiKaydet">Kaydet</button>
                 </div>
             </div>
 
@@ -243,134 +442,89 @@
                                         <th>Analiz</th>
                                         <td>
                                             <select class="form-control">
-                                                <option value="value">text</option>
+                                                <option id="analizKisi" value="value">text</option>
                                             </select>
                                         </td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><div class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                        <td><input id="analizBaslangicTarihi" class="form-control" type="date" /></td>
+                                        <td><input id="analizBitisTarihi" class="form-control" type="date" /></td>
+                                        <td><input id="analizTamamlanmaTarihi" class="form-control" type="date" /></td>
+                                        <td><div id="analizTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="35" data-range="min"></div></td>
                                     </tr>
                                     <tr>
                                         <th>Table</th>
                                         <td>
                                             <select class="form-control">
-                                                <option value="value">text</option>
+                                                <option id="tableKisi" value="value">text</option>
                                             </select>
                                         </td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><div class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                        <td><input id="tableBaslangicTarihi" class="form-control" type="date" /></td>
+                                        <td><input id="tableBitisTarihi" class="form-control" type="date" /></td>
+                                        <td><input id="tableTamamlanmaTarihi" class="form-control" type="date" /></td>
+                                        <td><div id="tableTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
                                     </tr>
                                     <tr>
                                         <th>Procedure</th>
                                         <td>
                                             <select class="form-control">
-                                                <option value="value">text</option>
+                                                <option id="procedureKisi" value="value">text</option>
                                             </select>
                                         </td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><div class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                        <td><input id="procedureBaslangicTarihi" class="form-control" type="date" /></td>
+                                        <td><input id="procedureBitisTarihi" class="form-control" type="date" /></td>
+                                        <td><input id="procedureTamamlanmaTarihi" class="form-control" type="date" /></td>
+                                        <td><div id="procedureTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
                                     </tr>
                                     <tr>
                                         <th>Dll list</th>
                                         <td>
                                             <select class="form-control">
-                                                <option value="value">text</option>
+                                                <option id="dllListKisi" value="value">text</option>
                                             </select>
                                         </td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><div class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                        <td><input id="dllListBaslangicTarihi" class="form-control" type="date" /></td>
+                                        <td><input id="dllListBitisTarihi" class="form-control" type="date" /></td>
+                                        <td><input id="dllListTamamlanmaTarihi" class="form-control" type="date" /></td>
+                                        <td><div id="dllListTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
                                     </tr>
                                     <tr>
                                         <th>Dll işlem</th>
                                         <td>
                                             <select class="form-control">
-                                                <option value="value">text</option>
+                                                <option id="dllIslemKisi" value="value">text</option>
                                             </select>
                                         </td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><div class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                        <td><input id="dllIslemBaslangicTarihi" class="form-control" type="date" /></td>
+                                        <td><input id="dllIslemBitisTarihi" class="form-control" type="date" /></td>
+                                        <td><input id="dllIslemTamamlanmaTarihi" class="form-control" type="date" /></td>
+                                        <td><div id="dllIslemTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
                                     </tr>
                                     <tr>
                                         <th>Arayüz</th>
                                         <td>
                                             <select class="form-control">
-                                                <option value="value">text</option>
+                                                <option id="arayuzKisi" value="value">text</option>
                                             </select>
                                         </td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><div class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                        <td><input id="arayuzBaslangicTarihi" class="form-control" type="date" /></td>
+                                        <td><input id="arayuzBitisTarihi" class="form-control" type="date" /></td>
+                                        <td><input id="arayuzTamamlanmaTarihi" class="form-control" type="date" /></td>
+                                        <td><div id="arayuzTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
                                     </tr>
                                     <tr>
-                                        <th>Test 1</th>
+                                        <th>Test</th>
                                         <td>
                                             <select class="form-control">
-                                                <option value="value">text</option>
+                                                <option id="testKisi" value="value">text</option>
                                             </select>
                                         </td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><div class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                        <td><input id="testBaslangicTarihi" class="form-control" type="date" /></td>
+                                        <td><input id="testBitisTarihi" class="form-control" type="date" /></td>
+                                        <td><input id="testTamamlanmaTarihi" class="form-control" type="date" /></td>
+                                        <td><div id="testTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
                                     </tr>
-                                    <tr>
-                                        <th>Test 2</th>
-                                        <td>
-                                            <select class="form-control">
-                                                <option value="value">text</option>
-                                            </select>
-                                        </td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><div class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Test 3</th>
-                                        <td>
-                                            <select class="form-control">
-                                                <option value="value">text</option>
-                                            </select>
-                                        </td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><div class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Test 4</th>
-                                        <td>
-                                            <select class="form-control">
-                                                <option value="value">text</option>
-                                            </select>
-                                        </td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><div class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Test 5</th>
-                                        <td>
-                                            <select class="form-control">
-                                                <option value="value">text</option>
-                                            </select>
-                                        </td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><input class="form-control" type="date" /></td>
-                                        <td><div class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
-                                    </tr>
+
+
+
                                 </tbody>
                             </table>
                         </div>
