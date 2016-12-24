@@ -36,7 +36,5 @@ namespace YPYA.Models
         public virtual DbSet<ProjeKullanici> ProjeKullanicis { get; set; }
         public virtual DbSet<Rol> Rols { get; set; }
         public virtual DbSet<Surec> Surecs { get; set; }
-        public virtual DbSet<Bildirim> Bildirims { get; set; }
-        public virtual DbSet<IsTakibi> IsTakibis { get; set; }
     }
 }

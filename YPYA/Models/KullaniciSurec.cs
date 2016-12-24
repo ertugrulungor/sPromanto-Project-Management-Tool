@@ -24,6 +24,5 @@ namespace YPYA.Models
         public virtual Kullanici Kullanici { get; set; }
         public virtual Rol Rol { get; set; }
         public virtual Surec Surec { get; set; }
-        public virtual IsTakibi IsTakibi { get; set; }
     }
 }
