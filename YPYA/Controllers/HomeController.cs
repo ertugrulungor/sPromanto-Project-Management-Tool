@@ -11,7 +11,8 @@ namespace YPYA.Controllers
     {
         projeyonetimvtEntities db = new projeyonetimvtEntities();
         public ActionResult Index()
-        {   
+        {  
+             
             Session["id"] = 1;
             if (Session["id"] != null)
             {

@@ -27,12 +27,12 @@ namespace YPYA.Models
         public Nullable<int> OlusturanKullaniciId { get; set; }
         public Nullable<System.DateTime> PlanBaslangic { get; set; }
         public Nullable<System.DateTime> PlanBitis { get; set; }
-        public Nullable<System.DateTime> GercekBaslangic { get; set; }
-        public Nullable<System.DateTime> GercekBitis { get; set; }
         public Nullable<System.DateTime> Olusturulma { get; set; }
         public Nullable<decimal> Butce { get; set; }
+        public Nullable<int> MusteriId { get; set; }
     
         public virtual Kullanici Kullanici { get; set; }
+        public virtual Kullanici Kullanici1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MusteriIsteri> MusteriIsteris { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

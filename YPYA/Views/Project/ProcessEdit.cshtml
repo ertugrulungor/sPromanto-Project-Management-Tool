@@ -7,7 +7,7 @@
 @model IEnumerable<YPYA.Models.Surec>
 
 @section ustBaslik{
-    <a class="navbar-item navbar-spacer-right navbar-heading hidden-md-down" href="~/Project/Index/@ViewBag.projeId">
+    <a class="navbar-item navbar-spacer-right navbar-heading hidden-md-down" id="proje" projeid="@ViewBag.projeId" href="~/Project/Index/@ViewBag.projeId">
         <span>@ViewBag.projeAdi</span>
     </a>
 }
@@ -94,7 +94,7 @@
     <script type="text/javascript">
         $(function () {
             var surecID;
-
+            
             $('.slider').each(function () {
                 var data = $(this).data();
                 $(this).slider(data);
@@ -104,27 +104,222 @@
             $(".surec").click(function () {
                 
                 console.log("tıklama");
-               
+                var projeID = $("a#proje").attr("projeid");
                 surecID = $(this).attr("id");
-                $("#isTakibiCek").attr("surecID", surecID);
+               
                 $("#isTakibiKaydet").attr("surecID", surecID);
                 console.log(surecID);
                 $.ajax({
                     type: "POST",//Metodu belirliyoruz POST veya GET olabilir.
                     url: "/Project/SurecBilgileri",//Nereye post edileceğini belirliyoruz. Home controller altında "IndexPost" adlı metodumuza gideceğini söyledik
-                    data: { surecID: surecID },
+                    data: { surecID: surecID, projeID: projeID},
                     datatype: "json",//Geri dönecek değerin tipini belirliyoruz. xml, json, script, html bunlardan birini belirleyebiliriz.
                     success: function (data) {//Eğer ajax post işlemi başarılı ise çalışacak fonksiyonumuz. function(data) kısmında ise data dönen değerimiz oluyor.
                         // $('#result').html(data);//Burda ise dönen değeri $('#result') divini seçip .html(data) ile içine basıyoruz.
                         //alert(data);  
-                       
-
+                        console.log(data);
                         $("#surecBaslik").val(data.surecBaslik);
                         $("#projeAdi").val(data.projeBaslik);
                         $("#sureciOlusturan").val(data.sureciOlusturan);
                         $("#planlananBaslangic").val(data.surecPlanlananBaslangic);
                         $("#planlananBitis").val(data.surecPlanlananBitis);
                         $("#surecTamamlama").val(data.surecTamamlanma);
+                        var kisilerUzunlugu = data.surecDetayKisiler.length;
+                        for (var j = 0; j < data.surecDetayKisiler.length; j++) {
+
+                            $("#analizKisi").prepend('<option  id="kisi"kisiId="' + data.surecDetayKisiler[j].kisiID + '" value="value">' + data.surecDetayKisiler[j].kisi + '</option>');
+                            $("#tableKisi").prepend('<option id="kisi" kisiId="' + data.surecDetayKisiler[j].kisiID + '" value="value">' + data.surecDetayKisiler[j].kisi + '</option>');
+                            $("#procedureKisi").prepend('<option id="kisi" kisiId="' + data.surecDetayKisiler[j].kisiID + '" value="value">' + data.surecDetayKisiler[j].kisi + '</option>');
+                            $("#dllListKisi").prepend('<option id="kisi" kisiId="' + data.surecDetayKisiler[j].kisiID + '" value="value">' + data.surecDetayKisiler[j].kisi + '</option>');
+                            $("#dllIslemKisi").prepend('<option id="kisi" kisiId="' + data.surecDetayKisiler[j].kisiID + '" value="value">' + data.surecDetayKisiler[j].kisi + '</option>');
+                            $("#arayuzKisi").prepend('<option id="kisi" kisiId="' + data.surecDetayKisiler[j].kisiID + '" value="value">' + data.surecDetayKisiler[j].kisi + '</option>');
+                            $("#testKisi").prepend('<option id="kisi" kisiId="' + data.surecDetayKisiler[j].kisiID + '" value="value">' + data.surecDetayKisiler[j].kisi + '</option>');
+                            if ((kisilerUzunlugu - 1) == j) {
+                                $("#analizKisi").prepend('<option selected="selected"  id="kisi" kisiId="0" value="value"></option>');
+                                $("#tableKisi").prepend('<option selected="selected"  id="kisi" kisiId="0" value="value"></option>');
+                                $("#procedureKisi").prepend('<option selected="selected"  id="kisi" kisiId="0" value="value"></option>');
+                                $("#dllListKisi").prepend('<option selected="selected"  id="kisi" kisiId="0" value="value"></option>');
+                                $("#dllIslemKisi").prepend('<option selected="selected"  id="kisi" kisiId="0" value="value"></option>');
+                                $("#arayuzKisi").prepend('<option selected="selected"  id="kisi" kisiId="0" value="value"></option>');
+                                $("#testKisi").prepend('<option selected="selected"  id="kisi" kisiId="0" value="value"></option>');
+
+                            }
+                        }
+
+                        $.ajax({
+                            type: "POST",//Metodu belirliyoruz POST veya GET olabilir.
+                            url: "/Project/IsTakibiBilgileri",//Nereye post edileceğini belirliyoruz. Home controller altında "IndexPost" adlı metodumuza gideceğini söyledik
+                            data: { surecID: surecID, projeID: projeID },
+                            datatype: "json",//Geri dönecek değerin tipini belirliyoruz. xml, json, script, html bunlardan birini belirleyebiliriz.
+                            success: function (data) {//Eğer ajax post işlemi başarılı ise çalışacak fonksiyonumuz. function(data) kısmında ise data dönen değerimiz oluyor.
+                                // $('#result').html(data);//Burda ise dönen değeri $('#result') divini seçip .html(data) ile içine basıyoruz.
+                                console.log(data);
+
+
+                                for (var i = 0; i < data.length; i++) {
+
+                                    if (data[i].surecDetayRolAdi == "Analiz") {
+
+                                        if (data[i].surecDetayKisiID != null) {
+                                            $("#analizKisi option#kisi").each(function () {
+                                                if ($(this).attr("kisiId") == 0) {
+                                                    $(this).removeAttr("selected");
+                                                }
+                                                if (data[i].surecDetayKisiID == $(this).attr("kisiId")) {
+                                                    $(this).attr("selected", "selected");
+
+                                                }
+                                            });
+                                        }
+
+                                        $("#analizBaslangicTarihi").val(data[i].surecDetayBaslangic);
+                                        $("#analizBitisTarihi").val(data[i].surecDetayBitis);
+                                        $("#analizTamamlanmaTarihi").val(data[i].surecDetayTamamlanma);
+                                        $("div#analizTamamlanmaOrani div.ui-slider-range").css("width", data[i].surecDetayTamamlanmaOrani);
+                                        $("div#analizTamamlanmaOrani span.ui-slider-handle").css("left", data[i].surecDetayTamamlanmaOrani);
+                                        $("#analizTamamlanmaOrani").attr("data-value", data[i].surecDetayTamamlanmaOrani);
+                                    } else if (data[i].surecDetayRolAdi == "Table") {
+
+                                        if (data[i].surecDetayKisiID != null) {
+                                            $("#tableKisi option#kisi").each(function () {
+                                                if ($(this).attr("kisiId") == 0) {
+                                                    $(this).removeAttr("selected");
+                                                }
+                                                if (data[i].surecDetayKisiID == $(this).attr("kisiId")) {
+                                                    $(this).attr("selected", "selected");
+
+                                                }
+                                            });
+                                        }
+
+                                        $("#tableBaslangicTarihi").val(data[i].surecDetayBaslangic);
+                                        $("#tableBitisTarihi").val(data[i].surecDetayBitis);
+                                        $("#tableTamamlanmaTarihi").val(data[i].surecDetayTamamlanma);
+                                        $("div#tableTamamlanmaOrani div.ui-slider-range").css("width", data[i].surecDetayTamamlanmaOrani);
+                                        $("div#tableTamamlanmaOrani span.ui-slider-handle").css("left", data[i].surecDetayTamamlanmaOrani);
+                                        $("#tableTamamlanmaOrani").attr("data-value", data[i].surecDetayTamamlanmaOrani);
+
+                                    } else if (data[i].surecDetayRolAdi == "Procedure") {
+
+                                        if (data[i].surecDetayKisiID != null) {
+                                            $("#procedureKisi option#kisi").each(function () {
+                                                if ($(this).attr("kisiId") == 0) {
+                                                    $(this).removeAttr("selected");
+                                                }
+                                                if (data[i].surecDetayKisiID == $(this).attr("kisiId")) {
+                                                    $(this).attr("selected", "selected");
+
+                                                }
+                                            });
+                                        }
+
+                                        $("#procedureBaslangicTarihi").val(data[i].surecDetayBaslangic);
+                                        $("#procedureBitisTarihi").val(data[i].surecDetayBitis);
+                                        $("#procedureTamamlanmaTarihi").val(data[i].surecDetayTamamlanma);
+                                        $("div#procedureTamamlanmaOrani div.ui-slider-range").css("width", data[i].surecDetayTamamlanmaOrani);
+                                        $("div#procedureTamamlanmaOrani span.ui-slider-handle").css("left", data[i].surecDetayTamamlanmaOrani);
+                                        $("#procedureTamamlanmaOrani").val(data[i].surecDetayTamamlanmaOrani);
+
+                                    } else if (data[i].surecDetayRolAdi == "DLL List") {
+
+                                        if (data[i].surecDetayKisiID != null) {
+                                            $("#dllListKisi option#kisi").each(function () {
+                                                if ($(this).attr("kisiId") == 0) {
+                                                    $(this).removeAttr("selected");
+                                                }
+                                                if (data[i].surecDetayKisiID == $(this).attr("kisiId")) {
+                                                    $(this).attr("selected", "selected");
+
+                                                }
+                                            });
+                                        }
+                                        //for (var j = 0; j < data[i].surecDetayKisiler.length; j++) {
+
+                                        //}
+
+                                        $("#dllListBaslangicTarihi").val(data[i].surecDetayBaslangic);
+                                        $("#dllListBitisTarihi").val(data[i].surecDetayBitis);
+                                        $("#dllListTamamlanmaTarihi").val(data[i].surecDetayTamamlanma);
+                                        $("div#dllListTamamlanmaOrani div.ui-slider-range").css("width", data[i].surecDetayTamamlanmaOrani);
+                                        $("div#dllListTamamlanmaOrani span.ui-slider-handle").css("left", data[i].surecDetayTamamlanmaOrani);
+                                        $("#dllListTamamlanmaOrani").val(data[i].surecDetayTamamlanmaOrani);
+
+                                    } else if (data[i].surecDetayRolAdi == "DLL Islem") {
+
+                                        if (data[i].surecDetayKisiID != null) {
+                                            $("#dllIslemKisi option#kisi").each(function () {
+                                                if ($(this).attr("kisiId") == 0) {
+                                                    $(this).removeAttr("selected");
+                                                }
+                                                if (data[i].surecDetayKisiID == $(this).attr("kisiId")) {
+                                                    $(this).attr("selected", "selected");
+
+                                                }
+                                            });
+                                        }
+                                        //for (var j = 0; j < data[i].surecDetayKisiler.length; j++) {
+
+                                        //}
+
+                                        $("#dllIslemBaslangicTarihi").val(data[i].surecDetayBaslangic);
+                                        $("#dllIslemBitisTarihi").val(data[i].surecDetayBitis);
+                                        $("#dllIslemTamamlanmaTarihi").val(data[i].surecDetayTamamlanma);
+                                        $("div#dllIslemTamamlanmaOrani div.ui-slider-range").css("width", data[i].surecDetayTamamlanmaOrani);
+                                        $("div#dllIslemTamamlanmaOrani span.ui-slider-handle").css("left", data[i].surecDetayTamamlanmaOrani);
+                                        $("#dllIslemTamamlanmaOrani").val(data[i].surecDetayTamamlanmaOrani);
+
+                                    } else if (data[i].surecDetayRolAdi == "Arayüz") {
+
+                                        if (data[i].surecDetayKisiID != null) {
+                                            $("#arayuzKisi option#kisi").each(function () {
+                                                if ($(this).attr("kisiId") == 0) {
+                                                    $(this).removeAttr("selected");
+                                                }
+                                                if (data[i].surecDetayKisiID == $(this).attr("kisiId")) {
+                                                    $(this).attr("selected", "selected");
+
+                                                }
+                                            });
+                                        }
+
+                                        $("#arayuzBaslangicTarihi").val(data[i].surecDetayBaslangic);
+                                        $("#arayuzBitisTarihi").val(data[i].surecDetayBitis);
+                                        $("div#arayuzTamamlanmaOrani div.ui-slider-range").css("width", data[i].surecDetayTamamlanmaOrani);
+                                        $("div#arayuzTamamlanmaOrani span.ui-slider-handle").css("left", data[i].surecDetayTamamlanmaOrani);
+                                        $("#arayuzTamamlanmaTarihi").val(data[i].surecDetayTamamlanma);
+                                        $("#arayuzTamamlanmaOrani").val(data[i].surecDetayTamamlanmaOrani);
+
+                                    } else if (data[i].surecDetayRolAdi == "Test") {
+
+                                        if (data[i].surecDetayKisiID != null) {
+                                            $("#testKisi option#kisi").each(function () {
+                                                if ($(this).attr("kisiId") == 0) {
+                                                    $(this).removeAttr("selected");
+                                                }
+                                                if (data[i].surecDetayKisiID == $(this).attr("kisiId")) {
+                                                    $(this).attr("selected", "selected");
+
+                                                }
+                                            });
+                                        }
+
+                                        $("#testBaslangicTarihi").val(data[i].surecDetayBaslangic);
+                                        $("#testBitisTarihi").val(data[i].surecDetayBitis);
+                                        $("div#testTamamlanmaOrani div.ui-slider-range").css("width", data[i].surecDetayTamamlanmaOrani);
+                                        $("div#testTamamlanmaOrani span.ui-slider-handle").css("left", data[i].surecDetayTamamlanmaOrani);
+                                        $("#testTamamlanmaTarihi").val(data[i].surecDetayTamamlanma);
+                                        $("#testTamamlanmaOrani").val(data[i].surecDetayTamamlanmaOrani);
+                                    } else {
+                                        alert("deger Gelmedi");
+                                    }
+
+
+
+
+                                }
+                            }
+
+                        });
 
                     }
 
@@ -132,59 +327,77 @@
 
             });
             $("#isTakibiKaydet").click(function () {
-                var istakibi = new {
-                    analizKisi: $("#analizKisi").text(),
+                console.log("Tıkladı..");
+          
+              
+                var surecID = $(this).attr("surecID");
+                var SurecIstakibi =  {
+                    analizKisi: $("#analizKisi option:selected").text(),
                     analizBaslangicTarihi: $("#analizBaslangicTarihi").val(),
                     analizBitisTarihi: $("#analizBitisTarihi").val(),
                     analizTamamlanmaTarihi: $("#analizTamamlanmaTarihi").val(),
-                    analizTamamlanmaOrani: $("#analizTamamlanmaOrani").val(),//bu daha işi var
+                    analizTamamlanmaOrani: $("div#analizTamamlanmaOrani div.ui-slider-range").width(),
+                    
 
-                    tableKisi: $("#tableKisi").text(),
-                    tableBaslangicTarihi: $("#tableBaslangicTarihi").val(),
-                    tableBitisTarihi: $("#tableBitisTarihi").val(),
+                    tableKisi:  $("#tableKisi option:selected").text() ,
+                    tableBaslangicTarihi:  $("#tableBaslangicTarihi").val() ,
+                    tableBitisTarihi:  $("#tableBitisTarihi").val() ,
                     tableTamamlanmaTarihi: $("#tableTamamlanmaTarihi").val(),
-                    tableTamamlanmaOrani: $("#tableTamamlanmaOrani").val(),
+                    tableTamamlanmaOrani: $("div#tableTamamlanmaOrani div.ui-slider-range").width(),
+                    
 
-                    procedureKisi: $("#procedureKisi").text(),
-                    procedureBaslangicTarihi: $("#procedureBaslangicTarihi").val(),
-                    procedureBitisTarihi: $("#procedureBitisTarihi").val(),
+                    procedureKisi:  $("#procedureKisi option:selected").text() ,
+                    procedureBaslangicTarihi:  $("#procedureBaslangicTarihi").val() ,
+                    procedureBitisTarihi:  $("#procedureBitisTarihi").val() ,
                     procedureTamamlanmaTarihi: $("#procedureTamamlanmaTarihi").val(),
-                    procedureTamamlanmaOrani: $("#procedureTamamlanmaOrani").val(),
+                    procedureTamamlanmaOrani: $("div#procedureTamamlanmaOrani div.ui-slider-range").width(),
+                       
+                    
 
 
-                    dllListKisi: $("#dllListKisi").text(),
-                    dllListBaslangicTarihi: $("#dllListBaslangicTarihi").val(),
-                    dllListBitisTarihi: $("#dllListBitisTarihi").val(),
+                    dllListKisi:  $("#dllListKisi option:selected").text() ,
+                    dllListBaslangicTarihi:  $("#dllListBaslangicTarihi").val() ,
+                    dllListBitisTarihi:  $("#dllListBitisTarihi").val() ,
                     dllListTamamlanmaTarihi: $("#dllListTamamlanmaTarihi").val(),
-                    dllListTamamlanmaOrani: $("#dllListTamamlanmaOrani").val(),
+                    dllListTamamlanmaOrani:  $("div#dllListTamamlanmaOrani div.ui-slider-range").width(),
+                       
+                   
 
-                    dllIslemKisi: $("#dllIslemKisi").text(),
-                    dllIslemBaslangicTarihi: $("#dllIslemBaslangicTarihi").val(),
-                    dllIslemBitisTarihi: $("#dllIslemBitisTarihi").val(),
+                    dllIslemKisi:  $("#dllIslemKisi option:selected").text() ,
+                    dllIslemBaslangicTarihi:  $("#dllIslemBaslangicTarihi").val() ,
+                    dllIslemBitisTarihi:  $("#dllIslemBitisTarihi").val() ,
                     dllIslemTamamlanmaTarihi: $("#dllIslemTamamlanmaTarihi").val(),
-                    dllIslemTamamlanmaOrani: $("#dllIslemTamamlanmaOrani").val(),
+                    dllIslemTamamlanmaOrani:  $("div#dllIslemTamamlanmaOrani div.ui-slider-range").width(),
+                       
 
-                    arayuzKisi: $("#arayuzKisi").text(),
-                    arayuzBaslangicTarihi: $("#arayuzBaslangicTarihi").val(),
-                    arayuzBitisTarihi: $("#arayuzBitisTarihi").val(),
-                    arayuzTamamlanmaTarihi: $("#arayuzTamamlanmaTarihi").val(),
-                    arayuzTamamlanmaOrani: $("#arayuzTamamlanmaOrani").val(),
 
-                    testKisi: $("#testKisi").text(),
-                    testBaslangicTarihi: $("#testBaslangicTarihi").val(),
-                    testBitisTarihi: $("#testBitisTarihi").val(),
+                    arayuzKisi:  $("#arayuzKisi option:selected").text() ,
+                    arayuzBaslangicTarihi:  $("#arayuzBaslangicTarihi").val() ,
+                    arayuzBitisTarihi:  $("#arayuzBitisTarihi").val() ,
+                    arayuzTamamlanmaTarihi: $("#arayuzTamamlanmaTarihi").val(),   
+                    arayuzTamamlanmaOrani: $("div#arayuzTamamlanmaOrani div.ui-slider-range").width(),
+                        
+                   
+
+                    testKisi:  $("#testKisi option:selected").text() ,
+                    testBaslangicTarihi:  $("#testBaslangicTarihi").val() ,
+                    testBitisTarihi:  $("#testBitisTarihi").val() ,
                     testTamamlanmaTarihi: $("#testTamamlanmaTarihi").val(),
-                    testTamamlanmaOrani: $("#testTamamlanmaOrani").val(),
+                    testTamamlanmaOrani: $("div#testTamamlanmaOrani div.ui-slider-range").width(),
+                  
+                   
                 };
+               
+                console.log(SurecIstakibi)
                 $.ajax({
                     type: "POST",//Metodu belirliyoruz POST veya GET olabilir.
                     url: "/Project/IsTakibiKaydet",//Nereye post edileceğini belirliyoruz. Home controller altında "IndexPost" adlı metodumuza gideceğini söyledik
-                    data: { istakibiBilgi: istakibi },
+                    data: { istakibiBilgi: SurecIstakibi, surecID: surecID },
                     datatype: "json",//Geri dönecek değerin tipini belirliyoruz. xml, json, script, html bunlardan birini belirleyebiliriz.
                     success: function (data) {//Eğer ajax post işlemi başarılı ise çalışacak fonksiyonumuz. function(data) kısmında ise data dönen değerimiz oluyor.
                         // $('#result').html(data);//Burda ise dönen değeri $('#result') divini seçip .html(data) ile içine basıyoruz.
                        
-
+                        console.log(data);
                     }
 
                 });
@@ -193,72 +406,7 @@
 
             });
 
-            $("#isTakibiCek").click(function () {
-                var surecID = $(this).attr("surecID");
-                $.ajax({
-                    type: "POST",//Metodu belirliyoruz POST veya GET olabilir.
-                    url: "/Project/IsTakibiBilgileri",//Nereye post edileceğini belirliyoruz. Home controller altında "IndexPost" adlı metodumuza gideceğini söyledik
-                    data: { surecID: surecID },
-                    datatype: "json",//Geri dönecek değerin tipini belirliyoruz. xml, json, script, html bunlardan birini belirleyebiliriz.
-                    success: function (data) {//Eğer ajax post işlemi başarılı ise çalışacak fonksiyonumuz. function(data) kısmında ise data dönen değerimiz oluyor.
-                        // $('#result').html(data);//Burda ise dönen değeri $('#result') divini seçip .html(data) ile içine basıyoruz.
-                        
-                        data.forEach(function (dt) {
-                            if (dt.surecDetayRolAdi == "Analiz") {
-                                $("#analizKisi").text(dt.surecDetayKisi);
-                                $("#analizBaslangicTarihi").val(dt.surecDetayBaslangic);
-                                $("#analizBitisTarihi").val(dt.surecDetayBitis);
-                                $("#analizTamamlanmaTarihi").val(dt.surecDetayTamamlanma);
-                                $("div.ui-slider-range").css("width", dt.surecDetayTamamlanmaOrani);
-                                $("span.ui-slider-handle").css("left", dt.surecDetayTamamlanmaOrani);
-                                $("#analizTamamlanmaOrani").attr("data-value", dt.surecDetayTamamlanmaOrani);
-                            } else if (dt.surecDetayRolAdi == "Table") {
-                                $("#tableKisi").text(dt.surecDetayKisi);
-                                $("#tableBaslangicTarihi").val(dt.surecDetayBaslangic);
-                                $("#tableBitisTarihi").val(dt.surecDetayBitis);
-                                $("#tableTamamlanmaTarihi").val(dt.surecDetayTamamlanma);
-                                $("#tableTamamlanmaOrani").attr("data-value",dt.surecDetayTamamlanmaOrani);
-                            } else if (dt.surecDetayRolAdi == "Procedure") {
-                                $("#procedureKisi").text(dt.surecDetayKisi);
-                                $("#procedureBaslangicTarihi").val(dt.surecDetayBaslangic);
-                                $("#procedureBitisTarihi").val(dt.surecDetayBitis);
-                                $("#procedureTamamlanmaTarihi").val(dt.surecDetayTamamlanma);
-                                $("#procedureTamamlanmaOrani").val(dt.surecDetayTamamlanmaOrani);
-                            } else if (dt.surecDetayRolAdi == "DLL List") {
-                                $("#dllListKisi").text(dt.surecDetayKisi);
-                                $("#dllListBaslangicTarihi").val(dt.surecDetayBaslangic);
-                                $("#dllListBitisTarihi").val(dt.surecDetayBitis);
-                                $("#dllListTamamlanmaTarihi").val(dt.surecDetayTamamlanma);
-                                $("#dllListTamamlanmaOrani").val(dt.surecDetayTamamlanmaOrani);
-                            } else if (dt.surecDetayRolAdi == "DLL Islem") {
-                                $("#dllIslemKisi").text(dt.surecDetayKisi);
-                                $("#dllIslemBaslangicTarihi").val(dt.surecDetayBaslangic);
-                                $("#dllIslemBitisTarihi").val(dt.surecDetayBitis);
-                                $("#dllIslemTamamlanmaTarihi").val(dt.surecDetayTamamlanma);
-                                $("#dllIslemTamamlanmaOrani").val(dt.surecDetayTamamlanmaOrani);
-                            } else if (dt.surecDetayRolAdi == "Arayüz") {
-                                $("#arayuzKisi").text(dt.surecDetayKisi);
-                                $("#arayuzBaslangicTarihi").val(dt.surecDetayBaslangic);
-                                $("#arayuzBitisTarihi").val(dt.surecDetayBitis);
-                                $("#arayuzTamamlanmaTarihi").val(dt.surecDetayTamamlanma);
-                                $("#arayuzTamamlanmaOrani").val(dt.surecDetayTamamlanmaOrani);
-                            } else if (dt.surecDetayRolAdi == "Test") {
-                                $("#testKisi").text(dt.surecDetayKisi);
-                                $("#testBaslangicTarihi").val(dt.surecDetayBaslangic);
-                                $("#testBitisTarihi").val(dt.surecDetayBitis);
-                                $("#testTamamlanmaTarihi").val(dt.surecDetayTamamlanma);
-                                $("#testTamamlanmaOrani").val(dt.surecDetayTamamlanmaOrani);
-                            }
-                            
-           
-                    
-                        });
-                    }
-
-                });
-
-
-            });
+  
 
        
 
@@ -417,7 +565,7 @@
             </div>
             <div class="card">
                 <div class="card-block">
-                    <button class="btn btn-success" id="isTakibiCek" >İş Takibi Çek</button>
+                    @*<button class="btn btn-success" id="isTakibiCek" >İş Takibi Çek</button>*@
                     <button class="btn btn-danger" id="isTakibiKaydet">Kaydet</button>
                 </div>
             </div>
@@ -441,86 +589,87 @@
                                     <tr>
                                         <th>Analiz</th>
                                         <td>
-                                            <select class="form-control">
-                                                <option id="analizKisi" value="value">text</option>
+                                            <select id="analizKisi"  class="form-control">
+                                                @*<option  value="value">text</option>
+                                                <option value="value">YSn</option>*@
                                             </select>
                                         </td>
                                         <td><input id="analizBaslangicTarihi" class="form-control" type="date" /></td>
                                         <td><input id="analizBitisTarihi" class="form-control" type="date" /></td>
                                         <td><input id="analizTamamlanmaTarihi" class="form-control" type="date" /></td>
-                                        <td><div id="analizTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="35" data-range="min"></div></td>
+                                        <td><div id="analizTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="0" data-range="min"></div></td>
                                     </tr>
                                     <tr>
                                         <th>Table</th>
                                         <td>
-                                            <select class="form-control">
-                                                <option id="tableKisi" value="value">text</option>
+                                            <select id="tableKisi" class="form-control">
+                                                @*<option  value="value">text</option>*@
                                             </select>
                                         </td>
                                         <td><input id="tableBaslangicTarihi" class="form-control" type="date" /></td>
                                         <td><input id="tableBitisTarihi" class="form-control" type="date" /></td>
                                         <td><input id="tableTamamlanmaTarihi" class="form-control" type="date" /></td>
-                                        <td><div id="tableTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                        <td><div id="tableTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="0" data-range="min"></div></td>
                                     </tr>
                                     <tr>
                                         <th>Procedure</th>
                                         <td>
-                                            <select class="form-control">
-                                                <option id="procedureKisi" value="value">text</option>
+                                            <select id="procedureKisi" class="form-control">
+                                                @*<option  value="value">text</option>*@
                                             </select>
                                         </td>
                                         <td><input id="procedureBaslangicTarihi" class="form-control" type="date" /></td>
                                         <td><input id="procedureBitisTarihi" class="form-control" type="date" /></td>
                                         <td><input id="procedureTamamlanmaTarihi" class="form-control" type="date" /></td>
-                                        <td><div id="procedureTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                        <td><div id="procedureTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="0" data-range="min"></div></td>
                                     </tr>
                                     <tr>
                                         <th>Dll list</th>
                                         <td>
-                                            <select class="form-control">
-                                                <option id="dllListKisi" value="value">text</option>
+                                            <select id="dllListKisi" class="form-control">
+                                                @*<option  value="value">text</option>*@
                                             </select>
                                         </td>
                                         <td><input id="dllListBaslangicTarihi" class="form-control" type="date" /></td>
                                         <td><input id="dllListBitisTarihi" class="form-control" type="date" /></td>
                                         <td><input id="dllListTamamlanmaTarihi" class="form-control" type="date" /></td>
-                                        <td><div id="dllListTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                        <td><div id="dllListTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="0" data-range="min"></div></td>
                                     </tr>
                                     <tr>
                                         <th>Dll işlem</th>
                                         <td>
-                                            <select class="form-control">
-                                                <option id="dllIslemKisi" value="value">text</option>
+                                            <select id="dllIslemKisi" class="form-control">
+                                                @*<option  value="value">text</option>*@
                                             </select>
                                         </td>
                                         <td><input id="dllIslemBaslangicTarihi" class="form-control" type="date" /></td>
                                         <td><input id="dllIslemBitisTarihi" class="form-control" type="date" /></td>
                                         <td><input id="dllIslemTamamlanmaTarihi" class="form-control" type="date" /></td>
-                                        <td><div id="dllIslemTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                        <td><div id="dllIslemTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="0" data-range="min"></div></td>
                                     </tr>
                                     <tr>
                                         <th>Arayüz</th>
                                         <td>
-                                            <select class="form-control">
-                                                <option id="arayuzKisi" value="value">text</option>
+                                            <select id="arayuzKisi"  class="form-control">
+                                                @*<option value="value">text</option>*@
                                             </select>
                                         </td>
                                         <td><input id="arayuzBaslangicTarihi" class="form-control" type="date" /></td>
                                         <td><input id="arayuzBitisTarihi" class="form-control" type="date" /></td>
                                         <td><input id="arayuzTamamlanmaTarihi" class="form-control" type="date" /></td>
-                                        <td><div id="arayuzTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                        <td><div id="arayuzTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="0" data-range="min"></div></td>
                                     </tr>
                                     <tr>
                                         <th>Test</th>
                                         <td>
-                                            <select class="form-control">
-                                                <option id="testKisi" value="value">text</option>
+                                            <select id="testKisi"  class="form-control">
+                                                @*<option value="value">text</option>*@
                                             </select>
                                         </td>
                                         <td><input id="testBaslangicTarihi" class="form-control" type="date" /></td>
                                         <td><input id="testBitisTarihi" class="form-control" type="date" /></td>
                                         <td><input id="testTamamlanmaTarihi" class="form-control" type="date" /></td>
-                                        <td><div id="testTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="70" data-range="min"></div></td>
+                                        <td><div id="testTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="0" data-range="min"></div></td>
                                     </tr>
 
 
