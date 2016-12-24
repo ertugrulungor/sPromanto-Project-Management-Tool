@@ -6,16 +6,16 @@
     <edmx:Diagrams>
       <Diagram DiagramId="9981890a9b7546f88ac6d667cf672bd4" Name="Diagram1">
         <EntityTypeShape EntityType="projeyonetimvtModel.Bildirim" Width="1.5" PointX="3" PointY="9.75" />
-        <EntityTypeShape EntityType="projeyonetimvtModel.Durum" Width="1.5" PointX="3" PointY="3" />
-        <EntityTypeShape EntityType="projeyonetimvtModel.IsTakibi" Width="1.5" PointX="8.25" PointY="13" />
-        <EntityTypeShape EntityType="projeyonetimvtModel.Kullanici" Width="1.5" PointX="0.75" PointY="7" />
-        <EntityTypeShape EntityType="projeyonetimvtModel.KullaniciSurec" Width="1.5" PointX="10.5" PointY="6.625" />
-        <EntityTypeShape EntityType="projeyonetimvtModel.MusteriIsteri" Width="1.5" PointX="8.25" PointY="6.75" />
-        <EntityTypeShape EntityType="projeyonetimvtModel.Oncelik" Width="1.5" PointX="3" PointY="13.375" />
-        <EntityTypeShape EntityType="projeyonetimvtModel.Proje" Width="1.5" PointX="3" PointY="5.375" />
-        <EntityTypeShape EntityType="projeyonetimvtModel.ProjeKullanici" Width="1.5" PointX="8.25" PointY="2.75" />
-        <EntityTypeShape EntityType="projeyonetimvtModel.Rol" Width="1.5" PointX="8.25" PointY="10.75" />
-        <EntityTypeShape EntityType="projeyonetimvtModel.Surec" Width="1.5" PointX="5.25" PointY="5.5" />
+        <EntityTypeShape EntityType="projeyonetimvtModel.Durum" Width="1.5" PointX="6" PointY="12.5" />
+        <EntityTypeShape EntityType="projeyonetimvtModel.IsTakibi" Width="1.5" PointX="8.25" PointY="12.125" />
+        <EntityTypeShape EntityType="projeyonetimvtModel.Kullanici" Width="1.5" PointX="0.75" PointY="7.125" />
+        <EntityTypeShape EntityType="projeyonetimvtModel.KullaniciSurec" Width="1.5" PointX="10.5" PointY="6.75" />
+        <EntityTypeShape EntityType="projeyonetimvtModel.MusteriIsteri" Width="1.5" PointX="5.25" PointY="6.75" />
+        <EntityTypeShape EntityType="projeyonetimvtModel.Oncelik" Width="1.5" PointX="6" PointY="10.125" />
+        <EntityTypeShape EntityType="projeyonetimvtModel.Proje" Width="1.5" PointX="3" PointY="5.5" />
+        <EntityTypeShape EntityType="projeyonetimvtModel.ProjeKullanici" Width="1.5" PointX="5.25" PointY="2.875" />
+        <EntityTypeShape EntityType="projeyonetimvtModel.Rol" Width="1.5" PointX="8.25" PointY="2.875" />
+        <EntityTypeShape EntityType="projeyonetimvtModel.Surec" Width="1.5" PointX="8.25" PointY="5.5" />
         <AssociationConnector Association="projeyonetimvtModel.fk_a" />
         <AssociationConnector Association="projeyonetimvtModel.FK_Surec_Durum" />
         <AssociationConnector Association="projeyonetimvtModel.fk_istakibi" />

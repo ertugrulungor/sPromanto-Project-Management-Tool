@@ -545,9 +545,9 @@
           <Property Name="Tarih" Type="DateTime" Precision="3" />
           <Property Name="ProjeId" Type="Int32" />
           <Property Name="MusteriId" Type="Int32" />
+          <Property Name="Baslik" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Kullanici" Relationship="projeyonetimvtModel.FK_MusteriIsteri_Kullanici" FromRole="MusteriIsteri" ToRole="Kullanici" />
           <NavigationProperty Name="Proje" Relationship="projeyonetimvtModel.FK_MusteriIsteri_Proje" FromRole="MusteriIsteri" ToRole="Proje" />
-          <Property Name="Baslik" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Oncelik">
           <Key>
