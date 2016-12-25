@@ -150,6 +150,7 @@ namespace YPYA.Controllers
                     PlanBitis = Convert.ToDateTime(bitis),
                     OlusturanId = Convert.ToInt32(Session["id"]),
                     OlusturmaTarihi = DateTime.Now,
+                    Tamamlanan = 0,
                     ParentSurecId = parentSurecId,
                     ProjeId = projeId
                 };
@@ -162,6 +163,7 @@ namespace YPYA.Controllers
                     PlanBaslangic = Convert.ToDateTime(baslangic),
                     PlanBitis = Convert.ToDateTime(bitis),
                     OlusturanId = Convert.ToInt32(Session["id"]),
+                    Tamamlanan = 0,
                     OlusturmaTarihi = DateTime.Now,
                     ProjeId = projeId
                 };

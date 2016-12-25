@@ -5,34 +5,34 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="24cac76a3acb42ba958c1f62cabe133f" Name="Diagram1">
-        <EntityTypeShape EntityType="projeyonetimvtModel.Bildirim" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="projeyonetimvtModel.Durum" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="projeyonetimvtModel.IsTakibi" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="projeyonetimvtModel.Kullanici" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="projeyonetimvtModel.KullaniciSurec" Width="1.5" PointX="7.5" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="projeyonetimvtModel.MusteriIsteri" Width="1.5" PointX="5.25" PointY="10" IsExpanded="true" />
-        <EntityTypeShape EntityType="projeyonetimvtModel.Oncelik" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="projeyonetimvtModel.Proje" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="projeyonetimvtModel.ProjeKullanici" Width="1.5" PointX="8.25" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="projeyonetimvtModel.Rol" Width="1.5" PointX="5.25" PointY="13.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="projeyonetimvtModel.Surec" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
-        <AssociationConnector Association="projeyonetimvtModel.fk_a" ManuallyRouted="false" />
-        <AssociationConnector Association="projeyonetimvtModel.FK_Surec_Durum" ManuallyRouted="false" />
-        <AssociationConnector Association="projeyonetimvtModel.fk_istakibi" ManuallyRouted="false" />
-        <AssociationConnector Association="projeyonetimvtModel.fk_f" ManuallyRouted="false" />
-        <AssociationConnector Association="projeyonetimvtModel.FK_KullaniciSurec_Kullanici" ManuallyRouted="false" />
-        <AssociationConnector Association="projeyonetimvtModel.FK_MusteriIsteri_Kullanici" ManuallyRouted="false" />
-        <AssociationConnector Association="projeyonetimvtModel.FK_Proje_Kullanici" ManuallyRouted="false" />
-        <AssociationConnector Association="projeyonetimvtModel.FK_ProjeKullanici_Kullanici" ManuallyRouted="false" />
-        <AssociationConnector Association="projeyonetimvtModel.FK_Surec_Kullanici" ManuallyRouted="false" />
-        <AssociationConnector Association="projeyonetimvtModel.FK_KullaniciSurec_Rol" ManuallyRouted="false" />
-        <AssociationConnector Association="projeyonetimvtModel.FK_KullaniciSurec_Surec" ManuallyRouted="false" />
-        <AssociationConnector Association="projeyonetimvtModel.FK_MusteriIsteri_Proje" ManuallyRouted="false" />
-        <AssociationConnector Association="projeyonetimvtModel.FK_Surec_Oncelik" ManuallyRouted="false" />
-        <AssociationConnector Association="projeyonetimvtModel.FK_ProjeKullanici_Proje" ManuallyRouted="false" />
-        <AssociationConnector Association="projeyonetimvtModel.FK_Surec_Proje" ManuallyRouted="false" />
-        <AssociationConnector Association="projeyonetimvtModel.FK_Surec_Surec" ManuallyRouted="false" />
-        </Diagram>
+        <EntityTypeShape EntityType="projeyonetimvtModel.Bildirim" Width="1.5" PointX="3" PointY="7.125" />
+        <EntityTypeShape EntityType="projeyonetimvtModel.Durum" Width="1.5" PointX="3" PointY="4.25" />
+        <EntityTypeShape EntityType="projeyonetimvtModel.IsTakibi" Width="1.5" PointX="5.25" PointY="0.75" />
+        <EntityTypeShape EntityType="projeyonetimvtModel.Kullanici" Width="1.5" PointX="0.75" PointY="8.625" />
+        <EntityTypeShape EntityType="projeyonetimvtModel.KullaniciSurec" Width="1.5" PointX="7.5" PointY="5.625" />
+        <EntityTypeShape EntityType="projeyonetimvtModel.MusteriIsteri" Width="1.5" PointX="8.25" PointY="9.875" />
+        <EntityTypeShape EntityType="projeyonetimvtModel.Oncelik" Width="1.5" PointX="3" PointY="1.5" />
+        <EntityTypeShape EntityType="projeyonetimvtModel.Proje" Width="1.5" PointX="3" PointY="10.25" />
+        <EntityTypeShape EntityType="projeyonetimvtModel.ProjeKullanici" Width="1.5" PointX="5.25" PointY="10" />
+        <EntityTypeShape EntityType="projeyonetimvtModel.Rol" Width="1.5" PointX="5.25" PointY="13.625" />
+        <EntityTypeShape EntityType="projeyonetimvtModel.Surec" Width="1.5" PointX="5.25" PointY="3.875" />
+        <AssociationConnector Association="projeyonetimvtModel.fk_a" />
+        <AssociationConnector Association="projeyonetimvtModel.FK_Surec_Durum" />
+        <AssociationConnector Association="projeyonetimvtModel.fk_istakibi" />
+        <AssociationConnector Association="projeyonetimvtModel.fk_f" />
+        <AssociationConnector Association="projeyonetimvtModel.FK_KullaniciSurec_Kullanici" />
+        <AssociationConnector Association="projeyonetimvtModel.FK_MusteriIsteri_Kullanici" />
+        <AssociationConnector Association="projeyonetimvtModel.FK_Proje_Kullanici" />
+        <AssociationConnector Association="projeyonetimvtModel.FK_ProjeKullanici_Kullanici" />
+        <AssociationConnector Association="projeyonetimvtModel.FK_Surec_Kullanici" />
+        <AssociationConnector Association="projeyonetimvtModel.FK_KullaniciSurec_Rol" />
+        <AssociationConnector Association="projeyonetimvtModel.FK_KullaniciSurec_Surec" />
+        <AssociationConnector Association="projeyonetimvtModel.FK_MusteriIsteri_Proje" />
+        <AssociationConnector Association="projeyonetimvtModel.FK_Surec_Oncelik" />
+        <AssociationConnector Association="projeyonetimvtModel.FK_ProjeKullanici_Proje" />
+        <AssociationConnector Association="projeyonetimvtModel.FK_Surec_Proje" />
+        <AssociationConnector Association="projeyonetimvtModel.FK_Surec_Surec" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

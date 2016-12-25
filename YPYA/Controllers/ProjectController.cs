@@ -349,11 +349,11 @@ namespace YPYA.Controllers
             return Json(Istakipleri);
           
         }
-        public JsonResult IsTakibiKaydet(SurecIstakibi istakibiBilgi ,int surecID)
+        public JsonResult IsTakibiKaydet(SurecIstakibi istakibiBilgi ,int surecID,int projeID)
         {
             List<string> snc = new List<string>();
                        
-            if (bl.KullaniciSurecEkle(istakibiBilgi, surecID) == 1)
+            if (bl.KullaniciSurecEkle(istakibiBilgi, surecID,projeID) == 1)
             {
                 snc.Add("Basarili");
             }

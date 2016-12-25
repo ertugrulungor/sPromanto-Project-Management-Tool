@@ -93,6 +93,24 @@
     <!-- initialize page scripts -->
     <script type="text/javascript">
         $(function () {
+
+            function antixss(deger) {
+                if (deger.indexOf("<script>") != -1 || deger.indexOf("</scrip") != -1) return false
+                else return true;
+            }
+
+            function bosGecme(deger,deger2,deger3) {
+                if (deger.length > 0 && deger2.length > 0 && deger3.length > 0) return true;
+                else if (deger.length == 0 && deger2.length == 0 && deger3.length == 0) return true;
+                else return false;
+            }
+
+            function dateKontrol(deger, deger2) {
+                var zaman = new Date(deger2);
+                var gelenZaman = new Date(deger);
+                if (gelenZaman.setHours(0, 0, 0, 0) < zaman.setHours(0, 0, 0, 0)) return false;
+                else return true;
+            }
             var surecID;
             
             $('.slider').each(function () {
@@ -101,8 +119,16 @@
             });
             $(".app").addClass("expanding");
 
+
             $(".surec").click(function () {
                 
+                $("option#kisi").each(function () {
+                    $(this).remove("option#kisi")
+                });
+                $("input[type=date]").val('');
+                $("div.ui-slider-range").css("width", "0");
+                $("span.ui-slider-handle").css("left", "0");
+
                 console.log("tıklama");
                 var projeID = $("a#proje").attr("projeid");
                 surecID = $(this).attr("id");
@@ -326,10 +352,14 @@
                 });
 
             });
+
             $("#isTakibiKaydet").click(function () {
+
                 console.log("Tıkladı..");
-          
-              
+                var projeID = $("a#proje").attr("projeid");
+                
+
+                
                 var surecID = $(this).attr("surecID");
                 var SurecIstakibi =  {
                     analizKisi: $("#analizKisi option:selected").text(),
@@ -392,26 +422,17 @@
                 $.ajax({
                     type: "POST",//Metodu belirliyoruz POST veya GET olabilir.
                     url: "/Project/IsTakibiKaydet",//Nereye post edileceğini belirliyoruz. Home controller altında "IndexPost" adlı metodumuza gideceğini söyledik
-                    data: { istakibiBilgi: SurecIstakibi, surecID: surecID },
+                    data: { istakibiBilgi: SurecIstakibi, surecID: surecID, projeID: projeID },
                     datatype: "json",//Geri dönecek değerin tipini belirliyoruz. xml, json, script, html bunlardan birini belirleyebiliriz.
                     success: function (data) {//Eğer ajax post işlemi başarılı ise çalışacak fonksiyonumuz. function(data) kısmında ise data dönen değerimiz oluyor.
                         // $('#result').html(data);//Burda ise dönen değeri $('#result') divini seçip .html(data) ile içine basıyoruz.
                        
-                        console.log(data);
+
                     }
 
                 });
 
-
-
             });
-
-  
-
-       
-
-
-
 
         });
 
