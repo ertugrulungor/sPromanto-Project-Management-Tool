@@ -94,10 +94,29 @@
     <script type="text/javascript">
         $(function () {
 
+            function noti(message, type, pos) {
+                var msg = message,
+                  type = type.toLowerCase(),
+                  position = pos;
+                noty({
+                    theme: 'app-noty',
+                    text: msg,
+                    type: type,
+                    timeout: 3000,
+                    layout: position,
+                    closeWith: ['button', 'click'],
+                    animation: {
+                        open: 'animated fadeInDown', // Animate.css class names
+                        close: 'animated fadeOutUp', // Animate.css class names
+                    }
+                });
+            }
+
             function antixss(deger) {
                 if (deger.indexOf("<script>") != -1 || deger.indexOf("</scrip") != -1) return false
                 else return true;
             }
+
 
             function bosGecme(deger,deger2,deger3) {
                 if (deger.length > 0 && deger2.length > 0 && deger3.length > 0) return true;
@@ -128,11 +147,15 @@
                 $("input[type=date]").val('');
                 $("div.ui-slider-range").css("width", "0");
                 $("span.ui-slider-handle").css("left", "0");
+                $("#surecBaslik").val("");
+                $("#projeAdi").val("");
+                $("#sureciOlusturan").val("");
+                $("#surecTamamlama").val("");
 
                 console.log("tıklama");
                 var projeID = $("a#proje").attr("projeid");
                 surecID = $(this).attr("id");
-               
+                $("#surecSil").attr("surecID", surecID);
                 $("#isTakibiKaydet").attr("surecID", surecID);
                 console.log(surecID);
                 $.ajax({
@@ -357,63 +380,121 @@
 
                 console.log("Tıkladı..");
                 var projeID = $("a#proje").attr("projeid");
-                
+  
+                var  AnalizKisi= $("#analizKisi option:selected").text();
+                var  AnalizBaslangicTarihi = $("#analizBaslangicTarihi").val();
+                var  AnalizBitisTarihi= $("#analizBitisTarihi").val();
+                var  AnalizTamamlanmaTarihi= $("#analizTamamlanmaTarihi").val();
+                var AnalizTamamlanmaOrani = $("div#analizTamamlanmaOrani div.ui-slider-range").width();
 
+                var TableKisi=  $("#tableKisi option:selected").text();
+                var TableBaslangicTarihi = $("#tableBaslangicTarihi").val();
+                var TableBitisTarihi=  $("#tableBitisTarihi").val();
+                var TableTamamlanmaTarihi= $("#tableTamamlanmaTarihi").val();
+                var TableTamamlanmaOrani= $("div#tableTamamlanmaOrani div.ui-slider-range").width();
+  
+                var ProcedureKisi=  $("#procedureKisi option:selected").text();
+                var ProcedureBaslangicTarihi=  $("#procedureBaslangicTarihi").val();
+                var ProcedureBitisTarihi=  $("#procedureBitisTarihi").val();
+                var ProcedureTamamlanmaTarihi= $("#procedureTamamlanmaTarihi").val();
+                var ProcedureTamamlanmaOrani = $("div#procedureTamamlanmaOrani div.ui-slider-range").width();
+
+                var DllListKisi=  $("#dllListKisi option:selected").text();
+                var DllListBaslangicTarihi=  $("#dllListBaslangicTarihi").val();
+                var DllListBitisTarihi = $("#dllListBitisTarihi").val();
+                var DllListTamamlanmaTarihi= $("#dllListTamamlanmaTarihi").val();
+                var DllListTamamlanmaOrani = $("div#dllListTamamlanmaOrani div.ui-slider-range").width();
+
+                var DllIslemKisi=  $("#dllIslemKisi option:selected").text();
+                var DllIslemBaslangicTarihi=  $("#dllIslemBaslangicTarihi").val();
+                var DllIslemBitisTarihi=  $("#dllIslemBitisTarihi").val();
+                var DllIslemTamamlanmaTarihi= $("#dllIslemTamamlanmaTarihi").val();
+                var DllIslemTamamlanmaOrani = $("div#dllIslemTamamlanmaOrani div.ui-slider-range").width();
+
+                var ArayuzKisi=  $("#arayuzKisi option:selected").text();
+                var ArayuzBaslangicTarihi=  $("#arayuzBaslangicTarihi").val();
+                var ArayuzBitisTarihi=  $("#arayuzBitisTarihi").val();
+                var ArayuzTamamlanmaTarihi= $("#arayuzTamamlanmaTarihi").val(); 
+                var ArayuzTamamlanmaOrani = $("div#arayuzTamamlanmaOrani div.ui-slider-range").width();
+                
+                var TestKisi=  $("#testKisi option:selected").text();
+                var TestBaslangicTarihi= $("#testBaslangicTarihi").val();
+                var TestBitisTarihi=  $("#testBitisTarihi").val();
+                var TestTamamlanmaTarihi= $("#testTamamlanmaTarihi").val();
+                var TestTamamlanmaOrani = $("div#testTamamlanmaOrani div.ui-slider-range").width();
                 
                 var surecID = $(this).attr("surecID");
-                var SurecIstakibi =  {
-                    analizKisi: $("#analizKisi option:selected").text(),
-                    analizBaslangicTarihi: $("#analizBaslangicTarihi").val(),
-                    analizBitisTarihi: $("#analizBitisTarihi").val(),
-                    analizTamamlanmaTarihi: $("#analizTamamlanmaTarihi").val(),
-                    analizTamamlanmaOrani: $("div#analizTamamlanmaOrani div.ui-slider-range").width(),
-                    
 
-                    tableKisi:  $("#tableKisi option:selected").text() ,
-                    tableBaslangicTarihi:  $("#tableBaslangicTarihi").val() ,
-                    tableBitisTarihi:  $("#tableBitisTarihi").val() ,
-                    tableTamamlanmaTarihi: $("#tableTamamlanmaTarihi").val(),
-                    tableTamamlanmaOrani: $("div#tableTamamlanmaOrani div.ui-slider-range").width(),
-                    
+                //if (antixss(AnalizKisi) && antixss(AnalizBaslangicTarihi) && antixss(AnalizBitisTarihi) && antixss(AnalizTamamlanmaTarihi) && antixss(AnalizTamamlanmaOrani)
+                //    && antixss(TableKisi) && antixss(TableBaslangicTarihi) && antixss(TableBitisTarihi) && antixss(TableTamamlanmaTarihi) && antixss(TableTamamlanmaOrani)
+                //    && antixss(ProcedureKisi) && antixss(ProcedureBaslangicTarihi) && antixss(ProcedureBitisTarihi) && antixss(ProcedureTamamlanmaTarihi) && antixss(ProcedureTamamlanmaOrani)
+                //    && antixss(DllListKisi) && antixss(DllListBaslangicTarihi) && antixss(DllListBitisTarihi) && antixss(DllListTamamlanmaTarihi) && antixss(DllListTamamlanmaOrani)
+                //    && antixss(DllIslemKisi) && antixss(DllIslemBaslangicTarihi) && antixss(DllIslemBitisTarihi) && antixss(DllIslemTamamlanmaTarihi) && antixss(DllIslemTamamlanmaOrani)
+                //    && antixss(ArayuzKisi) && antixss(ArayuzBaslangicTarihi) && antixss(ArayuzBitisTarihi) && antixss(ArayuzTamamlanmaTarihi) && antixss(ArayuzTamamlanmaOrani)
+                //    && antixss(TestKisi) && antixss(TestBaslangicTarihi) && antixss(TestBitisTarihi) && antixss(TestTamamlanmaTarihi) && antixss(TestTamamlanmaOrani))
+                // {
+                //        if (dateKontrol(AnalizBaslangicTarihi, new Date()) && (dateKontrol(TableBaslangicTarihi, new Date())) && (dateKontrol(ProcedureBaslangicTarihi, new Date()))
+                //            && (dateKontrol(DllListBaslangicTarihi, new Date())) && (dateKontrol(DllIslemBaslangicTarihi, new Date())) && (dateKontrol(ArayuzBaslangicTarihi, new Date())) && (dateKontrol(TestBaslangicTarihi, new Date())))
+                //        {
+                //            if (dateKontrol(AnalizBitisTarihi, AnalizBaslangicTarihi) && dateKontrol(TableBitisTarihi, TableBaslangicTarihi) && dateKontrol(ProcedureBitisTarihi, ProcedureBaslangicTarihi)
+                //               && dateKontrol(DllListBitisTarihi, DllListBaslangicTarihi) && dateKontrol(DllIslemBitisTarihi, DllIslemBaslangicTarihi) && dateKontrol(ArayuzBitisTarihi, ArayuzBaslangicTarihi) && dateKontrol(TestBitisTarihi, TestBaslangicTarihi))
+                //            {
 
-                    procedureKisi:  $("#procedureKisi option:selected").text() ,
-                    procedureBaslangicTarihi:  $("#procedureBaslangicTarihi").val() ,
-                    procedureBitisTarihi:  $("#procedureBitisTarihi").val() ,
-                    procedureTamamlanmaTarihi: $("#procedureTamamlanmaTarihi").val(),
-                    procedureTamamlanmaOrani: $("div#procedureTamamlanmaOrani div.ui-slider-range").width(),
-                       
-                    
+                //            } else {
+                //                noti("Bitiş tarihleri başlangıç tarihinden önce olamaz", "error", "top");
+                //            }
 
+                //        } else {
+                //            noti("Başlangıç tarihileri bugünden önce olamaz", "error", "top");
+                //        }
 
-                    dllListKisi:  $("#dllListKisi option:selected").text() ,
-                    dllListBaslangicTarihi:  $("#dllListBaslangicTarihi").val() ,
-                    dllListBitisTarihi:  $("#dllListBitisTarihi").val() ,
-                    dllListTamamlanmaTarihi: $("#dllListTamamlanmaTarihi").val(),
-                    dllListTamamlanmaOrani:  $("div#dllListTamamlanmaOrani div.ui-slider-range").width(),
-                       
-                   
+                // } else {
+                //    noti("Yanlış girdi denemesi", "error", "top");
+                //}
 
-                    dllIslemKisi:  $("#dllIslemKisi option:selected").text() ,
-                    dllIslemBaslangicTarihi:  $("#dllIslemBaslangicTarihi").val() ,
-                    dllIslemBitisTarihi:  $("#dllIslemBitisTarihi").val() ,
-                    dllIslemTamamlanmaTarihi: $("#dllIslemTamamlanmaTarihi").val(),
-                    dllIslemTamamlanmaOrani:  $("div#dllIslemTamamlanmaOrani div.ui-slider-range").width(),
-                       
+                var SurecIstakibi = {
 
+                    analizKisi: AnalizKisi,
+                    analizBaslangicTarihi: AnalizBaslangicTarihi,
+                    analizBitisTarihi: AnalizBitisTarihi,
+                    analizTamamlanmaTarihi: AnalizTamamlanmaTarihi,
+                    analizTamamlanmaOrani: AnalizTamamlanmaOrani,
 
-                    arayuzKisi:  $("#arayuzKisi option:selected").text() ,
-                    arayuzBaslangicTarihi:  $("#arayuzBaslangicTarihi").val() ,
-                    arayuzBitisTarihi:  $("#arayuzBitisTarihi").val() ,
-                    arayuzTamamlanmaTarihi: $("#arayuzTamamlanmaTarihi").val(),   
-                    arayuzTamamlanmaOrani: $("div#arayuzTamamlanmaOrani div.ui-slider-range").width(),
-                        
-                   
+                    tableKisi: TableKisi,
+                    tableBaslangicTarihi: TableBaslangicTarihi,
+                    tableBitisTarihi: TableBitisTarihi,
+                    tableTamamlanmaTarihi: TableTamamlanmaTarihi,
+                    tableTamamlanmaOrani: TableTamamlanmaOrani,
 
-                    testKisi:  $("#testKisi option:selected").text() ,
-                    testBaslangicTarihi:  $("#testBaslangicTarihi").val() ,
-                    testBitisTarihi:  $("#testBitisTarihi").val() ,
-                    testTamamlanmaTarihi: $("#testTamamlanmaTarihi").val(),
-                    testTamamlanmaOrani: $("div#testTamamlanmaOrani div.ui-slider-range").width(),
+                    procedureKisi:  ProcedureKisi,
+                    procedureBaslangicTarihi:  ProcedureBaslangicTarihi,
+                    procedureBitisTarihi: ProcedureBitisTarihi,
+                    procedureTamamlanmaTarihi: ProcedureTamamlanmaTarihi,
+                    procedureTamamlanmaOrani: ProcedureTamamlanmaOrani,
+
+                    dllListKisi: DllListKisi,
+                    dllListBaslangicTarihi: DllListBaslangicTarihi,
+                    dllListBitisTarihi: DllListBitisTarihi,
+                    dllListTamamlanmaTarihi: DllListTamamlanmaTarihi,
+                    dllListTamamlanmaOrani:  DllListTamamlanmaOrani,
+
+                    dllIslemKisi: DllIslemKisi,
+                    dllIslemBaslangicTarihi: DllIslemBaslangicTarihi,
+                    dllIslemBitisTarihi: DllIslemBitisTarihi,
+                    dllIslemTamamlanmaTarihi: DllIslemTamamlanmaTarihi,
+                    dllIslemTamamlanmaOrani: DllIslemTamamlanmaOrani,
+
+                    arayuzKisi: ArayuzKisi,
+                    arayuzBaslangicTarihi: ArayuzBaslangicTarihi,
+                    arayuzBitisTarihi: ArayuzBitisTarihi,
+                    arayuzTamamlanmaTarihi: ArayuzTamamlanmaTarihi,
+                    arayuzTamamlanmaOrani: ArayuzTamamlanmaOrani,
+
+                    testKisi: TestKisi,
+                    testBaslangicTarihi: TestBaslangicTarihi,
+                    testBitisTarihi: TestBitisTarihi,
+                    testTamamlanmaTarihi: TestTamamlanmaTarihi,
+                    testTamamlanmaOrani: TestTamamlanmaOrani,
                   
                    
                 };
@@ -423,6 +504,9 @@
                     type: "POST",//Metodu belirliyoruz POST veya GET olabilir.
                     url: "/Project/IsTakibiKaydet",//Nereye post edileceğini belirliyoruz. Home controller altında "IndexPost" adlı metodumuza gideceğini söyledik
                     data: { istakibiBilgi: SurecIstakibi, surecID: surecID, projeID: projeID },
+                    beforeSend: function () {
+                       // $("#isTakibiKaydet").append()  //loading simgesi gösterilecek
+                    },
                     datatype: "json",//Geri dönecek değerin tipini belirliyoruz. xml, json, script, html bunlardan birini belirleyebiliriz.
                     success: function (data) {//Eğer ajax post işlemi başarılı ise çalışacak fonksiyonumuz. function(data) kısmında ise data dönen değerimiz oluyor.
                         // $('#result').html(data);//Burda ise dönen değeri $('#result') divini seçip .html(data) ile içine basıyoruz.
@@ -432,6 +516,13 @@
 
                 });
 
+            });
+
+            $("#surecSil").click(function () {
+                var projeID = $("a#proje").attr("projeid");
+                var surecID = $(this).attr("surecID");
+                
+                
             });
 
         });
@@ -587,7 +678,8 @@
             <div class="card">
                 <div class="card-block">
                     @*<button class="btn btn-success" id="isTakibiCek" >İş Takibi Çek</button>*@
-                    <button class="btn btn-danger" id="isTakibiKaydet">Kaydet</button>
+                    <button class="btn btn-success" id="isTakibiKaydet">Kaydet</button>
+                    <button class="btn btn-danger" id="surecSil">Süreci Sil</button>
                 </div>
             </div>
 

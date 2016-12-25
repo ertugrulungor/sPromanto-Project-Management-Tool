@@ -306,5 +306,10 @@ namespace YPYA.Bl
             }
         }
 
+        public int SurecSilme(int surecID)
+        {
+
+            return 1;
+        }
     }
 }

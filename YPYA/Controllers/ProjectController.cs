@@ -349,6 +349,17 @@ namespace YPYA.Controllers
             return Json(Istakipleri);
           
         }
+        public JsonResult SurecSil(int surecID)
+        {
+            List<string> snc = new List<string>();
+
+            if (bl.SurecSilme(surecID) == 1)
+            {
+                snc.Add("Basarili");
+            }
+            return Json(snc);
+
+        }
         public JsonResult IsTakibiKaydet(SurecIstakibi istakibiBilgi ,int surecID,int projeID)
         {
             List<string> snc = new List<string>();
@@ -357,9 +368,6 @@ namespace YPYA.Controllers
             {
                 snc.Add("Basarili");
             }
-
-
-
             return Json(snc);
         }
     }
