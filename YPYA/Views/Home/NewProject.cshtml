@@ -13,7 +13,7 @@
 }
 @{
     ViewBag.Title = "Yeni Proje";
-    string ad = "", baslangic = "", bitis = "";
+    string ad = "", baslangic = "", bitis = "", not = "";
     int butce = 0;
     int projeId=0;
     if(ViewBag.projGuncelle != null)
@@ -117,6 +117,7 @@
                                             <input type="number" value="@butce" class="form-control" id="butce" placeholder="Bütçe">
                                         </div>
                                     </div>
+                                    
                                 </div>
                             </div>
                             <!-- END STEP CONTENT-->
@@ -148,6 +149,12 @@
                                 Planlanan bitis tarihi
                             </label>
                             <input class="form-control" id="surecbitis" type="date" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">
+                                Not
+                            </label>
+                            <textarea id="not" class="form-control"></textarea>
                         </div>
                         <div class="form-group">
                             <label id="altSurecSecim" class="custom-control custom-checkbox">
@@ -374,9 +381,9 @@
                 });
             }
 
-            function VeriKaydet(levelKontrol,baslik,baslangic,bitis,parentSurecId,projeId,kontrol) {
+            function VeriKaydet(levelKontrol,baslik,baslangic,bitis,parentSurecId,projeId,not,kontrol) {
                 if (levelKontrol) {
-                    $.post(surecOlustur, { baslik: baslik, baslangic: baslangic, bitis: bitis, parentSurecId: parentSurecId, projeId: projeId, kontrol:kontrol }, function (data) {
+                    $.post(surecOlustur, { baslik: baslik, baslangic: baslangic, bitis: bitis, parentSurecId: parentSurecId, projeId: projeId, kontrol:kontrol,not:not }, function (data) {
                         if (data.basari == 1) {
                             surecleriCek(projeId);
                             $("#surecBaslik").val("");
@@ -400,8 +407,10 @@
                 var bitis = $("#surecbitis").val();
                 var parentSurecId = 0;
                 var levelKontrol = true;
+                var not = $("#not").val();
 
-                if (bosGecme(baslik) && bosGecme(baslangic) && bosGecme(bitis) && antixss(baslik) && antixss(baslangic) && antixss(bitis)) {
+
+                if (bosGecme(baslik) && bosGecme(baslangic) && bosGecme(bitis) && bosGecme(not) && antixss(baslik) && antixss(baslangic) && antixss(bitis) && antixss(not)) {
                     if (dateKontrol(baslangic, new Date())) {
                         if (dateKontrol(bitis, baslangic)) {
                             if ($(".custom-control-input").is(':checked')) {
@@ -426,13 +435,13 @@
                                         html: true
                                     }, function (isConfirm) {
                                         if (isConfirm) {
-                                            VeriKaydet(levelKontrol, baslik, baslangic, bitis, parentSurecId, projeId,2);
+                                            VeriKaydet(levelKontrol, baslik, baslangic, bitis, parentSurecId, projeId,not,2);
                                         } else {
-                                            VeriKaydet(levelKontrol, baslik, baslangic, bitis, parentSurecId, projeId,1);
+                                            VeriKaydet(levelKontrol, baslik, baslangic, bitis, parentSurecId, projeId,not,1);
                                         }
                                     });
                                 }else{
-                                    VeriKaydet(levelKontrol,baslik,baslangic,bitis,parentSurecId,projeId,0);
+                                    VeriKaydet(levelKontrol,baslik,baslangic,bitis,parentSurecId,projeId,not,0);
                                 }
                                 
                             });

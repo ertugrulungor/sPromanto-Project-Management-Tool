@@ -119,6 +119,7 @@
           <Property Name="OlusturmaTarihi" Type="datetime" />
           <Property Name="ProjeId" Type="int" />
           <Property Name="haveChild" Type="bit" />
+          <Property Name="Note" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="fk_a">
           <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="0..1" />
@@ -403,7 +404,6 @@
           <EntitySet Name="KullaniciSurecs" EntityType="projeyonetimvtModel.KullaniciSurec" />
           <EntitySet Name="MusteriIsteris" EntityType="projeyonetimvtModel.MusteriIsteri" />
           <EntitySet Name="Onceliks" EntityType="projeyonetimvtModel.Oncelik" />
-          <EntitySet Name="Projes" EntityType="projeyonetimvtModel.Proje" />
           <EntitySet Name="ProjeKullanicis" EntityType="projeyonetimvtModel.ProjeKullanici" />
           <EntitySet Name="Rols" EntityType="projeyonetimvtModel.Rol" />
           <EntitySet Name="Surecs" EntityType="projeyonetimvtModel.Surec" />
@@ -419,10 +419,6 @@
             <End Role="IsTakibi" EntitySet="IsTakibis" />
             <End Role="KullaniciSurec" EntitySet="KullaniciSurecs" />
           </AssociationSet>
-          <AssociationSet Name="fk_f" Association="projeyonetimvtModel.fk_f">
-            <End Role="Kullanici" EntitySet="Kullanicis" />
-            <End Role="Proje" EntitySet="Projes" />
-          </AssociationSet>
           <AssociationSet Name="FK_KullaniciSurec_Kullanici" Association="projeyonetimvtModel.FK_KullaniciSurec_Kullanici">
             <End Role="Kullanici" EntitySet="Kullanicis" />
             <End Role="KullaniciSurec" EntitySet="KullaniciSurecs" />
@@ -430,10 +426,6 @@
           <AssociationSet Name="FK_MusteriIsteri_Kullanici" Association="projeyonetimvtModel.FK_MusteriIsteri_Kullanici">
             <End Role="Kullanici" EntitySet="Kullanicis" />
             <End Role="MusteriIsteri" EntitySet="MusteriIsteris" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Proje_Kullanici" Association="projeyonetimvtModel.FK_Proje_Kullanici">
-            <End Role="Kullanici" EntitySet="Kullanicis" />
-            <End Role="Proje" EntitySet="Projes" />
           </AssociationSet>
           <AssociationSet Name="FK_ProjeKullanici_Kullanici" Association="projeyonetimvtModel.FK_ProjeKullanici_Kullanici">
             <End Role="Kullanici" EntitySet="Kullanicis" />
@@ -451,13 +443,26 @@
             <End Role="Surec" EntitySet="Surecs" />
             <End Role="KullaniciSurec" EntitySet="KullaniciSurecs" />
           </AssociationSet>
-          <AssociationSet Name="FK_MusteriIsteri_Proje" Association="projeyonetimvtModel.FK_MusteriIsteri_Proje">
-            <End Role="Proje" EntitySet="Projes" />
-            <End Role="MusteriIsteri" EntitySet="MusteriIsteris" />
-          </AssociationSet>
           <AssociationSet Name="FK_Surec_Oncelik" Association="projeyonetimvtModel.FK_Surec_Oncelik">
             <End Role="Oncelik" EntitySet="Onceliks" />
             <End Role="Surec" EntitySet="Surecs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Surec_Surec" Association="projeyonetimvtModel.FK_Surec_Surec">
+            <End Role="Surec" EntitySet="Surecs" />
+            <End Role="Surec1" EntitySet="Surecs" />
+          </AssociationSet>
+          <EntitySet Name="Projes" EntityType="projeyonetimvtModel.Proje" />
+          <AssociationSet Name="fk_f" Association="projeyonetimvtModel.fk_f">
+            <End Role="Kullanici" EntitySet="Kullanicis" />
+            <End Role="Proje" EntitySet="Projes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proje_Kullanici" Association="projeyonetimvtModel.FK_Proje_Kullanici">
+            <End Role="Kullanici" EntitySet="Kullanicis" />
+            <End Role="Proje" EntitySet="Projes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MusteriIsteri_Proje" Association="projeyonetimvtModel.FK_MusteriIsteri_Proje">
+            <End Role="Proje" EntitySet="Projes" />
+            <End Role="MusteriIsteri" EntitySet="MusteriIsteris" />
           </AssociationSet>
           <AssociationSet Name="FK_ProjeKullanici_Proje" Association="projeyonetimvtModel.FK_ProjeKullanici_Proje">
             <End Role="Proje" EntitySet="Projes" />
@@ -466,10 +471,6 @@
           <AssociationSet Name="FK_Surec_Proje" Association="projeyonetimvtModel.FK_Surec_Proje">
             <End Role="Proje" EntitySet="Projes" />
             <End Role="Surec" EntitySet="Surecs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Surec_Surec" Association="projeyonetimvtModel.FK_Surec_Surec">
-            <End Role="Surec" EntitySet="Surecs" />
-            <End Role="Surec1" EntitySet="Surecs" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Bildirim">
@@ -514,12 +515,12 @@
           <Property Name="Adsoyad" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="Tarih" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Bildirims" Relationship="projeyonetimvtModel.fk_a" FromRole="Kullanici" ToRole="Bildirim" />
-          <NavigationProperty Name="Projes" Relationship="projeyonetimvtModel.fk_f" FromRole="Kullanici" ToRole="Proje" />
           <NavigationProperty Name="KullaniciSurecs" Relationship="projeyonetimvtModel.FK_KullaniciSurec_Kullanici" FromRole="Kullanici" ToRole="KullaniciSurec" />
           <NavigationProperty Name="MusteriIsteris" Relationship="projeyonetimvtModel.FK_MusteriIsteri_Kullanici" FromRole="Kullanici" ToRole="MusteriIsteri" />
-          <NavigationProperty Name="Projes1" Relationship="projeyonetimvtModel.FK_Proje_Kullanici" FromRole="Kullanici" ToRole="Proje" />
           <NavigationProperty Name="ProjeKullanicis" Relationship="projeyonetimvtModel.FK_ProjeKullanici_Kullanici" FromRole="Kullanici" ToRole="ProjeKullanici" />
           <NavigationProperty Name="Surecs" Relationship="projeyonetimvtModel.FK_Surec_Kullanici" FromRole="Kullanici" ToRole="Surec" />
+          <NavigationProperty Name="Projes" Relationship="projeyonetimvtModel.fk_f" FromRole="Kullanici" ToRole="Proje" />
+          <NavigationProperty Name="Projes1" Relationship="projeyonetimvtModel.FK_Proje_Kullanici" FromRole="Kullanici" ToRole="Proje" />
         </EntityType>
         <EntityType Name="KullaniciSurec">
           <Key>
@@ -555,25 +556,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Aciklama" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Surecs" Relationship="projeyonetimvtModel.FK_Surec_Oncelik" FromRole="Oncelik" ToRole="Surec" />
-        </EntityType>
-        <EntityType Name="Proje">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Baslik" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="OlusturanKullaniciId" Type="Int32" />
-          <Property Name="PlanBaslangic" Type="DateTime" Precision="3" />
-          <Property Name="PlanBitis" Type="DateTime" Precision="3" />
-          <Property Name="Olusturulma" Type="DateTime" Precision="3" />
-          <Property Name="Butce" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="MusteriId" Type="Int32" />
-          <Property Name="Tamamlanan" Type="Int32" />
-          <NavigationProperty Name="Kullanici" Relationship="projeyonetimvtModel.fk_f" FromRole="Proje" ToRole="Kullanici" />
-          <NavigationProperty Name="Kullanici1" Relationship="projeyonetimvtModel.FK_Proje_Kullanici" FromRole="Proje" ToRole="Kullanici" />
-          <NavigationProperty Name="MusteriIsteris" Relationship="projeyonetimvtModel.FK_MusteriIsteri_Proje" FromRole="Proje" ToRole="MusteriIsteri" />
-          <NavigationProperty Name="ProjeKullanicis" Relationship="projeyonetimvtModel.FK_ProjeKullanici_Proje" FromRole="Proje" ToRole="ProjeKullanici" />
-          <NavigationProperty Name="Surecs" Relationship="projeyonetimvtModel.FK_Surec_Proje" FromRole="Proje" ToRole="Surec" />
         </EntityType>
         <EntityType Name="ProjeKullanici">
           <Key>
@@ -615,9 +597,10 @@
           <NavigationProperty Name="Kullanici" Relationship="projeyonetimvtModel.FK_Surec_Kullanici" FromRole="Surec" ToRole="Kullanici" />
           <NavigationProperty Name="KullaniciSurecs" Relationship="projeyonetimvtModel.FK_KullaniciSurec_Surec" FromRole="Surec" ToRole="KullaniciSurec" />
           <NavigationProperty Name="Oncelik" Relationship="projeyonetimvtModel.FK_Surec_Oncelik" FromRole="Surec" ToRole="Oncelik" />
-          <NavigationProperty Name="Proje" Relationship="projeyonetimvtModel.FK_Surec_Proje" FromRole="Surec" ToRole="Proje" />
           <NavigationProperty Name="Surec1" Relationship="projeyonetimvtModel.FK_Surec_Surec" FromRole="Surec" ToRole="Surec1" />
           <NavigationProperty Name="Surec2" Relationship="projeyonetimvtModel.FK_Surec_Surec" FromRole="Surec1" ToRole="Surec" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Proje" Relationship="projeyonetimvtModel.FK_Surec_Proje" FromRole="Surec" ToRole="Proje" />
         </EntityType>
         <Association Name="fk_a">
           <End Type="projeyonetimvtModel.Kullanici" Role="Kullanici" Multiplicity="0..1" />
@@ -655,18 +638,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_f">
-          <End Type="projeyonetimvtModel.Kullanici" Role="Kullanici" Multiplicity="0..1" />
-          <End Type="projeyonetimvtModel.Proje" Role="Proje" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Kullanici">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Proje">
-              <PropertyRef Name="MusteriId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_KullaniciSurec_Kullanici">
           <End Type="projeyonetimvtModel.Kullanici" Role="Kullanici" Multiplicity="0..1" />
           <End Type="projeyonetimvtModel.KullaniciSurec" Role="KullaniciSurec" Multiplicity="*" />
@@ -688,18 +659,6 @@
             </Principal>
             <Dependent Role="MusteriIsteri">
               <PropertyRef Name="MusteriId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Proje_Kullanici">
-          <End Type="projeyonetimvtModel.Kullanici" Role="Kullanici" Multiplicity="0..1" />
-          <End Type="projeyonetimvtModel.Proje" Role="Proje" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Kullanici">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Proje">
-              <PropertyRef Name="OlusturanKullaniciId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -751,18 +710,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MusteriIsteri_Proje">
-          <End Type="projeyonetimvtModel.Proje" Role="Proje" Multiplicity="0..1" />
-          <End Type="projeyonetimvtModel.MusteriIsteri" Role="MusteriIsteri" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Proje">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="MusteriIsteri">
-              <PropertyRef Name="ProjeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Surec_Oncelik">
           <End Type="projeyonetimvtModel.Oncelik" Role="Oncelik" Multiplicity="0..1" />
           <End Type="projeyonetimvtModel.Surec" Role="Surec" Multiplicity="*" />
@@ -772,6 +719,73 @@
             </Principal>
             <Dependent Role="Surec">
               <PropertyRef Name="OncelikId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Surec_Surec">
+          <End Type="projeyonetimvtModel.Surec" Role="Surec" Multiplicity="0..1" />
+          <End Type="projeyonetimvtModel.Surec" Role="Surec1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Surec">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Surec1">
+              <PropertyRef Name="ParentSurecId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Proje">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Baslik" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OlusturanKullaniciId" Type="Int32" />
+          <Property Name="PlanBaslangic" Type="DateTime" Precision="3" />
+          <Property Name="PlanBitis" Type="DateTime" Precision="3" />
+          <Property Name="Olusturulma" Type="DateTime" Precision="3" />
+          <Property Name="Butce" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MusteriId" Type="Int32" />
+          <Property Name="Tamamlanan" Type="Int32" />
+          <NavigationProperty Name="Kullanici" Relationship="projeyonetimvtModel.fk_f" FromRole="Proje" ToRole="Kullanici" />
+          <NavigationProperty Name="Kullanici1" Relationship="projeyonetimvtModel.FK_Proje_Kullanici" FromRole="Proje" ToRole="Kullanici" />
+          <NavigationProperty Name="MusteriIsteris" Relationship="projeyonetimvtModel.FK_MusteriIsteri_Proje" FromRole="Proje" ToRole="MusteriIsteri" />
+          <NavigationProperty Name="ProjeKullanicis" Relationship="projeyonetimvtModel.FK_ProjeKullanici_Proje" FromRole="Proje" ToRole="ProjeKullanici" />
+          <NavigationProperty Name="Surecs" Relationship="projeyonetimvtModel.FK_Surec_Proje" FromRole="Proje" ToRole="Surec" />
+        </EntityType>
+        <Association Name="fk_f">
+          <End Type="projeyonetimvtModel.Kullanici" Role="Kullanici" Multiplicity="0..1" />
+          <End Type="projeyonetimvtModel.Proje" Role="Proje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Proje">
+              <PropertyRef Name="MusteriId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Proje_Kullanici">
+          <End Type="projeyonetimvtModel.Kullanici" Role="Kullanici" Multiplicity="0..1" />
+          <End Type="projeyonetimvtModel.Proje" Role="Proje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Proje">
+              <PropertyRef Name="OlusturanKullaniciId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MusteriIsteri_Proje">
+          <End Type="projeyonetimvtModel.Proje" Role="Proje" Multiplicity="0..1" />
+          <End Type="projeyonetimvtModel.MusteriIsteri" Role="MusteriIsteri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proje">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MusteriIsteri">
+              <PropertyRef Name="ProjeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -798,18 +812,6 @@
             </Principal>
             <Dependent Role="Surec">
               <PropertyRef Name="ProjeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Surec_Surec">
-          <End Type="projeyonetimvtModel.Surec" Role="Surec" Multiplicity="0..1" />
-          <End Type="projeyonetimvtModel.Surec" Role="Surec1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Surec">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Surec1">
-              <PropertyRef Name="ParentSurecId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -893,21 +895,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Projes">
-            <EntityTypeMapping TypeName="projeyonetimvtModel.Proje">
-              <MappingFragment StoreEntitySet="Proje">
-                <ScalarProperty Name="Tamamlanan" ColumnName="Tamamlanan" />
-                <ScalarProperty Name="MusteriId" ColumnName="MusteriId" />
-                <ScalarProperty Name="Butce" ColumnName="Butce" />
-                <ScalarProperty Name="Olusturulma" ColumnName="Olusturulma" />
-                <ScalarProperty Name="PlanBitis" ColumnName="PlanBitis" />
-                <ScalarProperty Name="PlanBaslangic" ColumnName="PlanBaslangic" />
-                <ScalarProperty Name="OlusturanKullaniciId" ColumnName="OlusturanKullaniciId" />
-                <ScalarProperty Name="Baslik" ColumnName="Baslik" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ProjeKullanicis">
             <EntityTypeMapping TypeName="projeyonetimvtModel.ProjeKullanici">
               <MappingFragment StoreEntitySet="ProjeKullanici">
@@ -930,6 +917,7 @@
           <EntitySetMapping Name="Surecs">
             <EntityTypeMapping TypeName="projeyonetimvtModel.Surec">
               <MappingFragment StoreEntitySet="Surec">
+                <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="haveChild" ColumnName="haveChild" />
                 <ScalarProperty Name="ProjeId" ColumnName="ProjeId" />
                 <ScalarProperty Name="OlusturmaTarihi" ColumnName="OlusturmaTarihi" />
@@ -940,6 +928,21 @@
                 <ScalarProperty Name="Tamamlanan" ColumnName="Tamamlanan" />
                 <ScalarProperty Name="PlanBitis" ColumnName="PlanBitis" />
                 <ScalarProperty Name="PlanBaslangic" ColumnName="PlanBaslangic" />
+                <ScalarProperty Name="Baslik" ColumnName="Baslik" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projes">
+            <EntityTypeMapping TypeName="projeyonetimvtModel.Proje">
+              <MappingFragment StoreEntitySet="Proje">
+                <ScalarProperty Name="Tamamlanan" ColumnName="Tamamlanan" />
+                <ScalarProperty Name="MusteriId" ColumnName="MusteriId" />
+                <ScalarProperty Name="Butce" ColumnName="Butce" />
+                <ScalarProperty Name="Olusturulma" ColumnName="Olusturulma" />
+                <ScalarProperty Name="PlanBitis" ColumnName="PlanBitis" />
+                <ScalarProperty Name="PlanBaslangic" ColumnName="PlanBaslangic" />
+                <ScalarProperty Name="OlusturanKullaniciId" ColumnName="OlusturanKullaniciId" />
                 <ScalarProperty Name="Baslik" ColumnName="Baslik" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

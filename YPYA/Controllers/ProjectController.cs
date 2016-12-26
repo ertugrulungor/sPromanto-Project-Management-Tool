@@ -351,8 +351,8 @@ namespace YPYA.Controllers
                 surecPlanlananBaslangic = baslangic,
                 surecPlanlananBitis = bitis,
                 surecTamamlanma = surecBilgi.Tamamlanan,
-                
-                
+                surecNotu = surecBilgi.Note
+
             };
 
             return Json(jsonmodel);

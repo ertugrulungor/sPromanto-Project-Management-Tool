@@ -93,7 +93,7 @@ namespace YPYA.Controllers
             return Json(jsonArray, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult ProjeOlustur(string projeAdi, string baslangic, string bitis, int projeId,int butce)
+        public JsonResult ProjeOlustur(string projeAdi, string baslangic, string bitis, int projeId,int butce,string not)
         {
             Proje p;
             if (projeId == 0)
@@ -162,7 +162,7 @@ namespace YPYA.Controllers
             db.SaveChanges();
         }
 
-        public JsonResult SurecOlustur(string baslik, string baslangic, string bitis, int parentSurecId, int projeId, int kontrol)
+        public JsonResult SurecOlustur(string baslik, string baslangic, string bitis, int parentSurecId, int projeId, string not, int kontrol)
         {
             if(kontrol == 0)
             {
@@ -178,8 +178,11 @@ namespace YPYA.Controllers
                         OlusturmaTarihi = DateTime.Now,
                         Tamamlanan = 0,
                         ParentSurecId = parentSurecId,
-                        ProjeId = projeId
+                        ProjeId = projeId,
+                        Note = not
                     };
+
+                    db.Surecs.Find(parentSurecId).haveChild = true;
                 }
                 else
                 {
@@ -191,13 +194,13 @@ namespace YPYA.Controllers
                         OlusturanId = Convert.ToInt32(Session["id"]),
                         Tamamlanan = 0,
                         OlusturmaTarihi = DateTime.Now,
-                        ProjeId = projeId
+                        ProjeId = projeId,
+                        Note = not
                     };
                 }
 
                 db.Surecs.Add(s);
 
-                db.Surecs.Find(parentSurecId).haveChild = true;
                 db.SaveChanges();
 
                 var jsonModel = new
@@ -222,7 +225,8 @@ namespace YPYA.Controllers
                     OlusturmaTarihi = DateTime.Now,
                     Tamamlanan = 0,
                     ParentSurecId = parentSurecId,
-                    ProjeId = projeId
+                    ProjeId = projeId,
+                    Note = not
                 };
 
                 db.Surecs.Add(s);
@@ -246,7 +250,8 @@ namespace YPYA.Controllers
                     OlusturmaTarihi = DateTime.Now,
                     Tamamlanan = 0,
                     ParentSurecId = parentSurecId,
-                    ProjeId = projeId
+                    ProjeId = projeId,
+                    Note = not
                 };
 
                 db.Surecs.Add(s);
