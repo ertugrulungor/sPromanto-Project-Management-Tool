@@ -75,6 +75,15 @@
         tbody tr th {
             padding-top: 24px !important;
         }
+        .btnSil{
+             position: absolute;
+            right: 0;
+            margin-right: 14px;
+            margin-top: 2px;
+            color:red;
+            width:10px;
+            height:10px;
+        }
     </style>
 }
 
@@ -112,10 +121,7 @@
                 });
             }
 
-            function antixss(deger) {
-                if (deger.indexOf("<script>") != -1 || deger.indexOf("</scrip") != -1) return false
-                else return true;
-            }
+    
 
 
             function bosGecme(deger,deger2,deger3) {
@@ -124,12 +130,7 @@
                 else return false;
             }
 
-            function dateKontrol(deger, deger2) {
-                var zaman = new Date(deger2);
-                var gelenZaman = new Date(deger);
-                if (gelenZaman.setHours(0, 0, 0, 0) < zaman.setHours(0, 0, 0, 0)) return false;
-                else return true;
-            }
+    
             var surecID;
             
             $('.slider').each(function () {
@@ -505,13 +506,14 @@
                     url: "/Project/IsTakibiKaydet",//Nereye post edileceğini belirliyoruz. Home controller altında "IndexPost" adlı metodumuza gideceğini söyledik
                     data: { istakibiBilgi: SurecIstakibi, surecID: surecID, projeID: projeID },
                     beforeSend: function () {
+                        noti("İşlem Gerçekleştiriliyor", "information", "topRight");
                        // $("#isTakibiKaydet").append()  //loading simgesi gösterilecek
                     },
                     datatype: "json",//Geri dönecek değerin tipini belirliyoruz. xml, json, script, html bunlardan birini belirleyebiliriz.
                     success: function (data) {//Eğer ajax post işlemi başarılı ise çalışacak fonksiyonumuz. function(data) kısmında ise data dönen değerimiz oluyor.
                         // $('#result').html(data);//Burda ise dönen değeri $('#result') divini seçip .html(data) ile içine basıyoruz.
                        
-
+                        noti("İşlem Gerçekleştirildi", "success", "topRight");
                     }
 
                 });
@@ -522,6 +524,23 @@
                 var projeID = $("a#proje").attr("projeid");
                 var surecID = $(this).attr("surecID");
                 
+                $.ajax({
+                    type: "POST",//Metodu belirliyoruz POST veya GET olabilir.
+                    url: "/Project/SurecSil",//Nereye post edileceğini belirliyoruz. Home controller altında "IndexPost" adlı metodumuza gideceğini söyledik
+                    data: { surecID: surecID },
+                    beforeSend: function () {
+                        noti("İşlem Gerçekleştiriliyor", "information", "topRight");
+                        // $("#isTakibiKaydet").append()  //loading simgesi gösterilecek
+                    },
+                    datatype: "json",//Geri dönecek değerin tipini belirliyoruz. xml, json, script, html bunlardan birini belirleyebiliriz.
+                    success: function (data) {//Eğer ajax post işlemi başarılı ise çalışacak fonksiyonumuz. function(data) kısmında ise data dönen değerimiz oluyor.
+                        // $('#result').html(data);//Burda ise dönen değeri $('#result') divini seçip .html(data) ile içine basıyoruz.
+
+                        noti("İşlem Gerçekleştirildi", "success", "topRight");
+                    }
+
+                });
+
                 
             });
 
@@ -553,11 +572,13 @@
                 {
                     drm = "surec";
                 }
+                
                 <a id="@i.Id" href="javascript:;" class="column-equal main-process @drm" data-toggle="contact">
                     <div href="#" class="notification-bar-icon">
                         <div><i></i></div>
                     </div>
                     <div class="col v-align-middle contact-details p-l-1">
+                        
                         <span class="bold">@i.Baslik</span>
                         <span class="small">@i.OlusturmaTarihi.Value.ToString("dd-MM-yyyy")</span>
                     </div>
@@ -572,11 +593,13 @@
                     {
                         drm = "surec";
                     }
+                   
                     <a id="@j.Id" href="javascript:;" class="column-equal proces @drm" data-toggle="contact">
                         <div href="#" class="notification-bar-icon">
                             <div><i></i></div>
                         </div>
                         <div class="col v-align-middle contact-details p-l-1">
+                            
                             <span class="bold">@j.Baslik</span>
                             <span class="small">@j.OlusturmaTarihi.Value.ToString("dd-MM-yyyy")</span>
                         </div>
@@ -591,11 +614,13 @@
                         {
                             drm = "surec";
                         }
+                       
                         <a id="@k.Id" href="javascript:;" class="column-equal sub-process @drm" data-toggle="contact">
                             <div href="#" class="notification-bar-icon">
                                 <div><i></i></div>
                             </div>
                             <div class="col v-align-middle contact-details p-l-1">
+                               
                                 <span class="bold">@k.Baslik</span>
                                 <span class="small">@k.OlusturmaTarihi.Value.ToString("dd-MM-yyyy")</span>
                             </div>
@@ -668,7 +693,7 @@
                                     <label for="formGroupExampleInput">
                                         Süreç tamamlanma
                                     </label>
-                                    <progress id="surecTamamlama" class="progress progress-success" style="margin-bottom: 0px;" value="10" max="100"></progress>
+                                    <progress id="surecTamamlama" class="progress progress-success" style="margin-bottom: 0px;" value="0" max="100"></progress>
                                 </fieldset>
                             </div>
                         </div>
