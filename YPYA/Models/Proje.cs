@@ -30,6 +30,7 @@ namespace YPYA.Models
         public Nullable<System.DateTime> Olusturulma { get; set; }
         public Nullable<decimal> Butce { get; set; }
         public Nullable<int> MusteriId { get; set; }
+        public Nullable<int> Tamamlanan { get; set; }
     
         public virtual Kullanici Kullanici { get; set; }
         public virtual Kullanici Kullanici1 { get; set; }

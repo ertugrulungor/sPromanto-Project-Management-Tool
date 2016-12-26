@@ -52,7 +52,7 @@
                 </h4>
                 <p class="card-text projects">
                     <i class="material-icons">group</i> <span>@(i.ProjeKullanicis.Count(x => x.Durum == true) + 1)</span>
-                    <i class="material-icons">timelapse</i> <span>26%</span>
+                    <i class="material-icons">timelapse</i> <span>@i.Tamamlanan %</span>
                 </p>
 
                 @if (i.Surecs.Any())
@@ -102,7 +102,7 @@
                 </h4>
                 <p class="card-text projects">
                     <i class="material-icons">group</i> <span>@(i.Proje.ProjeKullanicis.Count(x => x.Durum == true) + 1)</span>
-                    <i class="material-icons">timelapse</i> <span>26%</span>
+                    <i class="material-icons">timelapse</i> <span>@i.Proje.Tamamlanan %</span>
                 </p>
                 @if (i.Durum == true)
                 {

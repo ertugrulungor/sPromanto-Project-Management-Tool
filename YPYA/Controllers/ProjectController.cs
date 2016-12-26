@@ -5,13 +5,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using YPYA.Models;
+using YPYA.Bl;
 
 namespace YPYA.Controllers
 {
     public class ProjectController : Controller
     {
         projeyonetimvtEntities db = new projeyonetimvtEntities();
-
+        BusinessLayer bl = new BusinessLayer();
         private void sesAta()
         {
             Session["id"] = 3;
@@ -276,15 +277,34 @@ namespace YPYA.Controllers
             return Json(jsonModel);
         }
 
-        public JsonResult SurecBilgileri(int surecID)
+        public JsonResult SurecBilgileri(int surecID, int projeID)
         {
             Surec surecBilgi = new Surec();
             surecBilgi = db.Surecs.Where(x => x.Id == surecID).FirstOrDefault();
 
             string baslangic = surecBilgi.PlanBaslangic?.ToString("yyyy-MM-dd");           
             string bitis = surecBilgi.PlanBitis?.ToString("yyyy-MM-dd");
+
+            List<object> Kisiler = new List<object>();
+            int? musteriID = db.Projes.Where(x => x.Id == projeID).FirstOrDefault().MusteriId;
+            foreach (Kullanici k in db.Kullanicis)
+            {
+                if (k.Id == musteriID)
+                {
+                    continue;
+                }
+                var jsonKisi = new
+                {
+
+                    kisi = k.Adsoyad,
+                    kisiID = k.Id,
+                };
+
+                Kisiler.Add(jsonKisi);
+            }
             var jsonmodel = new {
-                
+
+                surecDetayKisiler = Kisiler,
                 surecBaslik = surecBilgi.Baslik,
                 projeBaslik = surecBilgi.Proje.Baslik,
                 sureciOlusturan = surecBilgi.Proje.Kullanici.Adsoyad,
@@ -299,36 +319,56 @@ namespace YPYA.Controllers
         }
         public JsonResult IsTakibiBilgileri(int surecID)
         {
-            List<object> surecKullaniciler = new List<object>();
-            foreach (KullaniciSurec item in db.KullaniciSurecs.Where(x => x.SurecId == surecID))
-            {
+            List<object> Istakipleri = new List<object>();
+           
 
+            foreach (KullaniciSurec item in db.KullaniciSurecs.Where(x => x.SurecId == surecID))
+            {    
+        
 
                 string surecBaslangic = item.IsTakibi.BaslangicTarihi?.ToString("yyyy-MM-dd");
                 string surecBitis = item.IsTakibi.BitisTarihi?.ToString("yyyy-MM-dd");
                 string surecTamamlanma = item.IsTakibi.TamamlanmaTarihi?.ToString("yyyy-MM-dd");
-          
+                float orn = 0;
+                orn = (float)item.IsTakibi.TamamlanmaOranı * 123;
+                orn = orn / 100;
                 var jsonmodel = new
                 {
-
-                    surecDetayRolAdi = item.Rol.RolAdi,
                     surecDetayKisi = item.Kullanici.Adsoyad,
+                    surecDetayRolAdi = item.Rol.RolAdi,
                     surecDetayBaslangic = surecBaslangic,
+                    surecDetayKisiID = item.KullaniciId,
                     surecDetayBitis = surecBitis,
                     surecDetayTamamlanma = surecTamamlanma,
-                    surecDetayTamamlanmaOrani = item.IsTakibi.TamamlanmaOranı,
+                    surecDetayTamamlanmaOrani = orn,
 
                 };
 
-                surecKullaniciler.Add(jsonmodel);
+                Istakipleri.Add(jsonmodel);
             }
-            return Json(surecKullaniciler);
+            return Json(Istakipleri);
           
         }
-        public JsonResult IsTakibiKaydet(string istakibiBilgi)
+        public JsonResult SurecSil(int surecID)
         {
-            var jsonn = new { };
-            return Json(jsonn);
+            List<string> snc = new List<string>();
+
+            if (bl.SurecSilme(surecID) == 1)
+            {
+                snc.Add("Basarili");
+            }
+            return Json(snc);
+
+        }
+        public JsonResult IsTakibiKaydet(SurecIstakibi istakibiBilgi ,int surecID,int projeID)
+        {
+            List<string> snc = new List<string>();
+                       
+            if (bl.KullaniciSurecEkle(istakibiBilgi, surecID,projeID) == 1)
+            {
+                snc.Add("Basarili");
+            }
+            return Json(snc);
         }
     }
 }

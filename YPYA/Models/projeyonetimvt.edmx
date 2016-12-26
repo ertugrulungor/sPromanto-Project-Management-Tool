@@ -84,6 +84,7 @@
           <Property Name="Olusturulma" Type="datetime" />
           <Property Name="Butce" Type="money" />
           <Property Name="MusteriId" Type="int" />
+          <Property Name="Tamamlanan" Type="int" />
         </EntityType>
         <EntityType Name="ProjeKullanici">
           <Key>
@@ -572,6 +573,7 @@
           <NavigationProperty Name="MusteriIsteris" Relationship="projeyonetimvtModel.FK_MusteriIsteri_Proje" FromRole="Proje" ToRole="MusteriIsteri" />
           <NavigationProperty Name="ProjeKullanicis" Relationship="projeyonetimvtModel.FK_ProjeKullanici_Proje" FromRole="Proje" ToRole="ProjeKullanici" />
           <NavigationProperty Name="Surecs" Relationship="projeyonetimvtModel.FK_Surec_Proje" FromRole="Proje" ToRole="Surec" />
+          <Property Name="Tamamlanan" Type="Int32" />
         </EntityType>
         <EntityType Name="ProjeKullanici">
           <Key>
@@ -894,6 +896,7 @@
           <EntitySetMapping Name="Projes">
             <EntityTypeMapping TypeName="projeyonetimvtModel.Proje">
               <MappingFragment StoreEntitySet="Proje">
+                <ScalarProperty Name="Tamamlanan" ColumnName="Tamamlanan" />
                 <ScalarProperty Name="MusteriId" ColumnName="MusteriId" />
                 <ScalarProperty Name="Butce" ColumnName="Butce" />
                 <ScalarProperty Name="Olusturulma" ColumnName="Olusturulma" />

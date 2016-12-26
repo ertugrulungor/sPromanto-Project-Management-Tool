@@ -158,6 +158,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Bl\BusinessLayer.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\SignController.cs" />
@@ -165,6 +166,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="helper\Yardimci.cs" />
+    <Compile Include="SurecIsTakibi.cs" />
     <Compile Include="Models\Bildirim.cs">
       <DependentUpon>projeyonetimvt.tt</DependentUpon>
     </Compile>
