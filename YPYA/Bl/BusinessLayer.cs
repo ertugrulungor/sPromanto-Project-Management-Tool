@@ -308,8 +308,37 @@ namespace YPYA.Bl
 
         public int SurecSilme(int surecID)
         {
+            using (projeyonetimvtEntities prj = new projeyonetimvtEntities())
+            {
+                Surec src = prj.Surecs.Find(surecID);
+                if (src.ParentSurecId != null)
+                {
+                    foreach (Surec item in prj.Surecs.Where(x => x.ParentSurecId == surecID))
+                    {
+                        if (item.ParentSurecId != null)
+                        {
+                            foreach (Surec i in prj.Surecs.Where(x=>x.ParentSurecId==item.Id))
+                            {
+                                if (i.ParentSurecId != null)
+                                {
+                                    prj.Surecs.Remove(i);
+                                }
 
-            return 1;
+                            }
+                            prj.Surecs.Remove(item);
+                        }
+
+                    }
+                    prj.Surecs.Remove(src);
+                }
+                else
+                {
+                    prj.Surecs.Remove(src);
+                }       
+
+                prj.SaveChanges();
+                return 1;
+            }
         }
     }
 }

@@ -307,7 +307,7 @@ namespace YPYA.Controllers
                 surecDetayKisiler = Kisiler,
                 surecBaslik = surecBilgi.Baslik,
                 projeBaslik = surecBilgi.Proje.Baslik,
-                sureciOlusturan = surecBilgi.Proje.Kullanici.Adsoyad,
+                sureciOlusturan = surecBilgi.Proje.Kullanici1.Adsoyad,
                 surecPlanlananBaslangic = baslangic,
                 surecPlanlananBitis = bitis,
                 surecTamamlanma = surecBilgi.Tamamlanan,
@@ -323,9 +323,7 @@ namespace YPYA.Controllers
            
 
             foreach (KullaniciSurec item in db.KullaniciSurecs.Where(x => x.SurecId == surecID))
-            {    
-        
-
+            { 
                 string surecBaslangic = item.IsTakibi.BaslangicTarihi?.ToString("yyyy-MM-dd");
                 string surecBitis = item.IsTakibi.BitisTarihi?.ToString("yyyy-MM-dd");
                 string surecTamamlanma = item.IsTakibi.TamamlanmaTarihi?.ToString("yyyy-MM-dd");
@@ -363,7 +361,6 @@ namespace YPYA.Controllers
         public JsonResult IsTakibiKaydet(SurecIstakibi istakibiBilgi ,int surecID,int projeID)
         {
             List<string> snc = new List<string>();
-                       
             if (bl.KullaniciSurecEkle(istakibiBilgi, surecID,projeID) == 1)
             {
                 snc.Add("Basarili");
