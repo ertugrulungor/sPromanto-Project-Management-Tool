@@ -226,12 +226,14 @@
     <Content Include="Content\images\slogo.png" />
     <Content Include="Content\images\slogo_white.png" />
     <Content Include="Content\images\spin.svg" />
+    <Content Include="Content\scripts\anychart-bundle.min.js" />
     <Content Include="Content\scripts\constants.js" />
     <Content Include="Content\scripts\helpers\tsf\js\tsf-wizard-plugin.js" />
     <Content Include="Content\scripts\main.js" />
     <Content Include="Content\scripts\noty-defaults.js" />
     <Content Include="Content\scripts\ui\alert.js" />
     <Content Include="Content\scripts\vendor\summernote\dist\summernote.js" />
+    <Content Include="Content\styles\anychart-ui.min.css" />
     <Content Include="Content\styles\app.css" />
     <Content Include="Content\styles\app.skins.css" />
     <Content Include="Content\styles\gsi-step-indicator.css" />
