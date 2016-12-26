@@ -131,6 +131,28 @@ namespace YPYA.Controllers
             else return RedirectToAction("Login", "Sign");
         }
 
+        public ActionResult TeamMember(int? id)
+        {
+            sesAta();
+            if (Session["id"] != null)
+            {
+                int kulId = Convert.ToInt32(Session["id"]);
+                ViewBag.k = db.Kullanicis.FirstOrDefault(x => x.Id == kulId);
+
+                if (id != null)
+                {
+                    Proje p = db.Projes.FirstOrDefault(x => x.Id == id);
+                    ViewBag.proje = p;
+                    ViewBag.projeId = p.Id;
+                    ViewBag.projeAdi = p.Baslik;
+                    return View(db.KullaniciSurecs.Where(x=>x.KullaniciId == kulId && x.Surec.Proje.Id == id));
+                }
+                else
+                    return RedirectToAction("Index", "Home");
+            }
+            else return RedirectToAction("Login", "Sign");
+        }
+
         public PartialViewResult ProjectMenu(int id)
         {
             ViewBag.menuKisi = db.Projes.FirstOrDefault(x => x.Id == id);

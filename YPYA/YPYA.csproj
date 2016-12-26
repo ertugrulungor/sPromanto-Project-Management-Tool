@@ -333,6 +333,7 @@
     <Content Include="Views\Project\InvitePeople.cshtml" />
     <Content Include="Views\Project\Customer.cshtml" />
     <Content Include="Views\Project\AddRequest.cshtml" />
+    <Content Include="Views\Project\TeamMember.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
