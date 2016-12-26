@@ -25,8 +25,6 @@ namespace YPYA.Models
         public string Baslik { get; set; }
         public Nullable<System.DateTime> PlanBaslangic { get; set; }
         public Nullable<System.DateTime> PlanBitis { get; set; }
-        public Nullable<System.DateTime> GercekBaslangic { get; set; }
-        public Nullable<System.DateTime> GercekBitis { get; set; }
         public Nullable<int> Tamamlanan { get; set; }
         public Nullable<int> OlusturanId { get; set; }
         public Nullable<int> DurumId { get; set; }

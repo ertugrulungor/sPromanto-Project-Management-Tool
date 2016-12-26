@@ -1,7 +1,20 @@
-﻿
+﻿@section ustBaslik{
+    <a class="navbar-item navbar-spacer-right navbar-heading hidden-md-down" href="#">
+
+    </a>
+}
+@section menu{
+    <li>
+        <a href="~/Home/NewProject">
+            <i class="material-icons text-brown">add_box</i>
+            <span>Yeni proje oluştur</span>
+        </a>
+    </li>
+}
 @{
     ViewBag.Title = "Yeni Proje";
     string ad = "", baslangic = "", bitis = "";
+    int butce = 0;
     int projeId=0;
     if(ViewBag.projGuncelle != null)
     {
@@ -10,6 +23,7 @@
         baslangic = p.PlanBaslangic.Value.ToString("yyyy-MM-dd");
         bitis = p.PlanBitis.Value.ToString("yyyy-MM-dd");
         projeId = p.Id;
+        butce = Convert.ToInt32(p.Butce.Value);
     }
 }
 <div class="wizards">
@@ -100,7 +114,7 @@
                                         <label for="exampleInputAmount">Bütçe</label>
                                         <div class="input-group">
                                             <div class="input-group-addon">₺</div>
-                                            <input type="number" class="form-control" id="butce" placeholder="Bütçe">
+                                            <input type="number" value="@butce" class="form-control" id="butce" placeholder="Bütçe">
                                         </div>
                                     </div>
                                 </div>
