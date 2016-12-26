@@ -328,7 +328,7 @@ namespace YPYA.Controllers
                 string surecBitis = item.IsTakibi.BitisTarihi?.ToString("yyyy-MM-dd");
                 string surecTamamlanma = item.IsTakibi.TamamlanmaTarihi?.ToString("yyyy-MM-dd");
                 float orn = 0;
-                orn = (float)item.IsTakibi.TamamlanmaOranı * 123;
+                orn = (float)item.IsTakibi.TamamlanmaOranı * 82;
                 orn = orn / 100;
                 var jsonmodel = new
                 {
@@ -352,7 +352,7 @@ namespace YPYA.Controllers
             List<string> snc = new List<string>();
 
             if (bl.SurecSilme(surecID) == 1)
-            {
+            {                                                                    
                 snc.Add("Basarili");
             }
             return Json(snc);
