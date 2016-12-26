@@ -568,12 +568,11 @@
           <Property Name="Olusturulma" Type="DateTime" Precision="3" />
           <Property Name="Butce" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="MusteriId" Type="Int32" />
-          <NavigationProperty Name="Kullanici" Relationship="projeyonetimvtModel.fk_f" FromRole="Proje" ToRole="Kullanici" />
-          <NavigationProperty Name="Kullanici1" Relationship="projeyonetimvtModel.FK_Proje_Kullanici" FromRole="Proje" ToRole="Kullanici" />
-          <NavigationProperty Name="MusteriIsteris" Relationship="projeyonetimvtModel.FK_MusteriIsteri_Proje" FromRole="Proje" ToRole="MusteriIsteri" />
-          <NavigationProperty Name="ProjeKullanicis" Relationship="projeyonetimvtModel.FK_ProjeKullanici_Proje" FromRole="Proje" ToRole="ProjeKullanici" />
-          <NavigationProperty Name="Surecs" Relationship="projeyonetimvtModel.FK_Surec_Proje" FromRole="Proje" ToRole="Surec" />
-          <Property Name="Tamamlanan" Type="Int32" />
+          <NavigationProperty Name="Kullanici" Relationship="Self.fk_f" FromRole="Proje" ToRole="Kullanici" />
+          <NavigationProperty Name="Kullanici1" Relationship="Self.FK_Proje_Kullanici" FromRole="Proje" ToRole="Kullanici" />
+          <NavigationProperty Name="MusteriIsteris" Relationship="Self.FK_MusteriIsteri_Proje" FromRole="Proje" ToRole="MusteriIsteri" />
+          <NavigationProperty Name="ProjeKullanicis" Relationship="Self.FK_ProjeKullanici_Proje" FromRole="Proje" ToRole="ProjeKullanici" />
+          <NavigationProperty Name="Surecs" Relationship="Self.FK_Surec_Proje" FromRole="Proje" ToRole="Surec" />
         </EntityType>
         <EntityType Name="ProjeKullanici">
           <Key>
@@ -896,14 +895,6 @@
           <EntitySetMapping Name="Projes">
             <EntityTypeMapping TypeName="projeyonetimvtModel.Proje">
               <MappingFragment StoreEntitySet="Proje">
-                <ScalarProperty Name="Tamamlanan" ColumnName="Tamamlanan" />
-                <ScalarProperty Name="MusteriId" ColumnName="MusteriId" />
-                <ScalarProperty Name="Butce" ColumnName="Butce" />
-                <ScalarProperty Name="Olusturulma" ColumnName="Olusturulma" />
-                <ScalarProperty Name="PlanBitis" ColumnName="PlanBitis" />
-                <ScalarProperty Name="PlanBaslangic" ColumnName="PlanBaslangic" />
-                <ScalarProperty Name="OlusturanKullaniciId" ColumnName="OlusturanKullaniciId" />
-                <ScalarProperty Name="Baslik" ColumnName="Baslik" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
