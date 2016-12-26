@@ -15,7 +15,7 @@ namespace YPYA.Controllers
         BusinessLayer bl = new BusinessLayer();
         private void sesAta()
         {
-            Session["id"] = 3;
+            Session["id"] = 1;
 
         }
 

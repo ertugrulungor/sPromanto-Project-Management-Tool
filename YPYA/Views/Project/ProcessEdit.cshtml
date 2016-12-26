@@ -162,7 +162,11 @@
                 $.ajax({
                     type: "POST",//Metodu belirliyoruz POST veya GET olabilir.
                     url: "/Project/SurecBilgileri",//Nereye post edileceğini belirliyoruz. Home controller altında "IndexPost" adlı metodumuza gideceğini söyledik
-                    data: { surecID: surecID, projeID: projeID},
+                    data: { surecID: surecID, projeID: projeID },
+                    beforeSend: function () {
+                        noti("İşlem Gerçekleştiriliyor", "information", "topRight");
+                        // $("#isTakibiKaydet").append()  //loading simgesi gösterilecek
+                    },
                     datatype: "json",//Geri dönecek değerin tipini belirliyoruz. xml, json, script, html bunlardan birini belirleyebiliriz.
                     success: function (data) {//Eğer ajax post işlemi başarılı ise çalışacak fonksiyonumuz. function(data) kısmında ise data dönen değerimiz oluyor.
                         // $('#result').html(data);//Burda ise dönen değeri $('#result') divini seçip .html(data) ile içine basıyoruz.
@@ -367,6 +371,7 @@
 
 
                                 }
+                                noti("İşlem Gerçekleştirildi", "success", "topRight");
                             }
 
                         });
@@ -426,32 +431,7 @@
                 
                 var surecID = $(this).attr("surecID");
 
-                //if (antixss(AnalizKisi) && antixss(AnalizBaslangicTarihi) && antixss(AnalizBitisTarihi) && antixss(AnalizTamamlanmaTarihi) && antixss(AnalizTamamlanmaOrani)
-                //    && antixss(TableKisi) && antixss(TableBaslangicTarihi) && antixss(TableBitisTarihi) && antixss(TableTamamlanmaTarihi) && antixss(TableTamamlanmaOrani)
-                //    && antixss(ProcedureKisi) && antixss(ProcedureBaslangicTarihi) && antixss(ProcedureBitisTarihi) && antixss(ProcedureTamamlanmaTarihi) && antixss(ProcedureTamamlanmaOrani)
-                //    && antixss(DllListKisi) && antixss(DllListBaslangicTarihi) && antixss(DllListBitisTarihi) && antixss(DllListTamamlanmaTarihi) && antixss(DllListTamamlanmaOrani)
-                //    && antixss(DllIslemKisi) && antixss(DllIslemBaslangicTarihi) && antixss(DllIslemBitisTarihi) && antixss(DllIslemTamamlanmaTarihi) && antixss(DllIslemTamamlanmaOrani)
-                //    && antixss(ArayuzKisi) && antixss(ArayuzBaslangicTarihi) && antixss(ArayuzBitisTarihi) && antixss(ArayuzTamamlanmaTarihi) && antixss(ArayuzTamamlanmaOrani)
-                //    && antixss(TestKisi) && antixss(TestBaslangicTarihi) && antixss(TestBitisTarihi) && antixss(TestTamamlanmaTarihi) && antixss(TestTamamlanmaOrani))
-                // {
-                //        if (dateKontrol(AnalizBaslangicTarihi, new Date()) && (dateKontrol(TableBaslangicTarihi, new Date())) && (dateKontrol(ProcedureBaslangicTarihi, new Date()))
-                //            && (dateKontrol(DllListBaslangicTarihi, new Date())) && (dateKontrol(DllIslemBaslangicTarihi, new Date())) && (dateKontrol(ArayuzBaslangicTarihi, new Date())) && (dateKontrol(TestBaslangicTarihi, new Date())))
-                //        {
-                //            if (dateKontrol(AnalizBitisTarihi, AnalizBaslangicTarihi) && dateKontrol(TableBitisTarihi, TableBaslangicTarihi) && dateKontrol(ProcedureBitisTarihi, ProcedureBaslangicTarihi)
-                //               && dateKontrol(DllListBitisTarihi, DllListBaslangicTarihi) && dateKontrol(DllIslemBitisTarihi, DllIslemBaslangicTarihi) && dateKontrol(ArayuzBitisTarihi, ArayuzBaslangicTarihi) && dateKontrol(TestBitisTarihi, TestBaslangicTarihi))
-                //            {
 
-                //            } else {
-                //                noti("Bitiş tarihleri başlangıç tarihinden önce olamaz", "error", "top");
-                //            }
-
-                //        } else {
-                //            noti("Başlangıç tarihileri bugünden önce olamaz", "error", "top");
-                //        }
-
-                // } else {
-                //    noti("Yanlış girdi denemesi", "error", "top");
-                //}
 
                 var SurecIstakibi = {
 
