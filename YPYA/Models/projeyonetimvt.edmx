@@ -568,12 +568,12 @@
           <Property Name="Olusturulma" Type="DateTime" Precision="3" />
           <Property Name="Butce" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="MusteriId" Type="Int32" />
+          <Property Name="Tamamlanan" Type="Int32" />
           <NavigationProperty Name="Kullanici" Relationship="projeyonetimvtModel.fk_f" FromRole="Proje" ToRole="Kullanici" />
           <NavigationProperty Name="Kullanici1" Relationship="projeyonetimvtModel.FK_Proje_Kullanici" FromRole="Proje" ToRole="Kullanici" />
           <NavigationProperty Name="MusteriIsteris" Relationship="projeyonetimvtModel.FK_MusteriIsteri_Proje" FromRole="Proje" ToRole="MusteriIsteri" />
           <NavigationProperty Name="ProjeKullanicis" Relationship="projeyonetimvtModel.FK_ProjeKullanici_Proje" FromRole="Proje" ToRole="ProjeKullanici" />
           <NavigationProperty Name="Surecs" Relationship="projeyonetimvtModel.FK_Surec_Proje" FromRole="Proje" ToRole="Surec" />
-          <Property Name="Tamamlanan" Type="Int32" />
         </EntityType>
         <EntityType Name="ProjeKullanici">
           <Key>
@@ -813,7 +813,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
