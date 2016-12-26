@@ -137,6 +137,30 @@ namespace YPYA.Controllers
             };
             return Json(jsonModel, JsonRequestBehavior.AllowGet);
         }
+        public bool SurecKontrol(int surecId)
+        {
+            bool isSurec = false;
+            foreach (KullaniciSurec item in db.KullaniciSurecs)
+            {
+                if (item.SurecId == surecId) 
+                {
+                    isSurec = true;
+                    break;                    
+                }
+            }
+            return isSurec;
+        }
+
+        public void SurecAktar(int surecId,int yeniSurecId)
+        {
+            foreach (KullaniciSurec item in db.KullaniciSurecs.Where(x => x.SurecId == surecId))
+            {
+                item.SurecId = yeniSurecId;
+                db.Entry(item).State = System.Data.Entity.EntityState.Modified;
+
+            }
+
+        }
 
         public JsonResult SurecOlustur(string baslik, string baslangic, string bitis, int parentSurecId, int projeId)
         {
