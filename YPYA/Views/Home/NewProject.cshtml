@@ -374,7 +374,27 @@
                 });
             }
 
+            function VeriKaydet(levelKontrol,baslik,baslangic,bitis,parentSurecId,projeId,kontrol) {
+                if (levelKontrol) {
+                    $.post(surecOlustur, { baslik: baslik, baslangic: baslangic, bitis: bitis, parentSurecId: parentSurecId, projeId: projeId, kontrol:kontrol }, function (data) {
+                        if (data.basari == 1) {
+                            surecleriCek(projeId);
+                            $("#surecBaslik").val("");
+                            $("#surecbaslangic").val("");
+                            $("#surecbitis").val("");
+                            $(".custom-control-input").prop("checked", false);
+                            $(".altsurec").hide();
+                        } else {
+                            noti("Beklenmeyen bir hata oluştu", "error", "top");
+                        }
+                    });
+                } else {
+                    noti("En fazla üçüncü seviye alt süreç ekleyebilirsiniz", "error", "top");
+                }
+            }
+
             $("#surecKayit").click(function () {
+                
                 var baslik = $("#surecBaslik").val();
                 var baslangic = $("#surecbaslangic").val();
                 var bitis = $("#surecbitis").val();
@@ -391,23 +411,32 @@
                                     levelKontrol = false;
                                 }
                             }
-
-                            if (levelKontrol) {
-                                $.post(surecOlustur, { baslik: baslik, baslangic: baslangic, bitis: bitis, parentSurecId: parentSurecId, projeId: projeId }, function (data) {
-                                    if (data.basari == 1) {
-                                        surecleriCek(projeId);
-                                        $("#surecBaslik").val("");
-                                        $("#surecbaslangic").val("");
-                                        $("#surecbitis").val("");
-                                        $(".custom-control-input").prop("checked", false);
-                                        $(".altsurec").hide();
-                                    } else {
-                                        noti("Beklenmeyen bir hata oluştu", "error", "top");
-                                    }
-                                });
-                            } else {
-                                noti("En fazla üçüncü seviye alt süreç ekleyebilirsiniz", "error", "top");
-                            }
+                            $.post('@Url.Action("SurecKontrol","Home")',{surecId:parentSurecId},function(data){
+                                if(data == 1){
+                                    swal({
+                                        title: 'Dikkat?',
+                                        text: 'Bu sürecin is takip bilgileri bulunmaktadır',
+                                        type: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#DD6B55',
+                                        confirmButtonText: 'Yeni sürece aktar',
+                                        cancelButtonText: 'Sil',
+                                        closeOnConfirm: true,
+                                        closeOnCancel: true,
+                                        html: true
+                                    }, function (isConfirm) {
+                                        if (isConfirm) {
+                                            VeriKaydet(levelKontrol, baslik, baslangic, bitis, parentSurecId, projeId,2);
+                                        } else {
+                                            VeriKaydet(levelKontrol, baslik, baslangic, bitis, parentSurecId, projeId,1);
+                                        }
+                                    });
+                                }else{
+                                    VeriKaydet(levelKontrol,baslik,baslangic,bitis,parentSurecId,projeId,0);
+                                }
+                                
+                            });
+                            
                         } else {
                             noti("Bitiş tarihi başlangıç tarihinden önce olamaz", "error", "top");
                         }

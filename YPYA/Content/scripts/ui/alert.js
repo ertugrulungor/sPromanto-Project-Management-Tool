@@ -76,6 +76,27 @@
       });
   });
 
+  $('.demo12').on('click', function () {
+      swal({
+          title: 'Dikkat?',
+          text: 'Bu sürecin is takip bilgileri bulunmaktadır',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#DD6B55',
+          confirmButtonText: 'Yeni sürece aktar',
+          cancelButtonText: 'Sil',
+          closeOnConfirm: false,
+          closeOnCancel: false,
+          html: true
+      }, function (isConfirm) {
+          if (isConfirm) {
+              VeriKaydet(levelKontrol, baslik, baslangic, bitis, parentSurecId, projeId,2   )
+          } else {
+              VeriKaydet(levelKontrol, baslik, baslangic, bitis, parentSurecId, projeId,1);
+          }
+      });
+  });
+
   $('.demo6').on('click', function() {
     swal({
       title: 'Are you sure?',

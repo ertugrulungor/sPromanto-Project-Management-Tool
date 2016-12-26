@@ -141,7 +141,6 @@
 
 
             $(".surec").click(function () {
-                
                 $("option#kisi").each(function () {
                     $(this).remove("option#kisi")
                 });
@@ -155,7 +154,9 @@
 
                 console.log("tıklama");
                 var projeID = $("a#proje").attr("projeid");
+
                 surecID = $(this).attr("id");
+                $("#RaporGit").attr("href", "/Project/Report/" + surecID);
                 $("#surecSil").attr("surecID", surecID);
                 $("#isTakibiKaydet").attr("surecID", surecID);
                 console.log(surecID);
@@ -682,6 +683,7 @@
                     @*<button class="btn btn-success" id="isTakibiCek" >İş Takibi Çek</button>*@
                     <button class="btn btn-success" id="isTakibiKaydet">Kaydet</button>
                     <button class="btn btn-danger" id="surecSil">Süreci Sil</button>
+                    <a class="btn btn-info" id="RaporGit" target="_blank">Raporu Görüntüle</a>
                 </div>
             </div>
 

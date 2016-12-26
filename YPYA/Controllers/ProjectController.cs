@@ -153,6 +153,24 @@ namespace YPYA.Controllers
             else return RedirectToAction("Login", "Sign");
         }
 
+        public ActionResult Report(int? id)
+        {
+            sesAta();
+            if (Session["id"] != null)
+            {
+                int kulId = Convert.ToInt32(Session["id"]);
+                ViewBag.k = db.Kullanicis.FirstOrDefault(x => x.Id == kulId);
+
+                if (id != null)
+                {                
+                    return View(db.Surecs.Find(id));
+                }
+                else
+                    return RedirectToAction("Index", "Home");
+            }
+            else return RedirectToAction("Login", "Sign");
+        }
+
         public PartialViewResult ProjectMenu(int id)
         {
             ViewBag.menuKisi = db.Projes.FirstOrDefault(x => x.Id == id);
