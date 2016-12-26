@@ -15,7 +15,7 @@ namespace YPYA.Controllers
         BusinessLayer bl = new BusinessLayer();
         private void sesAta()
         {
-            Session["id"] = 3;
+            Session["id"] = 1;
 
         }
 
@@ -369,6 +369,34 @@ namespace YPYA.Controllers
                 snc.Add("Basarili");
             }
             return Json(snc);
+        }
+
+        private static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1);
+        public string getGanttData(int projeId)
+        {
+            string json = "[";
+
+            foreach (Surec process in db.Surecs.Where(x => x.ProjeId == projeId))
+            {
+                if (process.ParentSurecId != null)
+                {
+                    json += "{'id':'"+process.Id+"','name':'"+process.Baslik+"','parent':'"+process.ParentSurecId+"','progressValue':'"+process.Tamamlanan+"%','actualStart':"+ (process.PlanBaslangic.Value - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond +", 'actualEnd':"+ (process.PlanBitis.Value - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond + "},";
+                }
+                else
+                {
+                    json += "{'id':'" + process.Id + "','name':'" + process.Baslik + "','progressValue':'" + process.Tamamlanan + "%','actualStart':"+ (process.PlanBaslangic.Value - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond + ", 'actualEnd':"+ (process.PlanBitis.Value - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond + "},";
+                }
+
+                foreach (KullaniciSurec ks in db.KullaniciSurecs.Where(x=>x.SurecId == process.Id))
+                {
+                    json += "{'id':'" + ks.Id + "57790802','name':'" + ks.Rol.RolAdi + "','person':'"+ks.Kullanici.Adsoyad+"','parent':'" + process.Id + "','progressValue':'" + ks.IsTakibi.TamamlanmaOranı + "%','actualStart':" + (ks.IsTakibi.BaslangicTarihi.Value - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond + ", 'actualEnd':" + (ks.IsTakibi.BitisTarihi.Value - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond + "},";
+                }
+            }
+            json = json.Remove(json.Length - 1);
+            json += "]";
+            json = json.Replace("\"", "");
+            json = json.Replace("'", "\"");
+            return json;
         }
     }
 }

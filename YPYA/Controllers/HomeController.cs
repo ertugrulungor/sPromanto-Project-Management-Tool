@@ -13,7 +13,7 @@ namespace YPYA.Controllers
 
         private void sesAta()
         {
-            Session["id"] = 3;
+            Session["id"] = 1;
         }
 
         public ActionResult Index()
