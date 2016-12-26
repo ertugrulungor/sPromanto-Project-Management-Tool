@@ -1,0 +1,167 @@
+﻿@{
+    ViewBag.Title = "Team Member";
+}
+
+@model IEnumerable<YPYA.Models.KullaniciSurec>
+
+@section ustBaslik{
+    <a class="navbar-item navbar-spacer-right navbar-heading hidden-md-down" href="~/Project/Index/     @ViewBag.projeId">
+        <span>@ViewBag.projeAdi</span>
+    </a>
+}
+
+@section pagestyle{
+    <style>
+        .main-panel > .header {
+            color: #fff !important;
+            background-color: #f32c1e !important;
+        }
+
+
+        .main-process {
+            padding: 12px !important;
+        }
+
+        .proces {
+            padding: 5px 43px !important;
+        }
+
+        .sub-process {
+            padding: 5px 74px !important;
+        }
+
+        .notification-bar-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+            .notification-bar-icon div {
+                width: 1.8rem;
+                height: 1.8rem;
+            }
+
+            .notification-bar-icon i {
+                top: 78%;
+                width: 1rem;
+                height: 1rem;
+                left: 78%;
+            }
+
+        .main-process .notification-bar-icon i {
+            background-color: #7fc35c;
+        }
+
+        .proces .notification-bar-icon i {
+            background-color: #d26d54;
+        }
+
+        .sub-process .notification-bar-icon i {
+            background-color: #4cc3f0;
+        }
+
+        tbody tr th {
+            padding-top: 24px !important;
+        }
+
+        .search-box {
+            border: 1px solid #e6e6e6;
+            border-top: 0px;
+            padding: 10px 25px;
+        }
+
+            .search-box:hover {
+                background-color: #f3f3f3;
+            }
+
+        .gizle {
+            display: none;
+        }
+    </style>
+}
+
+@section menu{
+    @Html.Action("ProjectMenu", "Project", new { id = ViewBag.projeId })
+}
+
+@section script{
+    <script src="~/Content/vendor/jquery.ui/ui/widget.js"></script>
+    <script src="~/Content/vendor/jquery.ui/ui/mouse.js"></script>
+    <script src="~/Content/vendor/jquery.ui/ui/slider.js"></script>
+    <script src="~/Content/vendor/jqueryui-touch-punch/jquery.ui.touch-punch.js"></script>
+
+    <script type="text/javascript">
+        $('.slider').each(function () {
+            var data = $(this).data();
+            $(this).slider(data);
+        });
+        $(function () {
+            function antixss(deger) {
+                if (deger.indexOf("<script>") != -1 || deger.indexOf("</scrip") != -1) return false
+                else return true;
+            }
+
+            function noti(message, type, pos) {
+                var msg = message,
+                  type = type.toLowerCase(),
+                  position = pos;
+                noty({
+                    theme: 'app-noty',
+                    text: msg,
+                    type: type,
+                    timeout: 3000,
+                    layout: position,
+                    closeWith: ['button', 'click'],
+                    animation: {
+                        open: 'animated fadeInDown', // Animate.css class names
+                        close: 'animated fadeOutUp', // Animate.css class names
+                    }
+                });
+            }
+        });
+    </script>
+    <!-- end initialize page scripts -->
+
+}
+
+
+@{
+    int surecId = 0;
+    foreach (YPYA.Models.KullaniciSurec ks in Model)
+    {
+        if (surecId != ks.SurecId)
+        {
+            surecId = ks.SurecId.Value;
+            
+            <div class="card">
+                <div class="card-block">
+                    <h5 style="margin-bottom: 17px;"><b>@ks.Surec.Baslik Süreci</b></h5>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Görev</th>
+                                    <th>Başlangıç Tarihi</th>
+                                    <th>Bitiş Tarihi</th>
+                                    <th>Tamamlanma Tarihi</th>
+                                    <th>Tamamlanma Oranı</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (YPYA.Models.KullaniciSurec i in Model.Where(x => x.SurecId == ks.SurecId))
+                                {
+                                    <tr>
+                                        <td style="padding-top: 25px;">@i.Rol.RolAdi</td>
+                                        <td style="padding-top: 25px;">@i.IsTakibi.BaslangicTarihi</td>
+                                        <td style="padding-top: 25px;">@i.IsTakibi.BitisTarihi</td>
+                                        <td><input type="date" class="form-control" value="@i.IsTakibi.TamamlanmaTarihi" /></td>
+                                        <td><div id="arayuzTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="0" data-range="min"></div></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}

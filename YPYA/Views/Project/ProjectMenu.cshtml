@@ -36,3 +36,12 @@ else if (p.Kullanici1.Id == (int)Session["id"])
         </a>
     </li>
 }
+else if (p.ProjeKullanicis.Any(x => x.KullaniciId == (int)Session["id"]))
+{
+    <li>
+        <a href="~/Project/TeamMember/@p.Id">
+            <i class="material-icons">dashboard</i>
+            <span>Süreçlerimi yönet</span>
+        </a>
+    </li>
+}
