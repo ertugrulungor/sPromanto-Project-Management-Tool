@@ -447,5 +447,16 @@ namespace YPYA.Controllers
             json = json.Replace("'", "\"");
             return json;
         }
+
+
+        public JsonResult SurecBilgiKaydet(SurecIstakibi istakibiBilgi,int surecID,int projeID)
+        {
+            List<string> snc = new List<string>();
+            if (bl.SurecBilgiKaydet(istakibiBilgi, surecID, projeID) == 1)
+            {
+                snc.Add("Basarili");
+            }
+            return Json(snc);
+        }
     }
 }

@@ -306,6 +306,116 @@ namespace YPYA.Bl
             }
         }
 
+        public int SurecBilgiKaydet(SurecIstakibi istakibiBilgi ,int surecID,int projeID)
+        {    
+            using (projeyonetimvtEntities prj = new projeyonetimvtEntities())
+            {
+                
+                if (istakibiBilgi.analizKisi != null)
+                {
+                   KullaniciSurec kl= prj.KullaniciSurecs.Where(x => x.SurecId == surecID && x.Rol.RolAdi == "Analiz").FirstOrDefault();
+                    kl.IsTakibi.TamamlanmaOranı = istakibiBilgi.analizTamamlanmaOrani;
+                    DateTime dt = Convert.ToDateTime("01/01/2000");
+                    if (istakibiBilgi.analizTamamlanmaTarihi > dt)
+                    {
+                        kl.IsTakibi.TamamlanmaTarihi = istakibiBilgi.analizTamamlanmaTarihi;
+                    }
+                    prj.Entry(kl).State = System.Data.Entity.EntityState.Modified;
+                    prj.SaveChanges();
+                    SurecOranHesapla(surecID);
+                }
+
+                if (istakibiBilgi.tableKisi != null) 
+                {
+                    KullaniciSurec kl = prj.KullaniciSurecs.Where(x => x.SurecId == surecID && x.Rol.RolAdi == "Table").FirstOrDefault();
+                    kl.IsTakibi.TamamlanmaOranı = istakibiBilgi.tableTamamlanmaOrani;
+                    DateTime dt = Convert.ToDateTime("01/01/2000");
+                    if (istakibiBilgi.tableTamamlanmaTarihi > dt)
+                    {
+                        kl.IsTakibi.TamamlanmaTarihi = istakibiBilgi.tableTamamlanmaTarihi;
+                    }
+                    prj.Entry(kl).State = System.Data.Entity.EntityState.Modified;
+                    prj.SaveChanges();
+                    SurecOranHesapla(surecID);
+                }
+
+                if (istakibiBilgi.procedureKisi != null)
+                {
+                    KullaniciSurec kl = prj.KullaniciSurecs.Where(x => x.SurecId == surecID && x.Rol.RolAdi == "Procedure").FirstOrDefault();
+                    kl.IsTakibi.TamamlanmaOranı = istakibiBilgi.procedureTamamlanmaOrani;
+                    DateTime dt = Convert.ToDateTime("01/01/2000");
+                    if (istakibiBilgi.procedureTamamlanmaTarihi > dt)
+                    {
+                        kl.IsTakibi.TamamlanmaTarihi = istakibiBilgi.procedureTamamlanmaTarihi;
+                    }
+                    prj.Entry(kl).State = System.Data.Entity.EntityState.Modified;
+                    prj.SaveChanges();
+                    SurecOranHesapla(surecID);
+                }
+
+                if (istakibiBilgi.dllListKisi != null)
+                {
+                    KullaniciSurec kl = prj.KullaniciSurecs.Where(x => x.SurecId == surecID && x.Rol.RolAdi == "DLL List").FirstOrDefault();
+                    kl.IsTakibi.TamamlanmaOranı = istakibiBilgi.dllListTamamlanmaOrani;
+                    DateTime dt = Convert.ToDateTime("01/01/2000");
+                    if (istakibiBilgi.dllListTamamlanmaTarihi > dt)
+                    {
+                        kl.IsTakibi.TamamlanmaTarihi = istakibiBilgi.dllListTamamlanmaTarihi;
+                    }
+                    prj.Entry(kl).State = System.Data.Entity.EntityState.Modified;
+                    prj.SaveChanges();
+                    SurecOranHesapla(surecID);
+
+                }
+
+                if (istakibiBilgi.dllIslemKisi != null)
+                {
+                    KullaniciSurec kl = prj.KullaniciSurecs.Where(x => x.SurecId == surecID && x.Rol.RolAdi == "DLL Islem").FirstOrDefault();
+                    kl.IsTakibi.TamamlanmaOranı = istakibiBilgi.analizTamamlanmaOrani;
+                    DateTime dt = Convert.ToDateTime("01/01/2000");
+                    if (istakibiBilgi.dllIslemTamamlanmaTarihi > dt)
+                    {
+                        kl.IsTakibi.TamamlanmaTarihi = istakibiBilgi.dllIslemTamamlanmaTarihi;
+                    }
+                    prj.Entry(kl).State = System.Data.Entity.EntityState.Modified;
+                    prj.SaveChanges();
+                    SurecOranHesapla(surecID);
+
+                }
+
+                if (istakibiBilgi.arayuzKisi != null)
+                {
+                    KullaniciSurec kl = prj.KullaniciSurecs.Where(x => x.SurecId == surecID && x.Rol.RolAdi == "Arayüz").FirstOrDefault();
+                    kl.IsTakibi.TamamlanmaOranı = istakibiBilgi.arayuzTamamlanmaOrani;
+                    DateTime dt = Convert.ToDateTime("01/01/2000");
+                    if (istakibiBilgi.analizTamamlanmaTarihi > dt)
+                    {
+                        kl.IsTakibi.TamamlanmaTarihi = istakibiBilgi.arayuzTamamlanmaTarihi;
+                    }
+                    prj.Entry(kl).State = System.Data.Entity.EntityState.Modified;
+                    prj.SaveChanges();
+                    SurecOranHesapla(surecID);
+                }
+
+                if (istakibiBilgi.testKisi != null)
+                {
+                    KullaniciSurec kl = prj.KullaniciSurecs.Where(x => x.SurecId == surecID && x.Rol.RolAdi == "Test").FirstOrDefault();
+                    kl.IsTakibi.TamamlanmaOranı = istakibiBilgi.testTamamlanmaOrani;
+                    DateTime dt = Convert.ToDateTime("01/01/2000");
+                    if (istakibiBilgi.analizTamamlanmaTarihi > dt)
+                    {
+                        kl.IsTakibi.TamamlanmaTarihi = istakibiBilgi.testTamamlanmaTarihi;
+                    }
+                    prj.Entry(kl).State = System.Data.Entity.EntityState.Modified;
+                    prj.SaveChanges();
+                    SurecOranHesapla(surecID);
+                }
+
+                ProjeOranDuzenle(projeID);
+                return 1;
+            }
+        }
+
         public int SurecSilme(int surecID)
         {
             using (projeyonetimvtEntities prj = new projeyonetimvtEntities())
@@ -317,22 +427,39 @@ namespace YPYA.Bl
                     {
                         if (item.ParentSurecId != null)
                         {
-                            foreach (Surec i in prj.Surecs.Where(x=>x.ParentSurecId==item.Id))
+                            foreach (Surec i in prj.Surecs.Where(x => x.ParentSurecId == item.Id)) 
                             {
                                 if (i.ParentSurecId != null)
                                 {
+                                    foreach (KullaniciSurec kl in prj.KullaniciSurecs.Where(x=>x.SurecId == i.Id))
+                                    {
+                                        prj.KullaniciSurecs.Remove(kl);
+
+                                    }
                                     prj.Surecs.Remove(i);
                                 }
 
                             }
+                            foreach (KullaniciSurec kl in prj.KullaniciSurecs.Where(x=>x.SurecId == item.Id))
+                            {
+                                prj.KullaniciSurecs.Remove(kl);
+                            }
                             prj.Surecs.Remove(item);
                         }
 
+                    } 
+                    foreach (KullaniciSurec kl in prj.KullaniciSurecs.Where(x => x.SurecId == src.Id))
+                    {
+                        prj.KullaniciSurecs.Remove(kl);
                     }
                     prj.Surecs.Remove(src);
                 }
                 else
                 {
+                    foreach (KullaniciSurec kl in prj.KullaniciSurecs.Where(x => x.SurecId == src.Id))
+                    {
+                        prj.KullaniciSurecs.Remove(kl);
+                    }
                     prj.Surecs.Remove(src);
                 }       
 
