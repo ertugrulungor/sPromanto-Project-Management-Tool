@@ -75,21 +75,25 @@
             }
             $("#giris").click(function () {
                 $(this).html('<img src="/Content/images/spin.svg" width="20"/>');
+                $(this).attr("disabled","disabled");
                 var kuladi = $("#username").val();
                 var password = $("#password").val();
                 if (bosGecme(kuladi) && bosGecme(password) && antixss(kuladi) && antixss(password)) {
                     $.post("../Sign/GirisYap", { kullanici: kuladi, sifre: password }, function (data) {
+                        console.log(data);
                         if (data.basari == 1) {
                             location.href = "/Home/Index";
                         } else {
                             noti("Kullanıcı adı yada şifre yanlış", "error", "topLeft");
                             $("#giris").html("Giriş Yap");
+                            $(this).attr("disabled", false);
                         }
                     });
                 }
                 else {
                     noti("Alanlar boş geçilemez", "error", "topLeft");
                     $("#giris").html("Giriş Yap");
+                    $(this).attr("disabled", false);
                 }
 
             });

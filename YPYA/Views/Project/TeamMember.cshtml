@@ -5,7 +5,7 @@
 @model IEnumerable<YPYA.Models.KullaniciSurec>
 
 @section ustBaslik{
-    <a class="navbar-item navbar-spacer-right navbar-heading hidden-md-down" href="~/Project/Index/     @ViewBag.projeId">
+    <a class="navbar-item navbar-spacer-right navbar-heading hidden-md-down" href="~/Project/Index/@ViewBag.projeId">
         <span>@ViewBag.projeAdi</span>
     </a>
 }
@@ -84,16 +84,10 @@
 }
 
 @section script{
-    <script src="~/Content/vendor/jquery.ui/ui/widget.js"></script>
-    <script src="~/Content/vendor/jquery.ui/ui/mouse.js"></script>
-    <script src="~/Content/vendor/jquery.ui/ui/slider.js"></script>
-    <script src="~/Content/vendor/jqueryui-touch-punch/jquery.ui.touch-punch.js"></script>
+    
 
     <script type="text/javascript">
-        $('.slider').each(function () {
-            var data = $(this).data();
-            $(this).slider(data);
-        });
+       
         $(function () {
             function antixss(deger) {
                 if (deger.indexOf("<script>") != -1 || deger.indexOf("</scrip") != -1) return false
@@ -124,43 +118,43 @@
                 var surecID = $(this).attr("surecID");
 
                 var AnalizTamamlanmaTarihi = $("#analizTamamlanmaTarihi").val();
-                var AnalizTamamlanmaOrani = $("div#analizTamamlanmaOrani div.ui-slider-range").width();
+                var AnalizTamamlanmaOrani = $("#analizTamamlanmaOrani").val();
                 if (AnalizTamamlanmaTarihi != null || AnalizTamamlanmaOrani != null) {
                   var  AnalizKisi = $("#kisi").attr("isim");
                 }
 
                 var TableTamamlanmaTarihi = $("#tableTamamlanmaTarihi").val();
-                var TableTamamlanmaOrani = $("div#tableTamamlanmaOrani div.ui-slider-range").width();
+                var TableTamamlanmaOrani = $("#tableTamamlanmaOrani").val();
                 if (TableTamamlanmaTarihi != null || TableTamamlanmaOrani != null) {
                     var TableKisi = $("#kisi").attr("isim");
                 }
 
                 var ProcedureTamamlanmaTarihi = $("#procedureTamamlanmaTarihi").val();
-                var ProcedureTamamlanmaOrani = $("div#procedureTamamlanmaOrani div.ui-slider-range").width();
+                var ProcedureTamamlanmaOrani = $("#procedureTamamlanmaOrani").val();
                 if (ProcedureTamamlanmaTarihi != null || ProcedureTamamlanmaOrani != null) {
                     var ProcedureKisi = $("#kisi").attr("isim");
                 }
 
                 var DllListTamamlanmaTarihi = $("#dllListTamamlanmaTarihi").val();
-                var DllListTamamlanmaOrani = $("div#dllListTamamlanmaOrani div.ui-slider-range").width();
+                var DllListTamamlanmaOrani = $("#dllListTamamlanmaOrani").val();
                 if (DllListTamamlanmaTarihi != null || DllListTamamlanmaOrani != null) {
                     var DllListKisi = $("#kisi").attr("isim");
                 }
 
                 var DllIslemTamamlanmaTarihi = $("#dllIslemTamamlanmaTarihi").val();
-                var DllIslemTamamlanmaOrani = $("div#dllIslemTamamlanmaOrani div.ui-slider-range").width();
+                var DllIslemTamamlanmaOrani = $("#dllIslemTamamlanmaOrani").val();
                 if (DllIslemTamamlanmaTarihi != null || DllIslemTamamlanmaOrani != null) {
                     var DllIslemKisi = $("#kisi").attr("isim");
                 }
 
                 var ArayuzTamamlanmaTarihi = $("#arayuzTamamlanmaTarihi").val();
-                var ArayuzTamamlanmaOrani = $("div#arayuzTamamlanmaOrani div.ui-slider-range").width();
+                var ArayuzTamamlanmaOrani = $("#arayuzTamamlanmaOrani").val();
                 if (ArayuzTamamlanmaTarihi != null || ArayuzTamamlanmaOrani != null) {
                     var ArayuzKisi = $("#kisi").attr("isim");
                 }
 
                 var TestTamamlanmaTarihi = $("#testTamamlanmaTarihi").val();
-                var TestTamamlanmaOrani = $("div#testTamamlanmaOrani div.ui-slider-range").width();
+                var TestTamamlanmaOrani = $("#testTamamlanmaOrani").val();
                 if (TestTamamlanmaTarihi != null || TestTamamlanmaOrani != null) {
                    var TestKisi = $("#kisi").attr("isim");
                 }
@@ -259,7 +253,7 @@
                                             <td style="padding-top: 25px;">@i.IsTakibi.BaslangicTarihi.Value.ToString("dd-MM-yyyy")</td>
                                             <td style="padding-top: 25px;">@i.IsTakibi.BitisTarihi.Value.ToString("dd-MM-yyyy")</td>
                                             <td><input id="analizTamamlanmaTarihi" type="date" class="form-control" value="@i.IsTakibi.TamamlanmaTarihi.Value.ToString("yyyy-MM-dd")" /></td>
-                                            <td><div id="analizTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="@i.IsTakibi.TamamlanmaOranı" data-range="min"></div></td>
+                                            <td><input class="form-control" value="@i.IsTakibi.TamamlanmaOranı" type="number" min="0" max="100" id="analizTamamlanmaOrani" placeholder="Tamamlanma oranı" /></td>
                                         </tr>
                                     }
                                     if (i.Rol.RolAdi == "Table")
@@ -269,7 +263,7 @@
                                             <td style="padding-top: 25px;">@i.IsTakibi.BaslangicTarihi.Value.ToString("dd-MM-yyyy")</td>
                                             <td style="padding-top: 25px;">@i.IsTakibi.BitisTarihi.Value.ToString("dd-MM-yyyy")</td>
                                             <td><input id="tableTamamlanmaTarihi" type="date" class="form-control" value="@i.IsTakibi.TamamlanmaTarihi.Value.ToString("yyyy-MM-dd")" /></td>
-                                            <td><div id="tableTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="@i.IsTakibi.TamamlanmaOranı" data-range="min"></div></td>
+                                            <td><input class="form-control" value="@i.IsTakibi.TamamlanmaOranı" type="number" min="0" max="100" id="tableTamamlanmaOrani" placeholder="Tamamlanma oranı" /></td>
                                         </tr>
                                     }
                                     if (i.Rol.RolAdi == "Procedure")
@@ -279,7 +273,8 @@
                                             <td style="padding-top: 25px;">@i.IsTakibi.BaslangicTarihi.Value.ToString("dd-MM-yyyy")</td>
                                             <td style="padding-top: 25px;">@i.IsTakibi.BitisTarihi.Value.ToString("dd-MM-yyyy")</td>
                                             <td><input id="procedureTamamlanmaTarihi" type="date" class="form-control" value="@i.IsTakibi.TamamlanmaTarihi.Value.ToString("yyyy-MM-dd")" /></td>
-                                            <td><div id="procedureTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="@i.IsTakibi.TamamlanmaOranı" data-range="min"></div></td>
+                                            <td><input class="form-control" value="@i.IsTakibi.TamamlanmaOranı" type="number" min="0" max="100" id="procedureTamamlanmaOrani" placeholder="Tamamlanma oranı" /></td>
+
                                         </tr>
                                     }
                                     if (i.Rol.RolAdi == "DLL List")
@@ -289,7 +284,8 @@
                                             <td style="padding-top: 25px;">@i.IsTakibi.BaslangicTarihi.Value.ToString("dd-MM-yyyy")</td>
                                             <td style="padding-top: 25px;">@i.IsTakibi.BitisTarihi.Value.ToString("dd-MM-yyyy")</td>
                                             <td><input id="dllListTamamlanmaTarihi" type="date" class="form-control" value="@i.IsTakibi.TamamlanmaTarihi.Value.ToString("yyyy-MM-dd")" /></td>
-                                            <td><div id="dllListTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="@i.IsTakibi.TamamlanmaOranı" data-range="min"></div></td>
+                                            <td><input class="form-control" value="@i.IsTakibi.TamamlanmaOranı" type="number" min="0" max="100" id="dllListTamamlanmaOrani" placeholder="Tamamlanma oranı" /></td>
+
                                         </tr>
                                     }
                                     if (i.Rol.RolAdi == "DLL Islem")
@@ -299,7 +295,8 @@
                                             <td style="padding-top: 25px;">@i.IsTakibi.BaslangicTarihi.Value.ToString("dd-MM-yyyy")</td>
                                             <td style="padding-top: 25px;">@i.IsTakibi.BitisTarihi.Value.ToString("dd-MM-yyyy")</td>
                                             <td><input id="dllIslemTamamlanmaTarihi" type="date" class="form-control" value="@i.IsTakibi.TamamlanmaTarihi.Value.ToString("yyyy-MM-dd")" /></td>
-                                            <td><div id="dllIslemTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="@i.IsTakibi.TamamlanmaOranı" data-range="min"></div></td>
+                                            <td><input class="form-control" value="@i.IsTakibi.TamamlanmaOranı" type="number" min="0" max="100" id="dllIslemTamamlanmaOrani" placeholder="Tamamlanma oranı" /></td>
+
                                         </tr>
                                     }
                                     if (i.Rol.RolAdi == "Arayüz")
@@ -309,7 +306,8 @@
                                             <td style="padding-top: 25px;">@i.IsTakibi.BaslangicTarihi.Value.ToString("dd-MM-yyyy")</td>
                                             <td style="padding-top: 25px;">@i.IsTakibi.BitisTarihi.Value.ToString("dd-MM-yyyy")</td>
                                             <td><input id="arayuzTamamlanmaTarihi" type="date" class="form-control" value="@i.IsTakibi.TamamlanmaTarihi.Value.ToString("yyyy-MM-dd")" /></td>
-                                            <td><div id="arayuzTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="@i.IsTakibi.TamamlanmaOranı" data-range="min"></div></td>
+                                            <td><input class="form-control" value="@i.IsTakibi.TamamlanmaOranı" type="number" min="0" max="100" id="arayuzTamamlanmaOrani" placeholder="Tamamlanma oranı" /></td>
+
                                         </tr>
                                     }
                                     if (i.Rol.RolAdi == "Test")
@@ -319,15 +317,15 @@
                                             <td style="padding-top: 25px;">@i.IsTakibi.BaslangicTarihi.Value.ToString("dd-MM-yyyy")</td>
                                             <td style="padding-top: 25px;">@i.IsTakibi.BitisTarihi.Value.ToString("dd-MM-yyyy")</td>
                                             <td><input id="testTamamlanmaTarihi" type="date" class="form-control" value="@i.IsTakibi.TamamlanmaTarihi.Value.ToString("yyyy-MM-dd")" /></td>
-                                            <td><div id="testTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="@i.IsTakibi.TamamlanmaOranı" data-range="min"></div></td>
+                                            <td><input class="form-control" value="@i.IsTakibi.TamamlanmaOranı" type="number" min="0" max="100" id="testTamamlanmaOrani" placeholder="Tamamlanma oranı" /></td>
+
                                         </tr>
                                     }
                                 }
-                                <tr>
-                                    <td><button class="btn btn-success" surecID="@ks.SurecId" id="surecKaydet">SureÇ Bilgilerini Kaydet</button></td>
-                                </tr>
                             </tbody>
                         </table>
+                        <button class="btn btn-success" surecID="@ks.SurecId" id="surecKaydet">Sureç Bilgilerini Kaydet</button>
+                        
                     </div>
                 </div>
             </div>
