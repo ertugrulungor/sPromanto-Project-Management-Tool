@@ -21,11 +21,7 @@ namespace YPYA.Controllers
         {
             return View();
         }
-
-        public ActionResult ForgotPassword()
-        {
-            return View();
-        }
+        
 
         public JsonResult GirisYap(string kullanici, string sifre)
         {

@@ -325,7 +325,6 @@
     <Content Include="Views\Shared\_SignLayout.cshtml" />
     <Content Include="Views\Sign\Login.cshtml" />
     <Content Include="Views\Sign\Register.cshtml" />
-    <Content Include="Views\Sign\ForgotPassword.cshtml" />
     <Content Include="Views\Home\NewProject.cshtml" />
     <Content Include="Views\Home\SurecCek.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
