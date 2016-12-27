@@ -350,12 +350,17 @@ namespace YPYA.Controllers
             db.SaveChanges();
         }
 
-        public int IsTakipTarih(object[,] dizi)
+        public int IsTakipTarih(SurecTarih[] dizi)
         {
             bool kontrol = true;
-            for (int i = 0; i < dizi.GetLength(0); i++)
+            for (int i = 0; i < dizi.Length; i++)
             {
-                int deger = TarihKontrol((int)dizi[i,0], (int)dizi[i,1], (string)dizi[i,2], (string) dizi[i,3]);
+                if(dizi[i].baslangicTarihi == null ||  dizi[i].bitisTarihi == null)
+                {
+                    continue;
+                }
+
+                int deger = TarihKontrol(dizi[i].parentId,dizi[i].tip,dizi[i].baslangicTarihi,dizi[i].bitisTarihi);
                 if(deger == 0)
                 {
                     kontrol = false;
