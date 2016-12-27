@@ -218,14 +218,9 @@ namespace YPYA.Controllers
 
                 if (id != null)
                 {
-                    if (yetkiVarMi(id))
-                    {
-                        return View(db.Surecs.Find(id));
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                    
+                    return View(db.Surecs.Find(id));
+                    
                 }
                 else
                     return RedirectToAction("Index", "Home");

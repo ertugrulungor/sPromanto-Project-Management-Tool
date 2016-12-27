@@ -107,6 +107,16 @@
     <script type="text/javascript">
         $(function () {
 
+            function AkisBosluk(s) {
+                var kontrol = true;
+                for (var i = 0; i < 7; i++) {
+                    if ((s[i].ad != "" && s[i].baslangic == "" && s[i].bitis == "") || (s[i].ad != "" && s[i].baslangic != "" && s[i].bitis == "") || (s[i].ad == "" && s[i].baslangic != "" && s[i].bitis == "") || (s[i].ad == "" && s[i].baslangic != "" && s[i].bitis != "") || (s[i].ad != "" && s[i].baslangic == "" && s[i].bitis != "") || (s[i].ad == "" && s[i].baslangic == "" && s[i].bitis != "")) {
+                        kontrol = false;
+                        break;
+                    }
+                }
+                return kontrol;
+            }
             
             $(".anaEkran").hide();
 
@@ -438,6 +448,43 @@
 
                 var surecID = $(this).attr("surecID");
 
+                var surecDizi = [
+                    {
+                        ad: AnalizKisi,
+                        baslangic: AnalizBaslangicTarihi,
+                        bitis: AnalizBitisTarihi
+                    },
+                    {
+                        ad: TableKisi,
+                        baslangic: TableBaslangicTarihi,
+                        bitis: TableBitisTarihi
+                    },
+                    {
+                        ad: ProcedureKisi,
+                        baslangic: ProcedureBaslangicTarihi,
+                        bitis: ProcedureBitisTarihi
+                    },
+                    {
+                        ad: DllListKisi,
+                        baslangic: DllListBaslangicTarihi,
+                        bitis: DllListBitisTarihi
+                    },
+                    {
+                        ad: DllIslemKisi,
+                        baslangic: DllIslemBaslangicTarihi,
+                        bitis: DllIslemBitisTarihi
+                    },
+                    {
+                        ad: ArayuzKisi,
+                        baslangic: ArayuzBaslangicTarihi,
+                        bitis: ArayuzBitisTarihi
+                    },
+                    {
+                        ad: TestKisi,
+                        baslangic: TestBaslangicTarihi,
+                        bitis: TestBitisTarihi
+                    }
+                ]
 
 
 
@@ -537,47 +584,56 @@
                     }
                 ];
 
-                if (AnalizTamamlanmaOrani >= 0 && AnalizTamamlanmaOrani <= 100 && TableTamamlanmaOrani >= 0 && TableTamamlanmaOrani <= 100 && ProcedureTamamlanmaOrani >= 0 && ProcedureTamamlanmaOrani <= 100 && DllListTamamlanmaOrani >= 0 && DllListTamamlanmaOrani <= 100 && DllIslemTamamlanmaOrani >= 0 && DllIslemTamamlanmaOrani <= 100 && ArayuzTamamlanmaOrani >= 0 && ArayuzTamamlanmaOrani <= 100 && TestTamamlanmaOrani >= 0 && TestTamamlanmaOrani <= 100) {
-                    $.post('@Url.Action("IsTakipTarih", "Home")', { dizi: surecTarih }, function (data) {
-                        if (data == 1) {
-                            $.ajax({
-                                type: "POST",//Metodu belirliyoruz POST veya GET olabilir.
-                                url: "/Project/IsTakibiKaydet",//Nereye post edileceğini belirliyoruz. Home controller altında "IndexPost" adlı metodumuza gideceğini söyledik
-                                data: { istakibiBilgi: SurecIstakibi, surecID: surecID, projeID: projeID },
-                                beforeSend: function () {
-                                    noti("İşlem Gerçekleştiriliyor", "information", "topRight");
-                                    // $("#isTakibiKaydet").append()  //loading simgesi gösterilecek
-                                },
-                                datatype: "json",//Geri dönecek değerin tipini belirliyoruz. xml, json, script, html bunlardan birini belirleyebiliriz.
-                                success: function (data) {//Eğer ajax post işlemi başarılı ise çalışacak fonksiyonumuz. function(data) kısmında ise data dönen değerimiz oluyor.
-                                    // $('#result').html(data);//Burda ise dönen değeri $('#result') divini seçip .html(data) ile içine basıyoruz.
+                if (AkisBosluk(surecDizi)) {
+                    if (AnalizTamamlanmaOrani >= 0 && AnalizTamamlanmaOrani <= 100 && TableTamamlanmaOrani >= 0 && TableTamamlanmaOrani <= 100 && ProcedureTamamlanmaOrani >= 0 && ProcedureTamamlanmaOrani <= 100 && DllListTamamlanmaOrani >= 0 && DllListTamamlanmaOrani <= 100 && DllIslemTamamlanmaOrani >= 0 && DllIslemTamamlanmaOrani <= 100 && ArayuzTamamlanmaOrani >= 0 && ArayuzTamamlanmaOrani <= 100 && TestTamamlanmaOrani >= 0 && TestTamamlanmaOrani <= 100) {
+                        $.post('@Url.Action("IsTakipTarih", "Home")', { dizi: surecTarih }, function (data) {
+                            if (data == 1) {
+                                $.ajax({
+                                    type: "POST",//Metodu belirliyoruz POST veya GET olabilir.
+                                    url: "/Project/IsTakibiKaydet",//Nereye post edileceğini belirliyoruz. Home controller altında "IndexPost" adlı metodumuza gideceğini söyledik
+                                    data: { istakibiBilgi: SurecIstakibi, surecID: surecID, projeID: projeID },
+                                    beforeSend: function () {
+                                        noti("İşlem Gerçekleştiriliyor", "information", "topRight");
+                                        // $("#isTakibiKaydet").append()  //loading simgesi gösterilecek
+                                    },
+                                    datatype: "json",//Geri dönecek değerin tipini belirliyoruz. xml, json, script, html bunlardan birini belirleyebiliriz.
+                                    success: function (data) {//Eğer ajax post işlemi başarılı ise çalışacak fonksiyonumuz. function(data) kısmında ise data dönen değerimiz oluyor.
+                                        // $('#result').html(data);//Burda ise dönen değeri $('#result') divini seçip .html(data) ile içine basıyoruz.
 
-                                    noti("İşlem Gerçekleştirildi", "success", "topRight");
-                                    $("#isTakibiKaydet").attr("disabled", false);
-                                    $("#surecSil").attr("disabled", false);
-                                    $("#RaporGit").attr("disabled", false);
-                                    $(".akisSil").attr("disabled", false);
-                                    $("#surecTamamlama").val(data);
-                                    $("#surecdegeri").html("<b> (" + data + "%)</b>");
-                                }
+                                        noti("İşlem Gerçekleştirildi", "success", "topRight");
+                                        $("#isTakibiKaydet").attr("disabled", false);
+                                        $("#surecSil").attr("disabled", false);
+                                        $("#RaporGit").attr("disabled", false);
+                                        $(".akisSil").attr("disabled", false);
+                                        $("#surecTamamlama").val(data);
+                                        $("#surecdegeri").html("<b> (" + data + "%)</b>");
+                                    }
 
-                            });
-                        } else {
-                            noti("Bu süreç, bir üst süreç yada projenin tarih aralığını aşıyor ", "error", "top");
-                            $("#isTakibiKaydet").attr("disabled", false);
-                            $("#surecSil").attr("disabled", false);
-                            $("#RaporGit").attr("disabled", false);
-                            $(".akisSil").attr("disabled", false);
-                        }
+                                });
+                            } else {
+                                noti("Bu süreç, bir üst süreç yada projenin tarih aralığını aşıyor ", "error", "top");
+                                $("#isTakibiKaydet").attr("disabled", false);
+                                $("#surecSil").attr("disabled", false);
+                                $("#RaporGit").attr("disabled", false);
+                                $(".akisSil").attr("disabled", false);
+                            }
 
-                    });
+                        });
+                    } else {
+                        noti("Oranlar 0 ile 100 arası olmalıdır", "warning", "topRight");
+                        $("#isTakibiKaydet").attr("disabled", false);
+                        $("#surecSil").attr("disabled", false);
+                        $("#RaporGit").attr("disabled", false);
+                        $(".akisSil").attr("disabled", false);
+                    }
                 } else {
-                    noti("Oranlar 0 ile 100 arası olmalıdır", "warning", "topRight");
+                    noti("Alanlar boş geçilemez", "warning", "topRight");
                     $("#isTakibiKaydet").attr("disabled", false);
                     $("#surecSil").attr("disabled", false);
                     $("#RaporGit").attr("disabled", false);
                     $(".akisSil").attr("disabled", false);
                 }
+               
                 
 
 
