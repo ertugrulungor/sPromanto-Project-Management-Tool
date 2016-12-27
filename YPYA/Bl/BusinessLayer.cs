@@ -9,6 +9,7 @@ namespace YPYA.Bl
 
     public class BusinessLayer
     {
+        DateTime dt = Convert.ToDateTime("01/01/2000");
         public int OranKontrol(int oran)
         {
             float fOran = 0, sncOran = 0;
@@ -127,9 +128,13 @@ namespace YPYA.Bl
                 IsTakibi istkb = new IsTakibi();
                 istkb.BaslangicTarihi = bslngc;
                 istkb.BitisTarihi = bts;
-                if (tmTarihi != null)
+                if (tmTarihi > dt)
                 {
                     istkb.TamamlanmaTarihi = tmTarihi;
+                }
+                else
+                {
+                    istkb.TamamlanmaTarihi = null;
                 }
                 istkb.TamamlanmaOranı = OranKontrol(tmOrani);
                 prj.IsTakibis.Add(istkb);
@@ -159,9 +164,13 @@ namespace YPYA.Bl
                 IsTakibi guncelIstakibi = prj.IsTakibis.Find(isTakibiID);
                 guncelIstakibi.BaslangicTarihi = bslngc;
                 guncelIstakibi.BitisTarihi = bts;
-                if (tmTarihi != null)
+                if (tmTarihi > dt)
                 {
                     guncelIstakibi.TamamlanmaTarihi = tmTarihi;
+                }
+                else
+                {
+                    guncelIstakibi.TamamlanmaTarihi = null;
                 }
                 guncelIstakibi.TamamlanmaOranı = OranKontrol(tmOrani);
                 prj.Entry(guncelIstakibi).State = System.Data.Entity.EntityState.Modified;
@@ -238,7 +247,7 @@ namespace YPYA.Bl
 
 
                 }
-                DateTime dt = Convert.ToDateTime("01/01/2000");
+                
                 for (int i = 0; i < 7; i++)
                 {
 
