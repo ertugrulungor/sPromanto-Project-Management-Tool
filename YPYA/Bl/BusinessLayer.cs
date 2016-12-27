@@ -118,6 +118,10 @@ namespace YPYA.Bl
                 istkb.BitisTarihi = bts;
                 istkb.TamamlanmaTarihi = tmTarihi;
                 istkb.TamamlanmaOranı = tmOrani;
+                if (tmTarihi != null)
+                {
+                    istkb.TamamlanmaTarihi = tmTarihi;
+                }
                 prj.IsTakibis.Add(istkb);
                 prj.SaveChanges();
                 int id = istkb.IstakibiId;
@@ -147,6 +151,10 @@ namespace YPYA.Bl
                 guncelIstakibi.BitisTarihi = bts;
                 guncelIstakibi.TamamlanmaTarihi = tmTarihi;
                 guncelIstakibi.TamamlanmaOranı = tmOrani;
+                if (tmTarihi != null)
+                {
+                    guncelIstakibi.TamamlanmaTarihi = tmTarihi;
+                }
                 prj.Entry(guncelIstakibi).State = System.Data.Entity.EntityState.Modified;
                 prj.SaveChanges();
             }
@@ -157,6 +165,12 @@ namespace YPYA.Bl
         {
             using (projeyonetimvtEntities prj = new projeyonetimvtEntities())
             {
+                if (istakibi.surecNote != null)
+                {
+                    Surec src = prj.Surecs.Find(surecID);
+                    src.Note = istakibi.surecNote;
+                    prj.SaveChanges();
+                }
                 bool isAnaliz = false, isTable = false, isProcedure = false, isDllList = false, isDllIslem = false, isArayuz = false, isTest = false;
                 foreach (KullaniciSurec item in prj.KullaniciSurecs.Where(x => x.SurecId == surecID))
                 {
@@ -223,7 +237,7 @@ namespace YPYA.Bl
                     if (isAnaliz == false)
                     {
                         isAnaliz = true;
-                        if (istakibi.analizBaslangicTarihi > dt && istakibi.analizBitisTarihi > dt && istakibi.analizTamamlanmaTarihi > dt)
+                        if (istakibi.analizBaslangicTarihi > dt && istakibi.analizBitisTarihi > dt)
                         {
                             KsurecEkle(istakibi.analizKisi, "Analiz", surecID, istakibi.analizBaslangicTarihi, istakibi.analizBitisTarihi, istakibi.analizTamamlanmaTarihi, istakibi.analizTamamlanmaOrani);
                         }
@@ -232,7 +246,7 @@ namespace YPYA.Bl
                     else if (isTable == false)
                     {
                         isTable = true;
-                        if (istakibi.tableBaslangicTarihi > dt && istakibi.tableBitisTarihi > dt && istakibi.tableTamamlanmaTarihi > dt)
+                        if (istakibi.tableBaslangicTarihi > dt && istakibi.tableBitisTarihi > dt)
                         {
                             KsurecEkle(istakibi.tableKisi, "Table", surecID, istakibi.tableBaslangicTarihi, istakibi.tableBitisTarihi, istakibi.tableTamamlanmaTarihi, istakibi.tableTamamlanmaOrani);
                         }
@@ -241,7 +255,7 @@ namespace YPYA.Bl
                     else if (isProcedure == false)
                     {
                         isProcedure = true;
-                        if (istakibi.procedureBaslangicTarihi > dt && istakibi.procedureBitisTarihi > dt && istakibi.procedureTamamlanmaTarihi > dt)
+                        if (istakibi.procedureBaslangicTarihi > dt && istakibi.procedureBitisTarihi > dt)
                         {
                             KsurecEkle(istakibi.procedureKisi, "Procedure", surecID, istakibi.procedureBaslangicTarihi, istakibi.procedureBitisTarihi, istakibi.procedureTamamlanmaTarihi, istakibi.procedureTamamlanmaOrani);
                         }
@@ -250,7 +264,7 @@ namespace YPYA.Bl
                     else if (isDllList == false)
                     {
                         isDllList = true;
-                        if (istakibi.dllListBaslangicTarihi > dt && istakibi.dllListBitisTarihi > dt && istakibi.dllListTamamlanmaTarihi > dt)
+                        if (istakibi.dllListBaslangicTarihi > dt && istakibi.dllListBitisTarihi > dt)
                         {
                             KsurecEkle(istakibi.dllListKisi, "DLL List", surecID, istakibi.dllListBaslangicTarihi, istakibi.dllListBitisTarihi, istakibi.dllListTamamlanmaTarihi, istakibi.dllListTamamlanmaOrani);
                         }
@@ -259,7 +273,7 @@ namespace YPYA.Bl
                     else if (isDllIslem == false)
                     {
                         isDllIslem = true;
-                        if (istakibi.dllIslemBaslangicTarihi > dt && istakibi.dllIslemBitisTarihi > dt && istakibi.dllIslemTamamlanmaTarihi > dt)
+                        if (istakibi.dllIslemBaslangicTarihi > dt && istakibi.dllIslemBitisTarihi > dt)
                         {
                             KsurecEkle(istakibi.dllIslemKisi, "DLL Islem", surecID, istakibi.dllIslemBaslangicTarihi, istakibi.dllIslemBitisTarihi, istakibi.dllIslemTamamlanmaTarihi, istakibi.dllIslemTamamlanmaOrani);
                         }
@@ -268,7 +282,7 @@ namespace YPYA.Bl
                     else if (isArayuz == false)
                     {
                         isArayuz = true;
-                        if (istakibi.arayuzBaslangicTarihi > dt && istakibi.arayuzBitisTarihi > dt && istakibi.arayuzTamamlanmaTarihi > dt)
+                        if (istakibi.arayuzBaslangicTarihi > dt && istakibi.arayuzBitisTarihi > dt )
                         {
                             KsurecEkle(istakibi.arayuzKisi, "Arayüz", surecID, istakibi.arayuzBaslangicTarihi, istakibi.arayuzBitisTarihi, istakibi.arayuzTamamlanmaTarihi, istakibi.arayuzTamamlanmaOrani);
                         }
@@ -277,7 +291,7 @@ namespace YPYA.Bl
                     else if (isTest == false)
                     {
                         isTest = true;
-                        if (istakibi.testBaslangicTarihi > dt && istakibi.testBitisTarihi > dt && istakibi.testTamamlanmaTarihi != null)
+                        if (istakibi.testBaslangicTarihi > dt && istakibi.testBitisTarihi > dt)
                         {
                             KsurecEkle(istakibi.testKisi, "Test", surecID, istakibi.testBaslangicTarihi, istakibi.testBitisTarihi, istakibi.testTamamlanmaTarihi, istakibi.testTamamlanmaOrani);
                         }
