@@ -9,18 +9,6 @@ namespace YPYA.Bl
 
     public class BusinessLayer
     {
-        DateTime dt = Convert.ToDateTime("01/01/2000");
-        public int OranKontrol(int oran)
-        {
-            float fOran = 0, sncOran = 0;
-            if (oran < 0) 
-            {
-                oran = 0; 
-            }
-            fOran = oran * 100;
-            sncOran = fOran / 82;
-            return Convert.ToInt32(sncOran);
-        }
 
         public void SurecOranHesapla(int surecID)
         {

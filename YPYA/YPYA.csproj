@@ -232,6 +232,7 @@
     <Content Include="Content\scripts\helpers\tsf\js\tsf-wizard-plugin.js" />
     <Content Include="Content\scripts\main.js" />
     <Content Include="Content\scripts\noty-defaults.js" />
+    <Content Include="Content\scripts\rangeSlider.js" />
     <Content Include="Content\scripts\ui\alert.js" />
     <Content Include="Content\scripts\vendor\summernote\dist\summernote.js" />
     <Content Include="Content\styles\anychart-ui.min.css" />
@@ -239,6 +240,7 @@
     <Content Include="Content\styles\app.skins.css" />
     <Content Include="Content\styles\gsi-step-indicator.css" />
     <Content Include="Content\styles\loaders.css" />
+    <Content Include="Content\styles\rangeSlider-flat.css" />
     <Content Include="Content\styles\style.css" />
     <Content Include="Content\styles\tsf-step-form-wizard.css" />
     <Content Include="Content\vendor\animate.css\animate.css" />

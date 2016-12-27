@@ -371,9 +371,7 @@ namespace YPYA.Controllers
                 string surecBaslangic = item.IsTakibi.BaslangicTarihi?.ToString("yyyy-MM-dd");
                 string surecBitis = item.IsTakibi.BitisTarihi?.ToString("yyyy-MM-dd");
                 string surecTamamlanma = item.IsTakibi.TamamlanmaTarihi?.ToString("yyyy-MM-dd");
-                float orn = 0;
-                orn = (float)item.IsTakibi.TamamlanmaOranı * 82;
-                orn = orn / 100;
+                
                 var jsonmodel = new
                 {
                     surecDetayKisi = item.Kullanici.Adsoyad,
@@ -382,7 +380,7 @@ namespace YPYA.Controllers
                     surecDetayKisiID = item.KullaniciId,
                     surecDetayBitis = surecBitis,
                     surecDetayTamamlanma = surecTamamlanma,
-                    surecDetayTamamlanmaOrani = orn,
+                    surecDetayTamamlanmaOrani = item.IsTakibi.TamamlanmaOranı,
                     id = item.IstakibiId
 
                 };
