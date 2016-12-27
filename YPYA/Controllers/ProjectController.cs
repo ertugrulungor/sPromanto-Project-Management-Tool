@@ -387,20 +387,21 @@ namespace YPYA.Controllers
 
             List<object> Kisiler = new List<object>();
             int? musteriID = db.Projes.Where(x => x.Id == projeID).FirstOrDefault().MusteriId;
-            foreach (Kullanici k in db.Kullanicis)
+            foreach (ProjeKullanici pk in db.ProjeKullanicis.Where(x => x.ProjeId == projeID && x.Durum == true))
             {
-                if (k.Id == musteriID)
-                {
-                    continue;
-                }
-                var jsonKisi = new
-                {
+               
+                    if (pk.Id == musteriID)
+                    {
+                        continue;
+                    }
+                    var jsonKisi = new
+                    {
+                        kisi = pk.Kullanici.Adsoyad,
+                        kisiID = pk.Id,
+                    };
 
-                    kisi = k.Adsoyad,
-                    kisiID = k.Id,
-                };
-
-                Kisiler.Add(jsonKisi);
+                    Kisiler.Add(jsonKisi);
+               
             }
             var jsonmodel = new {
                 surecDetayKisiler = Kisiler,
@@ -456,10 +457,14 @@ namespace YPYA.Controllers
             return Json(snc);
 
         }
-        public JsonResult IsTakibiKaydet(SurecIstakibi istakibiBilgi ,int surecID,int projeID)
+        public JsonResult IsTakibiKaydet(SurecIstakibi istakibiBilgi ,int surecID,int projeID,string surecBaslik,string surecNote,string baslangic,string bitis)
         {
             List<int> snc = new List<int>();
-            if (bl.KullaniciSurecEkle(istakibiBilgi, surecID,projeID) == 1)
+            surecBaslik = y.PreventXSS(surecBaslik);
+            surecNote=y.PreventXSS(surecNote);
+            baslangic = y.PreventXSS(baslangic);
+            bitis = y.PreventXSS(bitis);
+            if (bl.KullaniciSurecEkle(istakibiBilgi, surecID,projeID,surecBaslik,surecNote,baslangic,bitis) == 1)
             {
                 snc.Add(db.Projes.Find(projeID).Tamamlanan.Value);
             }
@@ -471,7 +476,7 @@ namespace YPYA.Controllers
             IsTakibi i = db.IsTakibis.Find(akisid);
             db.IsTakibis.Remove(i);
             db.SaveChanges();
-            bl.SurecOranDuzenleme(surecID);
+            bl.SurecOranHesapla(surecID);
             bl.ProjeOranDuzenle(projeID);
         }
 

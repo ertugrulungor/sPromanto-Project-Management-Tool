@@ -167,14 +167,18 @@ namespace YPYA.Bl
 
         }
 
-        public int KullaniciSurecEkle(SurecIstakibi istakibi, int surecID,int projeID)
+        public int KullaniciSurecEkle(SurecIstakibi istakibi, int surecID,int projeID,string surecBaslik,string surecNote,string baslangic,string bitis)
         {
             using (projeyonetimvtEntities prj = new projeyonetimvtEntities())
             {
-                if (istakibi.surecNote != null)
+                if (surecNote != null && surecBaslik != null && baslangic != null && bitis != null )
                 {
                     Surec src = prj.Surecs.Find(surecID);
-                    src.Note = istakibi.surecNote;
+                    src.Baslik = surecBaslik;
+                    src.Note = surecNote;
+                    src.PlanBaslangic = Convert.ToDateTime(baslangic);
+                    src.PlanBitis = Convert.ToDateTime(bitis);
+                    prj.Entry(src).State = System.Data.Entity.EntityState.Modified;
                     prj.SaveChanges();
                 }
                 bool isAnaliz = false, isTable = false, isProcedure = false, isDllList = false, isDllIslem = false, isArayuz = false, isTest = false;
@@ -428,6 +432,7 @@ namespace YPYA.Bl
         public int SurecSilme(int surecID, int projeID)
         {
             int ParentSurecID = 0;
+            bool kontrol = false;
             using (projeyonetimvtEntities prj = new projeyonetimvtEntities())
             {
                 Surec src = prj.Surecs.Find(surecID);
@@ -477,14 +482,23 @@ namespace YPYA.Bl
                 {
                     foreach (KullaniciSurec kl in prj.KullaniciSurecs.Where(x => x.SurecId == src.Id))
                     {
+                        kontrol = true;
                         prj.KullaniciSurecs.Remove(kl);
                     }
                     prj.Surecs.Remove(src);
                 }       
 
                 prj.SaveChanges();
-                SurecOranHesapla(ParentSurecID);
-                ProjeOranDuzenle(projeID);
+
+                if (kontrol == true) 
+                {
+
+                }
+                else
+                {
+                    SurecOranHesapla(ParentSurecID);
+                    ProjeOranDuzenle(projeID);
+                }
                 return 1;
             }
         }

@@ -7,8 +7,7 @@ namespace YPYA
 {
     public class SurecIstakibi
     {
-        public string surecNote { get; set; }
-
+        
         public string analizKisi { get; set; }
         public DateTime analizBaslangicTarihi { get; set; }
         public DateTime analizBitisTarihi { get; set; }
