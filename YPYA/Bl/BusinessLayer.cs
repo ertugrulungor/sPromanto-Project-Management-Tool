@@ -447,7 +447,7 @@ namespace YPYA.Bl
                             prj.Surecs.Remove(item);
                         }
 
-                    } //Bakılacak
+                    } 
                     foreach (KullaniciSurec kl in prj.KullaniciSurecs.Where(x => x.SurecId == src.Id))
                     {
                         prj.KullaniciSurecs.Remove(kl);
