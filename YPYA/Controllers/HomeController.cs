@@ -4,12 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using YPYA.Models;
+using YPYA.helper;
 
 namespace YPYA.Controllers
 {
     public class HomeController : Controller
     {
         projeyonetimvtEntities db = new projeyonetimvtEntities();
+        Yardimci y = new Yardimci();
 
         private void sesAta()
         {
@@ -95,6 +97,11 @@ namespace YPYA.Controllers
 
         public JsonResult ProjeOlustur(string projeAdi, string baslangic, string bitis, int projeId,int butce,string not)
         {
+            projeAdi = y.PreventXSS(projeAdi);
+            baslangic = y.PreventXSS(baslangic);
+            bitis = y.PreventXSS(bitis);
+            not = y.PreventXSS(not);
+
             Proje p;
             if (projeId == 0)
             {
@@ -164,7 +171,11 @@ namespace YPYA.Controllers
 
         public JsonResult SurecOlustur(string baslik, string baslangic, string bitis, int parentSurecId, int projeId, string not, int kontrol)
         {
-            if(kontrol == 0)
+            baslik = y.PreventXSS(baslik);
+            baslangic = y.PreventXSS(baslangic);
+            bitis = y.PreventXSS(bitis);
+            not = y.PreventXSS(not);
+            if (kontrol == 0)
             {
                 Surec s;
                 if (parentSurecId != 0)
@@ -356,7 +367,9 @@ namespace YPYA.Controllers
 
         public int TarihKontrol(int parentId, int tip, string baslangic, string bitis)
         {
-            if(tip == 0)
+            baslangic = y.PreventXSS(baslangic);
+            bitis = y.PreventXSS(bitis);
+            if (tip == 0)
             {
                 Proje p = db.Projes.Find(parentId);
                 if(p.PlanBaslangic <= Convert.ToDateTime(baslangic) && p.PlanBitis >= Convert.ToDateTime(bitis))
