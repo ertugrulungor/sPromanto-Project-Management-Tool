@@ -98,6 +98,7 @@
 
         $("#kayit").click(function () {
             $(this).html('<img src="/Content/images/spin.svg" width="20"/>');
+            $(this).attr("disabled", "disabled");
             var adsoyad = $("#adsoyad").val();
             var kuladi = $("#kuladi").val();
             var email = $("#email").val();
@@ -113,27 +114,32 @@
                                 } else {
                                     noti("Beklenmeyen bir hata oluştu", "error", "topLeft");
                                     $("#kayit").html("Hesap Oluştur");
+                                    $(this).attr("disabled", false);
                                 }
                             });
                         } else {
                             noti("Mail adresi doğru formatta değil", "error", "topLeft");
                             $("#kayit").html("Hesap Oluştur");
+                            $(this).attr("disabled", false);
                         }
                         
                     } else {
                         noti("Şifre en az 6 karakter olmalıdır", "error", "topLeft");
                         $("#kayit").html("Hesap Oluştur");
+                        $(this).attr("disabled", false);
                     }
                    
                 }
                 else {
                     noti("Şifreler birbiriyle uyuşmuyor", "error", "topLeft");
                     $("#kayit").html("Hesap Oluştur");
+                    $(this).attr("disabled", false);
                 }
             }
             else {
                 noti("Alanlar boş geçilemez", "error", "topLeft");
                 $("#kayit").html("Hesap Oluştur");
+                $(this).attr("disabled", false);
             }
 
         });

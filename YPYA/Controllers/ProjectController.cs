@@ -15,15 +15,11 @@ namespace YPYA.Controllers
         projeyonetimvtEntities db = new projeyonetimvtEntities();
         BusinessLayer bl = new BusinessLayer();
         Yardimci y = new Yardimci();
-        private void sesAta()
-        {
-            Session["id"] = 3;
-
-        }
+       
 
         public ActionResult Index(int? id)
         {
-            sesAta();
+            
             if (Session["id"] != null)
             {
                 int kulId = Convert.ToInt32(Session["id"]);
@@ -46,7 +42,7 @@ namespace YPYA.Controllers
 
         public ActionResult ProcessEdit(int? id)
         {
-            sesAta();
+            
             if (Session["id"] != null)
             {
                 int kulId = Convert.ToInt32(Session["id"]);
@@ -68,7 +64,7 @@ namespace YPYA.Controllers
 
         public ActionResult InvitePeople(int? id)
         {
-            sesAta();
+            
             if (Session["id"] != null)
             {
                 int kulId = Convert.ToInt32(Session["id"]);
@@ -90,7 +86,7 @@ namespace YPYA.Controllers
 
         public ActionResult Customer(int? id)
         {
-            sesAta();
+            
             if (Session["id"] != null)
             {
                 int kulId = Convert.ToInt32(Session["id"]);
@@ -113,7 +109,7 @@ namespace YPYA.Controllers
 
         public ActionResult AddRequest(int? id)
         {
-            sesAta();
+            
             if (Session["id"] != null)
             {
                 int kulId = Convert.ToInt32(Session["id"]);
@@ -135,7 +131,7 @@ namespace YPYA.Controllers
 
         public ActionResult TeamMember(int? id)
         {
-            sesAta();
+            
             if (Session["id"] != null)
             {
                 int kulId = Convert.ToInt32(Session["id"]);
@@ -157,7 +153,7 @@ namespace YPYA.Controllers
 
         public ActionResult Report(int? id)
         {
-            sesAta();
+            
             if (Session["id"] != null)
             {
                 int kulId = Convert.ToInt32(Session["id"]);

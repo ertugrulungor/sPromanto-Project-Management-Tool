@@ -300,6 +300,7 @@
     <Content Include="Models\projeyonetimvt.edmx.diagram">
       <DependentUpon>projeyonetimvt.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\spromanto.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -31,6 +31,7 @@ namespace YPYA.Controllers
             sifre = y.MD5Sifrele(sifre);
             if (db.Kullanicis.Any(x => (x.KullaniciAdi == kullanici || x.Mail == kullanici) && x.Sifre == sifre))
             {
+                Session["id"] = db.Kullanicis.FirstOrDefault(x => (x.KullaniciAdi == kullanici || x.Mail == kullanici) && x.Sifre == sifre).Id;
                 var jsonModel = new {
                     basari = 1
                 };

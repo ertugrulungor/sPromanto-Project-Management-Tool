@@ -13,14 +13,11 @@ namespace YPYA.Controllers
         projeyonetimvtEntities db = new projeyonetimvtEntities();
         Yardimci y = new Yardimci();
 
-        private void sesAta()
-        {
-            Session["id"] = 3;
-        }
+        
 
         public ActionResult Index()
         {
-            sesAta();
+            
             if (Session["id"] != null)
             {
                 int id = Convert.ToInt32(Session["id"]);
@@ -37,7 +34,7 @@ namespace YPYA.Controllers
 
         public ActionResult NewProject(int? id)
         {
-            sesAta();
+            
             ViewBag.projGuncelle = null;
             if (Session["id"] != null)
             {
