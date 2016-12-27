@@ -338,5 +338,48 @@ namespace YPYA.Controllers
 
             db.SaveChanges();
         }
+
+        public int IsTakipTarih(object[,] dizi)
+        {
+            bool kontrol = true;
+            for (int i = 0; i < dizi.GetLength(0); i++)
+            {
+                int deger = TarihKontrol((int)dizi[i,0], (int)dizi[i,1], (string)dizi[i,2], (string) dizi[i,3]);
+                if(deger == 0)
+                {
+                    kontrol = false;
+                    break;
+                }
+            }
+            return kontrol == true ? 1 : 0;
+        }
+
+        public int TarihKontrol(int parentId, int tip, string baslangic, string bitis)
+        {
+            if(tip == 0)
+            {
+                Proje p = db.Projes.Find(parentId);
+                if(p.PlanBaslangic <= Convert.ToDateTime(baslangic) && p.PlanBitis >= Convert.ToDateTime(bitis))
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            else
+            {
+                Surec s = db.Surecs.Find(parentId);
+                if (s.PlanBaslangic <= Convert.ToDateTime(baslangic) && s.PlanBitis >= Convert.ToDateTime(bitis))
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
     }
 }

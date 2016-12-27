@@ -383,18 +383,37 @@
 
             function VeriKaydet(levelKontrol,baslik,baslangic,bitis,parentSurecId,projeId,not,kontrol) {
                 if (levelKontrol) {
-                    $.post(surecOlustur, { baslik: baslik, baslangic: baslangic, bitis: bitis, parentSurecId: parentSurecId, projeId: projeId, kontrol:kontrol,not:not }, function (data) {
-                        if (data.basari == 1) {
-                            surecleriCek(projeId);
-                            $("#surecBaslik").val("");
-                            $("#surecbaslangic").val("");
-                            $("#surecbitis").val("");
-                            $(".custom-control-input").prop("checked", false);
-                            $(".altsurec").hide();
-                        } else {
-                            noti("Beklenmeyen bir hata oluştu", "error", "top");
+                    var tip;
+                    var parentId;
+                    if(parentSurecId == 0){
+                        tip = 0;
+                        parentId = projeId;
+                    }else{
+                        tip = 1;
+                        parentId = parentSurecId;
+                    }
+                    console.log(parentId + "-" + tip + "-" + baslangic + "-" + bitis);
+                    $.post('@Url.Action("TarihKontrol", "Home")',{parentId:parentId,tip:tip,baslangic:baslangic,bitis:bitis},function(sonuc){
+                        console.log(sonuc);
+                        if(sonuc == 1){
+                            $.post(surecOlustur, { baslik: baslik, baslangic: baslangic, bitis: bitis, parentSurecId: parentSurecId, projeId: projeId, kontrol:kontrol,not:not }, function (data) {
+                                if (data.basari == 1) {
+                                    surecleriCek(projeId);
+                                    $("#surecBaslik").val("");
+                                    $("#surecbaslangic").val("");
+                                    $("#surecbitis").val("");
+                                    $("#not").val("");
+                                    $(".custom-control-input").prop("checked", false);
+                                    $(".altsurec").hide();
+                                } else {
+                                    noti("Beklenmeyen bir hata oluştu", "error", "top");
+                                }
+                            });
+                        }else{
+                            noti("Bu süreç, bir üst süreç yada projenin tarih aralığını aşıyor ", "error", "top");
                         }
                     });
+                    
                 } else {
                     noti("En fazla üçüncü seviye alt süreç ekleyebilirsiniz", "error", "top");
                 }
