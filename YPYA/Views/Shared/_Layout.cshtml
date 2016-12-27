@@ -67,15 +67,15 @@
                     </div>
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="javascript:;">Settings</a>
+                    @*<a class="dropdown-item" href="javascript:;">Settings</a>
                     <a class="dropdown-item" href="javascript:;">Upgrade</a>
                     <a class="dropdown-item" href="javascript:;">
                         <span>Notifications</span>
                         <span class="tag bg-primary">34</span>
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="javascript:;">Help</a>
-                    <a class="dropdown-item" href="">Logout</a>
+                    <a class="dropdown-item" href="javascript:;">Help</a>*@
+                    <a class="dropdown-item" href="#" id="cikisYap">Çıkış Yap</a>
                 </div>
             </div>
             <!-- main navigation -->
@@ -131,7 +131,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item" href="javascript:;">Türkçe</a>
-                                <a class="dropdown-item" href="javascript:;">English</a>
+                                @*<a class="dropdown-item" href="javascript:;">English</a>*@
                             </div>
                         </div>
                         <div class="nav-item nav-link dropdown">
@@ -447,6 +447,14 @@
             $("#bildirimOku").click(function () {
                 $.post('@Url.Action("BildirimOku", "Home")', function () {
                     $("#bldCount").html(0);
+                });
+            });
+
+            $("#cikisYap").click(function () {
+                $.post('@Url.Action("CikisYap", "Sign")', function (data) {
+                    if (data == 1) {
+                        location.href = '@Url.Action("Login", "Sign")';
+                    }
                 });
             });
         });
