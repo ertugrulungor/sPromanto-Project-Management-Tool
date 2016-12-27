@@ -33,7 +33,7 @@
                 $.post("../Home/AcceptProject", { projeId: projeId }, function () {
                     secili.remove();
                     $(".demo11").remove();
-                    $("#projKatil").append('<a href="~/Project/Index/'+projeId+'" class="btn btn-danger">Projeye Git</a>');
+                    $("#projKatil").append('<a href="/Project/Index/'+projeId+'" class="btn btn-danger">Projeye Git</a>');
 
                 });
             });
