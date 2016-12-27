@@ -413,11 +413,13 @@ namespace YPYA.Controllers
             return Json(snc);
         }
         
-        public void AkisSil(int akisid)
+        public void AkisSil(int akisid,int surecID,int projeID)
         {
             IsTakibi i = db.IsTakibis.Find(akisid);
             db.IsTakibis.Remove(i);
             db.SaveChanges();
+            bl.SurecOranDuzenleme(surecID);
+            bl.ProjeOranDuzenle(projeID);
         }
 
         private static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1);

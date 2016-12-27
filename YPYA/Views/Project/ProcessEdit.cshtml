@@ -166,6 +166,7 @@
                 surecID = $(this).attr("id");
                 $("#RaporGit").attr("href", "/Project/Report/" + surecID);
                 $("#surecSil").attr("surecID", surecID);
+                $(".akisSil").attr("surecID",surecID);
                 $("#isTakibiKaydet").attr("surecID", surecID);
                 console.log(surecID);
                 $.ajax({
@@ -622,12 +623,13 @@
                 $("#RaporGit").attr("disabled", "disabled");
                 $(".akisSil").attr("disabled", "disabled");
                 var projeID = $("a#proje").attr("projeid");
-                var projeID = $("a#proje").attr("projeid");
+                var surecID=$(this).attr("surecID");
+                
                 if ($(this).attr("akisid") == 0) {
                     noti("Bu akış zaten boş", "information", "topRight");
                 } else {
                     noti("İşlem yapılıyor", "information", "topRight");
-                    $.post('@Url.Action("AkisSil", "Project")', { akisid: $(this).attr("akisid") }, function () {
+                    $.post('@Url.Action("AkisSil", "Project")', { akisid: $(this).attr("akisid"), surecID: surecID, projeID:projeID}, function () {
                         location.href = "../../Project/ProcessEdit/" + projeID;
                     });
                 }
