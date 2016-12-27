@@ -9,9 +9,9 @@ namespace YPYA.Bl
 
     public class BusinessLayer
     {
-
+        DateTime dt = new DateTime(2000,01,01);
         public void SurecOranHesapla(int surecID)
-        {
+        {                          
             using (projeyonetimvtEntities prj = new projeyonetimvtEntities())
             {
                 float orn = 0;
@@ -116,12 +116,15 @@ namespace YPYA.Bl
                 IsTakibi istkb = new IsTakibi();
                 istkb.BaslangicTarihi = bslngc;
                 istkb.BitisTarihi = bts;
-                istkb.TamamlanmaTarihi = tmTarihi;
-                istkb.TamamlanmaOranı = tmOrani;
-                if (tmTarihi != null)
+                if (tmTarihi > dt)
                 {
                     istkb.TamamlanmaTarihi = tmTarihi;
                 }
+                else
+                {
+                    istkb.TamamlanmaTarihi = null;
+                }
+                istkb.TamamlanmaOranı = tmOrani;
                 prj.IsTakibis.Add(istkb);
                 prj.SaveChanges();
                 int id = istkb.IstakibiId;
@@ -149,12 +152,15 @@ namespace YPYA.Bl
                 IsTakibi guncelIstakibi = prj.IsTakibis.Find(isTakibiID);
                 guncelIstakibi.BaslangicTarihi = bslngc;
                 guncelIstakibi.BitisTarihi = bts;
-                guncelIstakibi.TamamlanmaTarihi = tmTarihi;
-                guncelIstakibi.TamamlanmaOranı = tmOrani;
-                if (tmTarihi != null)
+                if (tmTarihi > dt)
                 {
                     guncelIstakibi.TamamlanmaTarihi = tmTarihi;
                 }
+                else
+                {
+                    guncelIstakibi.TamamlanmaTarihi = null;
+                }
+                guncelIstakibi.TamamlanmaOranı = tmOrani;
                 prj.Entry(guncelIstakibi).State = System.Data.Entity.EntityState.Modified;
                 prj.SaveChanges();
             }
@@ -229,7 +235,7 @@ namespace YPYA.Bl
 
 
                 }
-                DateTime dt = Convert.ToDateTime("01/01/2000");
+                
                 for (int i = 0; i < 7; i++)
                 {
 
@@ -419,8 +425,9 @@ namespace YPYA.Bl
             }
         }
 
-        public int SurecSilme(int surecID)
+        public int SurecSilme(int surecID, int projeID)
         {
+            int ParentSurecID = 0;
             using (projeyonetimvtEntities prj = new projeyonetimvtEntities())
             {
                 Surec src = prj.Surecs.Find(surecID);
@@ -439,6 +446,9 @@ namespace YPYA.Bl
                                         prj.KullaniciSurecs.Remove(kl);
 
                                     }
+                                    Surec childSrc = prj.Surecs.Find(i.ParentSurecId);
+                                    ParentSurecID = childSrc.Id;
+                                    childSrc.haveChild = false;
                                     prj.Surecs.Remove(i);
                                 }
 
@@ -447,6 +457,9 @@ namespace YPYA.Bl
                             {
                                 prj.KullaniciSurecs.Remove(kl);
                             }
+                            Surec src3 = prj.Surecs.Find(item.ParentSurecId);
+                            ParentSurecID = src3.Id;
+                            src3.haveChild = false;
                             prj.Surecs.Remove(item);
                         }
 
@@ -455,6 +468,9 @@ namespace YPYA.Bl
                     {
                         prj.KullaniciSurecs.Remove(kl);
                     }
+                    Surec src2 = prj.Surecs.Find(src.ParentSurecId);
+                    ParentSurecID = src2.Id;
+                    src2.haveChild = false;
                     prj.Surecs.Remove(src);
                 }
                 else
@@ -467,6 +483,8 @@ namespace YPYA.Bl
                 }       
 
                 prj.SaveChanges();
+                SurecOranHesapla(ParentSurecID);
+                ProjeOranDuzenle(projeID);
                 return 1;
             }
         }

@@ -580,7 +580,7 @@
 
             });
 
-            $("#surecSil").click(function () {
+            $("#surecSil").click(function () {                  
                 $("#isTakibiKaydet").attr("disabled", "disabled");
                 $("#surecSil").attr("disabled", "disabled");
                 $("#RaporGit").attr("disabled", "disabled");
@@ -591,7 +591,7 @@
                 $.ajax({
                     type: "POST",//Metodu belirliyoruz POST veya GET olabilir.
                     url: "/Project/SurecSil",//Nereye post edileceğini belirliyoruz. Home controller altında "IndexPost" adlı metodumuza gideceğini söyledik
-                    data: { surecID: surecID },
+                    data: { surecID: surecID, projeID: projeID },
                     beforeSend: function () {
                         noti("İşlem Gerçekleştiriliyor", "information", "topRight");
                         // $("#isTakibiKaydet").append()  //loading simgesi gösterilecek
@@ -623,6 +623,7 @@
                 var surecID=$(this).attr("surecID");
                 
                 if ($(this).attr("akisid") == 0) {
+                    $(".akisSil").attr("disabled", false);
                     noti("Bu akış zaten boş", "information", "topRight");
                 } else {
                     noti("İşlem yapılıyor", "information", "topRight");
