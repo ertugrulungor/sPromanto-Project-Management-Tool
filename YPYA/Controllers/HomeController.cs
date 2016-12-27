@@ -4,12 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using YPYA.Models;
+using YPYA.helper;
 
 namespace YPYA.Controllers
 {
     public class HomeController : Controller
     {
         projeyonetimvtEntities db = new projeyonetimvtEntities();
+        Yardimci y = new Yardimci();
 
         private void sesAta()
         {
@@ -93,8 +95,13 @@ namespace YPYA.Controllers
             return Json(jsonArray, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult ProjeOlustur(string projeAdi, string baslangic, string bitis, int projeId,int butce)
+        public JsonResult ProjeOlustur(string projeAdi, string baslangic, string bitis, int projeId,int butce,string not)
         {
+            projeAdi = y.PreventXSS(projeAdi);
+            baslangic = y.PreventXSS(baslangic);
+            bitis = y.PreventXSS(bitis);
+            not = y.PreventXSS(not);
+
             Proje p;
             if (projeId == 0)
             {
@@ -137,14 +144,14 @@ namespace YPYA.Controllers
             };
             return Json(jsonModel, JsonRequestBehavior.AllowGet);
         }
-        public bool SurecKontrol(int surecId)
+        public int SurecKontrol(int surecId)
         {
-            bool isSurec = false;
+            int isSurec = 0;
             foreach (KullaniciSurec item in db.KullaniciSurecs)
             {
                 if (item.SurecId == surecId) 
                 {
-                    isSurec = true;
+                    isSurec = 1;
                     break;                    
                 }
             }
@@ -157,17 +164,70 @@ namespace YPYA.Controllers
             {
                 item.SurecId = yeniSurecId;
                 db.Entry(item).State = System.Data.Entity.EntityState.Modified;
-
             }
-
+            db.Surecs.Find(surecId).haveChild = true;
+            db.SaveChanges();
         }
 
-        public JsonResult SurecOlustur(string baslik, string baslangic, string bitis, int parentSurecId, int projeId)
+        public JsonResult SurecOlustur(string baslik, string baslangic, string bitis, int parentSurecId, int projeId, string not, int kontrol)
         {
-            Surec s;
-            if (parentSurecId != 0)
+            baslik = y.PreventXSS(baslik);
+            baslangic = y.PreventXSS(baslangic);
+            bitis = y.PreventXSS(bitis);
+            not = y.PreventXSS(not);
+            if (kontrol == 0)
             {
-                s = new Surec()
+                Surec s;
+                if (parentSurecId != 0)
+                {
+                    s = new Surec()
+                    {
+                        Baslik = baslik,
+                        PlanBaslangic = Convert.ToDateTime(baslangic),
+                        PlanBitis = Convert.ToDateTime(bitis),
+                        OlusturanId = Convert.ToInt32(Session["id"]),
+                        OlusturmaTarihi = DateTime.Now,
+                        Tamamlanan = 0,
+                        ParentSurecId = parentSurecId,
+                        ProjeId = projeId,
+                        Note = not
+                    };
+
+                    db.Surecs.Find(parentSurecId).haveChild = true;
+                }
+                else
+                {
+                    s = new Surec()
+                    {
+                        Baslik = baslik,
+                        PlanBaslangic = Convert.ToDateTime(baslangic),
+                        PlanBitis = Convert.ToDateTime(bitis),
+                        OlusturanId = Convert.ToInt32(Session["id"]),
+                        Tamamlanan = 0,
+                        OlusturmaTarihi = DateTime.Now,
+                        ProjeId = projeId,
+                        Note = not
+                    };
+                }
+
+                db.Surecs.Add(s);
+
+                db.SaveChanges();
+
+                var jsonModel = new
+                {
+                    basari = 1,
+                    surecId = s.Id
+                };
+                return Json(jsonModel, JsonRequestBehavior.AllowGet);
+            }else if(kontrol == 1)
+            {
+                foreach (KullaniciSurec ks in db.KullaniciSurecs.Where(x=>x.SurecId == parentSurecId))
+                {
+                    db.KullaniciSurecs.Remove(ks);
+                }
+
+                Surec s = new Surec()
                 {
                     Baslik = baslik,
                     PlanBaslangic = Convert.ToDateTime(baslangic),
@@ -176,31 +236,47 @@ namespace YPYA.Controllers
                     OlusturmaTarihi = DateTime.Now,
                     Tamamlanan = 0,
                     ParentSurecId = parentSurecId,
-                    ProjeId = projeId
+                    ProjeId = projeId,
+                    Note = not
                 };
-            }
-            else
+
+                db.Surecs.Add(s);
+                db.Surecs.Find(parentSurecId).haveChild = true;
+                db.SaveChanges();
+
+                var jsonModel = new
+                {
+                    basari = 1,
+                    surecId = s.Id
+                };
+                return Json(jsonModel, JsonRequestBehavior.AllowGet);
+            }else 
             {
-                s = new Surec()
+                Surec s = new Surec()
                 {
                     Baslik = baslik,
                     PlanBaslangic = Convert.ToDateTime(baslangic),
                     PlanBitis = Convert.ToDateTime(bitis),
                     OlusturanId = Convert.ToInt32(Session["id"]),
-                    Tamamlanan = 0,
                     OlusturmaTarihi = DateTime.Now,
-                    ProjeId = projeId
+                    Tamamlanan = 0,
+                    ParentSurecId = parentSurecId,
+                    ProjeId = projeId,
+                    Note = not
                 };
+
+                db.Surecs.Add(s);
+                db.SaveChanges();
+
+                SurecAktar(parentSurecId, s.Id);
+                var jsonModel = new
+                {
+                    basari = 1,
+                    surecId = s.Id
+                };
+                return Json(jsonModel, JsonRequestBehavior.AllowGet);
             }
-
-            db.Surecs.Add(s);
-            db.SaveChanges();
-
-            var jsonModel = new {
-                basari = 1,
-                surecId = s.Id
-            };
-            return Json(jsonModel,JsonRequestBehavior.AllowGet);
+            
         }
 
         public void ProjeRed(int projeId)
@@ -272,6 +348,51 @@ namespace YPYA.Controllers
             }
 
             db.SaveChanges();
+        }
+
+        public int IsTakipTarih(object[,] dizi)
+        {
+            bool kontrol = true;
+            for (int i = 0; i < dizi.GetLength(0); i++)
+            {
+                int deger = TarihKontrol((int)dizi[i,0], (int)dizi[i,1], (string)dizi[i,2], (string) dizi[i,3]);
+                if(deger == 0)
+                {
+                    kontrol = false;
+                    break;
+                }
+            }
+            return kontrol == true ? 1 : 0;
+        }
+
+        public int TarihKontrol(int parentId, int tip, string baslangic, string bitis)
+        {
+            baslangic = y.PreventXSS(baslangic);
+            bitis = y.PreventXSS(bitis);
+            if (tip == 0)
+            {
+                Proje p = db.Projes.Find(parentId);
+                if(p.PlanBaslangic <= Convert.ToDateTime(baslangic) && p.PlanBitis >= Convert.ToDateTime(bitis))
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            else
+            {
+                Surec s = db.Surecs.Find(parentId);
+                if (s.PlanBaslangic <= Convert.ToDateTime(baslangic) && s.PlanBitis >= Convert.ToDateTime(bitis))
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
         }
     }
 }

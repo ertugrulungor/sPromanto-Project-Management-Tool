@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using YPYA.Models;
 using YPYA.Bl;
+using YPYA.helper;
 
 namespace YPYA.Controllers
 {
@@ -13,6 +14,7 @@ namespace YPYA.Controllers
     {
         projeyonetimvtEntities db = new projeyonetimvtEntities();
         BusinessLayer bl = new BusinessLayer();
+        Yardimci y = new Yardimci();
         private void sesAta()
         {
             Session["id"] = 1;
@@ -153,6 +155,24 @@ namespace YPYA.Controllers
             else return RedirectToAction("Login", "Sign");
         }
 
+        public ActionResult Report(int? id)
+        {
+            sesAta();
+            if (Session["id"] != null)
+            {
+                int kulId = Convert.ToInt32(Session["id"]);
+                ViewBag.k = db.Kullanicis.FirstOrDefault(x => x.Id == kulId);
+
+                if (id != null)
+                {                
+                    return View(db.Surecs.Find(id));
+                }
+                else
+                    return RedirectToAction("Index", "Home");
+            }
+            else return RedirectToAction("Login", "Sign");
+        }
+
         public PartialViewResult ProjectMenu(int id)
         {
             ViewBag.menuKisi = db.Projes.FirstOrDefault(x => x.Id == id);
@@ -161,6 +181,7 @@ namespace YPYA.Controllers
 
         public JsonResult SearchPeople(string content)
         {
+            content = y.PreventXSS(content);
             List<Object> JsonList = new List<Object>();
             foreach (Kullanici k in db.Kullanicis.Where(x=>x.KullaniciAdi.Contains(content) || x.Adsoyad.Contains(content)))
             {
@@ -243,6 +264,8 @@ namespace YPYA.Controllers
         
         public int IstekEkle(int projectId, string content, string header)
         {
+            content = y.PreventXSS(content);
+            header = y.PreventXSS(header);
             int musteriId = Convert.ToInt32(Session["id"]);
             MusteriIsteri m = new MusteriIsteri();
             m.Baslik = header;
@@ -333,8 +356,8 @@ namespace YPYA.Controllers
                 surecPlanlananBaslangic = baslangic,
                 surecPlanlananBitis = bitis,
                 surecTamamlanma = surecBilgi.Tamamlanan,
-                
-                
+                surecNotu = surecBilgi.Note
+
             };
 
             return Json(jsonmodel);

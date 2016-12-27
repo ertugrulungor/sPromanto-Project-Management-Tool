@@ -1,0 +1,86 @@
+﻿
+@{
+    Layout = null;
+}
+@model YPYA.Models.Surec
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Report</title>
+    <style>
+        .container{
+            width:960px;
+            margin-left:auto;
+            margin-right:auto;
+            padding:10px 0px;
+        }
+
+        .container table{
+            width:100%;
+        }
+
+        .container table tr td,
+        .container table tr th{
+            border:1px solid #000;
+            text-align:center;
+            padding:7px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="text-align:center">
+        İstek Çözüm Planı
+    </div>
+    <div class="container">
+        <table>
+            <tr>
+                <th>Süreç Adı</th>
+                <th>Süreci Oluşturan</th>
+                <th>Planlanan Başlangıç Tarihi</th>
+                <th>Planlanan Bitiş Tarihi</th>
+                <th>Bitiş Oranı</th>
+            </tr>
+            <tr>
+                <td>@Model.Baslik</td>
+                <td>@Model.Kullanici.Adsoyad</td>
+                <td>@Model.PlanBaslangic.Value.ToString("dd-MM-yyyy")</td>
+                <td>@Model.PlanBitis.Value.ToString("dd-MM-yyyy")</td>
+                <td>@Model.Tamamlanan</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="container" style="text-align:center">
+        Süreç İş Akışları
+    </div>
+
+    <div class="container">
+        <table>
+            <tr>
+                <th></th>
+                <th>Kişi</th>
+                <th>Başlangıç Tarihi</th>
+                <th>Bitiş Tarihi</th>
+                <th>Tamamlanma Tarihi</th>
+                <th>Tamamlanma Oranı</th>
+            </tr>
+            @foreach (YPYA.Models.KullaniciSurec ks in Model.KullaniciSurecs)
+            {
+                <tr>
+                    <td>@ks.Rol.RolAdi</td>
+                    <td>@ks.Kullanici.Adsoyad</td>
+                    <td>@ks.IsTakibi.BaslangicTarihi.Value.ToString("dd-MM-yyyy")</td>
+                    <td>@ks.IsTakibi.BitisTarihi.Value.ToString("dd-MM-yyyy")</td>
+                    <td>@ks.IsTakibi.TamamlanmaTarihi.Value.ToString("dd-MM-yyyy")</td>
+                    <td>@ks.IsTakibi.TamamlanmaOranı</td>
+                </tr>
+            }
+        </table>
+    </div>
+    <script>
+        window.print();
+    </script>
+</body>
+</html>

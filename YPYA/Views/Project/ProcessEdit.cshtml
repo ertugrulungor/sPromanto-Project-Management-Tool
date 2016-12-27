@@ -159,7 +159,9 @@
 
                 console.log("tıklama");
                 var projeID = $("a#proje").attr("projeid");
+
                 surecID = $(this).attr("id");
+                $("#RaporGit").attr("href", "/Project/Report/" + surecID);
                 $("#surecSil").attr("surecID", surecID);
                 $("#isTakibiKaydet").attr("surecID", surecID);
                 console.log(surecID);
@@ -182,6 +184,7 @@
                         $("#planlananBaslangic").val(data.surecPlanlananBaslangic);
                         $("#planlananBitis").val(data.surecPlanlananBitis);
                         $("#surecTamamlama").val(data.surecTamamlanma);
+                        $("#not").val(data.surecNotu);
                         var kisilerUzunlugu = data.surecDetayKisiler.length;
                         for (var j = 0; j < data.surecDetayKisiler.length; j++) {
 
@@ -672,6 +675,14 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">
+                                        Not
+                                    </label>
+                                    <textarea id="not" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
                                 <fieldset class="form-group">
                                     <label for="formGroupExampleInput">
                                         Süreç tamamlanma
@@ -688,6 +699,7 @@
                     @*<button class="btn btn-success" id="isTakibiCek" >İş Takibi Çek</button>*@
                     <button class="btn btn-success" id="isTakibiKaydet">Kaydet</button>
                     <button class="btn btn-danger" id="surecSil">Süreci Sil</button>
+                    <a class="btn btn-info" id="RaporGit" target="_blank">Raporu Görüntüle</a>
                 </div>
             </div>
 

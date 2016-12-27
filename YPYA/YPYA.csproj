@@ -334,6 +334,7 @@
     <Content Include="Views\Project\Customer.cshtml" />
     <Content Include="Views\Project\AddRequest.cshtml" />
     <Content Include="Views\Project\TeamMember.cshtml" />
+    <Content Include="Views\Project\Report.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
