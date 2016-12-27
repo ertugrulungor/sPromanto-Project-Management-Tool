@@ -107,7 +107,7 @@
     <script type="text/javascript">
         $(function () {
 
-            
+            var parentId = 0, tip = 0;
             $(".anaEkran").hide();
 
             function noti(message, type, pos) {
@@ -173,6 +173,16 @@
                 $("#surecSil").attr("surecID", surecID);
                 $(".akisSil").attr("surecID",surecID);
                 $("#isTakibiKaydet").attr("surecID", surecID);
+
+                if ($(this).attr("proces") == "mainProces") {
+                    tip = 0;
+                    parentId = projeID;
+
+                } else {
+                    tip = 1;
+                    parentId = $(this).attr("parent");
+                }
+
                 console.log(surecID);
                 $.ajax({
                     type: "POST",//Metodu belirliyoruz POST veya GET olabilir.
@@ -376,7 +386,6 @@
                             }
 
                         });
-
                     }
 
                 });
@@ -384,14 +393,19 @@
             });
 
             $("#isTakibiKaydet").click(function () {
+          
                 $("#isTakibiKaydet").attr("disabled", "disabled");
                 $("#surecSil").attr("disabled", "disabled");
                 $("#RaporGit").attr("disabled", "disabled");
                 $(".akisSil").attr("disabled", "disabled");
                 console.log("Tıkladı..");
                 var projeID = $("a#proje").attr("projeid");
-  
-                var SurecNote = $("#not").val();
+
+                var SurecBaslik = $("#surecBaslik").val();
+                var SurecBaslangic = $("#planlananBaslangic").val();
+                var SurecBitis = $("#planlananBitis").val();
+                var SurecNote = $("textarea#not").val();
+                console.log(SurecNote);
 
                 var  AnalizKisi= $("#analizKisi option:selected").text();
                 var  AnalizBaslangicTarihi = $("#analizBaslangicTarihi").val();
@@ -443,7 +457,6 @@
 
                 var SurecIstakibi = {
 
-                    surecNote: SurecNote,
                     analizKisi: AnalizKisi,
                     analizBaslangicTarihi: AnalizBaslangicTarihi,
                     analizBitisTarihi: AnalizBitisTarihi,
@@ -535,23 +548,33 @@
                         bitisTarihi: TestBitisTarihi
                     }
                 ];
+                $.post('@Url.Action("TarihKontrol", "Home")', { parentId: parentId, tip: tip, baslangic: SurecBaslangic, bitis: SurecBitis }, function (sonuc) {
+                    if (sonuc==1) {
+                        if (AnalizTamamlanmaOrani >= 0 && AnalizTamamlanmaOrani <= 100 && TableTamamlanmaOrani >= 0 && TableTamamlanmaOrani <= 100 && ProcedureTamamlanmaOrani >= 0 && ProcedureTamamlanmaOrani <= 100 && DllListTamamlanmaOrani >= 0 && DllListTamamlanmaOrani <= 100 && DllIslemTamamlanmaOrani >= 0 && DllIslemTamamlanmaOrani <= 100 && ArayuzTamamlanmaOrani >= 0 && ArayuzTamamlanmaOrani <= 100 && TestTamamlanmaOrani >= 0 && TestTamamlanmaOrani <= 100) {
+                            $.post('@Url.Action("IsTakipTarih", "Home")', { dizi: surecTarih }, function (data) {
+                                if (data == 1) {
+                                    $.ajax({
+                                        type: "POST",//Metodu belirliyoruz POST veya GET olabilir.
+                                        url: "/Project/IsTakibiKaydet",//Nereye post edileceğini belirliyoruz. Home controller altında "IndexPost" adlı metodumuza gideceğini söyledik
+                                        data: { istakibiBilgi: SurecIstakibi, surecID: surecID, projeID: projeID, surecBaslik: SurecBaslik, surecNote: SurecNote },
+                                        beforeSend: function () {
+                                            noti("İşlem Gerçekleştiriliyor", "information", "topRight");
+                                            // $("#isTakibiKaydet").append()  //loading simgesi gösterilecek
+                                        },
+                                        datatype: "json",//Geri dönecek değerin tipini belirliyoruz. xml, json, script, html bunlardan birini belirleyebiliriz.
+                                        success: function (data) {//Eğer ajax post işlemi başarılı ise çalışacak fonksiyonumuz. function(data) kısmında ise data dönen değerimiz oluyor.
+                                            // $('#result').html(data);//Burda ise dönen değeri $('#result') divini seçip .html(data) ile içine basıyoruz.
 
-                if (AnalizTamamlanmaOrani >= 0 && AnalizTamamlanmaOrani <= 100 && TableTamamlanmaOrani >= 0 && TableTamamlanmaOrani <= 100 && ProcedureTamamlanmaOrani >= 0 && ProcedureTamamlanmaOrani <= 100 && DllListTamamlanmaOrani >= 0 && DllListTamamlanmaOrani <= 100 && DllIslemTamamlanmaOrani >= 0 && DllIslemTamamlanmaOrani <= 100 && ArayuzTamamlanmaOrani >= 0 && ArayuzTamamlanmaOrani <= 100 && TestTamamlanmaOrani >= 0 && TestTamamlanmaOrani <= 100) {
-                    $.post('@Url.Action("IsTakipTarih", "Home")', { dizi: surecTarih }, function (data) {
-                        if (data == 1) {
-                            $.ajax({
-                                type: "POST",//Metodu belirliyoruz POST veya GET olabilir.
-                                url: "/Project/IsTakibiKaydet",//Nereye post edileceğini belirliyoruz. Home controller altında "IndexPost" adlı metodumuza gideceğini söyledik
-                                data: { istakibiBilgi: SurecIstakibi, surecID: surecID, projeID: projeID },
-                                beforeSend: function () {
-                                    noti("İşlem Gerçekleştiriliyor", "information", "topRight");
-                                    // $("#isTakibiKaydet").append()  //loading simgesi gösterilecek
-                                },
-                                datatype: "json",//Geri dönecek değerin tipini belirliyoruz. xml, json, script, html bunlardan birini belirleyebiliriz.
-                                success: function (data) {//Eğer ajax post işlemi başarılı ise çalışacak fonksiyonumuz. function(data) kısmında ise data dönen değerimiz oluyor.
-                                    // $('#result').html(data);//Burda ise dönen değeri $('#result') divini seçip .html(data) ile içine basıyoruz.
+                                            noti("İşlem Gerçekleştirildi", "success", "topRight");
+                                            $("#isTakibiKaydet").attr("disabled", false);
+                                            $("#surecSil").attr("disabled", false);
+                                            $("#RaporGit").attr("disabled", false);
+                                            $(".akisSil").attr("disabled", false);
+                                        }
 
-                                    noti("İşlem Gerçekleştirildi", "success", "topRight");
+                                    });
+                                } else {
+                                    noti("Bu süreç, bir üst süreç yada projenin tarih aralığını aşıyor ", "error", "top");
                                     $("#isTakibiKaydet").attr("disabled", false);
                                     $("#surecSil").attr("disabled", false);
                                     $("#RaporGit").attr("disabled", false);
@@ -560,22 +583,20 @@
 
                             });
                         } else {
-                            noti("Bu süreç, bir üst süreç yada projenin tarih aralığını aşıyor ", "error", "top");
+                            noti("Oranlar 0 ile 100 arası olmalıdır", "warning", "topRight");
                             $("#isTakibiKaydet").attr("disabled", false);
                             $("#surecSil").attr("disabled", false);
                             $("#RaporGit").attr("disabled", false);
                             $(".akisSil").attr("disabled", false);
                         }
 
-                    });
-                } else {
-                    noti("Oranlar 0 ile 100 arası olmalıdır", "warning", "topRight");
-                    $("#isTakibiKaydet").attr("disabled", false);
-                    $("#surecSil").attr("disabled", false);
-                    $("#RaporGit").attr("disabled", false);
-                    $(".akisSil").attr("disabled", false);
-                }
-                
+                    }
+                    else {
+                        noti("Bu süreç, bir üst süreç yada projenin tarih aralığını aşıyor ", "error", "top");
+                    }
+                    
+                });
+            
 
 
             });
@@ -661,7 +682,7 @@
                 drm = "surec";
                 }
 
-                <a id="@i.Id" href="javascript:;" class="column-equal main-process @drm" data-toggle="contact">
+                <a id="@i.Id" href="javascript:;" proces="mainProces" class="column-equal main-process @drm" data-toggle="contact">
                     <div href="#" class="notification-bar-icon">
                         <div><i></i></div>
                     </div>
@@ -682,7 +703,7 @@
                 drm = "surec";
                 }
 
-                <a id="@j.Id" href="javascript:;" class="column-equal proces @drm" data-toggle="contact">
+                <a id="@j.Id" parent="@j.ParentSurecId" href="javascript:;" proces="proces" class="column-equal proces @drm" data-toggle="contact">
                     <div href="#" class="notification-bar-icon">
                         <div><i></i></div>
                     </div>
@@ -703,7 +724,7 @@
                 drm = "surec";
                 }
 
-                <a id="@k.Id" href="javascript:;" class="column-equal sub-process @drm" data-toggle="contact">
+                <a id="@k.Id" parent="@i.ParentSurecId" href="javascript:;" proces="subProces" class="column-equal sub-process @drm" data-toggle="contact">
                     <div href="#" class="notification-bar-icon">
                         <div><i></i></div>
                     </div>
