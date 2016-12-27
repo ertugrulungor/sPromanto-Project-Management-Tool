@@ -167,15 +167,17 @@ namespace YPYA.Bl
 
         }
 
-        public int KullaniciSurecEkle(SurecIstakibi istakibi, int surecID,int projeID,string surecBaslik,string surecNote)
+        public int KullaniciSurecEkle(SurecIstakibi istakibi, int surecID,int projeID,string surecBaslik,string surecNote,string baslangic,string bitis)
         {
             using (projeyonetimvtEntities prj = new projeyonetimvtEntities())
             {
-                if (surecNote != null)
+                if (surecNote != null && surecBaslik != null && baslangic != null && bitis != null )
                 {
                     Surec src = prj.Surecs.Find(surecID);
                     src.Baslik = surecBaslik;
                     src.Note = surecNote;
+                    src.PlanBaslangic = Convert.ToDateTime(baslangic);
+                    src.PlanBitis = Convert.ToDateTime(bitis);
                     prj.Entry(src).State = System.Data.Entity.EntityState.Modified;
                     prj.SaveChanges();
                 }

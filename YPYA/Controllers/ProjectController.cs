@@ -462,12 +462,14 @@ namespace YPYA.Controllers
             return Json(snc);
 
         }
-        public JsonResult IsTakibiKaydet(SurecIstakibi istakibiBilgi ,int surecID,int projeID,string surecBaslik,string surecNote)
+        public JsonResult IsTakibiKaydet(SurecIstakibi istakibiBilgi ,int surecID,int projeID,string surecBaslik,string surecNote,string baslangic,string bitis)
         {
-            List<string> snc = new List<string>();
+            List<int> snc = new List<int>();
             surecBaslik = y.PreventXSS(surecBaslik);
             surecNote=y.PreventXSS(surecNote);
-            if (bl.KullaniciSurecEkle(istakibiBilgi, surecID,projeID,surecBaslik,surecNote) == 1)
+            baslangic = y.PreventXSS(baslangic);
+            bitis = y.PreventXSS(bitis);
+            if (bl.KullaniciSurecEkle(istakibiBilgi, surecID,projeID,surecBaslik,surecNote,baslangic,bitis) == 1)
             {
                 snc.Add(db.Projes.Find(projeID).Tamamlanan.Value);
             }

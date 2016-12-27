@@ -557,7 +557,7 @@
                                     $.ajax({
                                         type: "POST",//Metodu belirliyoruz POST veya GET olabilir.
                                         url: "/Project/IsTakibiKaydet",//Nereye post edileceğini belirliyoruz. Home controller altında "IndexPost" adlı metodumuza gideceğini söyledik
-                                        data: { istakibiBilgi: SurecIstakibi, surecID: surecID, projeID: projeID, surecBaslik: SurecBaslik, surecNote: SurecNote },
+                                        data: { istakibiBilgi: SurecIstakibi, surecID: surecID, projeID: projeID, surecBaslik: SurecBaslik, surecNote: SurecNote ,baslangic:SurecBaslangic, bitis:SurecBitis},
                                         beforeSend: function () {
                                             noti("İşlem Gerçekleştiriliyor", "information", "topRight");
                                             // $("#isTakibiKaydet").append()  //loading simgesi gösterilecek
@@ -596,6 +596,10 @@
                     }
                     else {
                         noti("Bu süreç, bir üst süreç yada projenin tarih aralığını aşıyor ", "error", "top");
+                        $("#isTakibiKaydet").attr("disabled", false);
+                        $("#surecSil").attr("disabled", false);
+                        $("#RaporGit").attr("disabled", false);
+                        $(".akisSil").attr("disabled", false);
                     }
                     
                 });
