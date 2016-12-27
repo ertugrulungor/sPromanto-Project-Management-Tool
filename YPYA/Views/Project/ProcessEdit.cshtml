@@ -193,6 +193,7 @@
                         $("#planlananBaslangic").val(data.surecPlanlananBaslangic);
                         $("#planlananBitis").val(data.surecPlanlananBitis);
                         $("#surecTamamlama").val(data.surecTamamlanma);
+                        $("#surecdegeri").html("<b> (%" + data.surecTamamlanma + ")</b>");
                         $("#not").val(data.surecNotu);
                         var kisilerUzunlugu = data.surecDetayKisiler.length;
                         for (var j = 0; j < data.surecDetayKisiler.length; j++) {
@@ -787,7 +788,7 @@
                                 <div class="col-xs-12">
                                     <fieldset class="form-group">
                                         <label for="formGroupExampleInput">
-                                            Süreç tamamlanma
+                                            Süreç tamamlanma<span id="surecdegeri"></span>   
                                         </label>
                                         <progress id="surecTamamlama" class="progress progress-success" style="margin-bottom: 0px;" value="0" max="100"></progress>
                                     </fieldset>

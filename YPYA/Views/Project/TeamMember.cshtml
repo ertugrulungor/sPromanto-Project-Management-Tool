@@ -114,6 +114,7 @@
 
 
             $("#surecKaydet").click(function () {
+                $(this).attr("disabled", "disabled");
                 var projeID = $("input#proje").attr("projeid");
                 var surecID = $(this).attr("surecID");
 
@@ -204,6 +205,7 @@
                         // $('#result').html(data);//Burda ise dönen değeri $('#result') divini seçip .html(data) ile içine basıyoruz.
 
                         noti("İşlem Gerçekleştirildi", "success", "topRight");
+                        $("#surecKaydet").attr("disabled", false);
                     }
 
                 });

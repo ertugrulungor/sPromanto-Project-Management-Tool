@@ -109,6 +109,7 @@ namespace YPYA.Controllers
                 p.OlusturanKullaniciId = Convert.ToInt32(Session["id"]);
                 p.Olusturulma = DateTime.Now;
                 p.Butce = butce;
+                p.Tamamlanan = 0;
 
                 db.Projes.Add(p);
             }

@@ -210,7 +210,7 @@ namespace YPYA.Controllers
 
         public JsonResult AddPeopleProject(int id,int projeId)
         {
-            if (!db.ProjeKullanicis.Any(x => x.KullaniciId == id && x.ProjeId == projeId) && db.Projes.Find(projeId).Kullanici.Id != id)
+            if (!db.ProjeKullanicis.Any(x => x.KullaniciId == id && x.ProjeId == projeId) && db.Projes.Find(projeId).Kullanici1.Id != id)
             {
                 ProjeKullanici pk = new ProjeKullanici()
                 {
