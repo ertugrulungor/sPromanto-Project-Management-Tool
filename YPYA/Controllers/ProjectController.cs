@@ -390,11 +390,11 @@ namespace YPYA.Controllers
             return Json(Istakipleri);
           
         }
-        public JsonResult SurecSil(int surecID)
+        public JsonResult SurecSil(int surecID ,int projeID)
         {
             List<string> snc = new List<string>();
 
-            if (bl.SurecSilme(surecID) == 1)
+            if (bl.SurecSilme(surecID,projeID) == 1)
             {                                                                    
                 snc.Add("Basarili");
             }
