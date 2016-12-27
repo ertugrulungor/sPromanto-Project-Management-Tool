@@ -348,7 +348,6 @@ namespace YPYA.Controllers
                 Kisiler.Add(jsonKisi);
             }
             var jsonmodel = new {
-
                 surecDetayKisiler = Kisiler,
                 surecBaslik = surecBilgi.Baslik,
                 projeBaslik = surecBilgi.Proje.Baslik,
@@ -384,6 +383,7 @@ namespace YPYA.Controllers
                     surecDetayBitis = surecBitis,
                     surecDetayTamamlanma = surecTamamlanma,
                     surecDetayTamamlanmaOrani = orn,
+                    id = item.IstakibiId
 
                 };
 
@@ -411,6 +411,13 @@ namespace YPYA.Controllers
                 snc.Add("Basarili");
             }
             return Json(snc);
+        }
+        
+        public void AkisSil(int akisid)
+        {
+            IsTakibi i = db.IsTakibis.Find(akisid);
+            db.IsTakibis.Remove(i);
+            db.SaveChanges();
         }
 
         private static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1);

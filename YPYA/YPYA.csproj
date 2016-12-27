@@ -216,6 +216,7 @@
       <DependentUpon>projeyonetimvt.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SurecTarih.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\images\avatar.jpg" />
@@ -324,7 +325,6 @@
     <Content Include="Views\Shared\_SignLayout.cshtml" />
     <Content Include="Views\Sign\Login.cshtml" />
     <Content Include="Views\Sign\Register.cshtml" />
-    <Content Include="Views\Sign\ForgotPassword.cshtml" />
     <Content Include="Views\Home\NewProject.cshtml" />
     <Content Include="Views\Home\SurecCek.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />

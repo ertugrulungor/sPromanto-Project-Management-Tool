@@ -7,7 +7,7 @@
 <div class="card card-block form-layout">
     <form role="form" action="index.html" id="validate">
         <div class="text-xs-center m-b-3">
-            <img src="~/Content/images/logo-icon.png" height="80" alt="" class="m-b-1" />
+            <img src="~/Content/images/slogo.png" width="150" style="margin-top:10px" alt="" class="m-b-1" />
             <h5>
                 Şimdi hesap oluştur
             </h5>
@@ -48,41 +48,12 @@
         <button class="btn btn-primary btn-block btn-lg" id="kayit" type="button">
             Hesap Oluştur
         </button>
-        <div class="divider">
-            <span>
-                yada
-            </span>
-        </div>
-        <div class="text-xs-center">
-            <p>
-                Sosyal hesapları kullanarak giriş yap
-            </p>
-            <button href="javascript:;" class="btn btn-icon-icon btn-facebook btn-lg m-b-1 m-r-1">
-                <i class="fa fa-facebook">
-                </i>
-            </button>
-            <button href="javascript:;" class="btn btn-icon-icon btn-github btn-lg m-b-1 m-r-1">
-                <i class="fa fa-github">
-                </i>
-            </button>
-            <button href="javascript:;" class="btn btn-icon-icon btn-google btn-lg m-b-1 m-r-1">
-                <i class="fa fa-google-plus">
-                </i>
-            </button>
-            <button href="javascript:;" class="btn btn-icon-icon btn-linkedin btn-lg m-b-1 m-r-1">
-                <i class="fa fa-linkedin">
-                </i>
-            </button>
-        </div>
+        
     </form>
 </div>
 
 @section footer{
     <p>
-        <a href="~/Sign/ForgotPassword">
-            Şifreni mi unuttun?
-        </a>
-        &nbsp;&nbsp;·&nbsp;&nbsp;
         <a href="~/Sign/Login">
             Zaten bir hesabım var
         </a>
@@ -119,6 +90,12 @@
             if(deger.length>0) return true;
             else return false;
         }
+
+        function validateEmail(email) {
+            var re = /^(([^<>()[\]\\.,;:\s@@\"]+(\.[^<>()[\]\\.,;:\s@@\"]+)*)|(\".+\"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
+        }
+
         $("#kayit").click(function () {
             $(this).html('<img src="/Content/images/spin.svg" width="20"/>');
             var adsoyad = $("#adsoyad").val();
@@ -128,14 +105,26 @@
             var cpassword = $("#cpassword").val();
             if (bosGecme(kuladi) && bosGecme(adsoyad) && bosGecme(email) && bosGecme(password) && bosGecme(cpassword) && antixss(kuladi) && antixss(adsoyad) && antixss(email) && antixss(password) && antixss(cpassword)) {
                 if (password == cpassword) {
-                    $.post("../Sign/KayitOl", { adsoyad: adsoyad ,kuladi: kuladi, mail: email, sifre: password }, function (data) {
-                        if (data.basari == 1) {
-                            location.href = "/Home/Index";
+                    if (password >= 6) {
+                        if(validateEmail(email)){
+                            $.post("../Sign/KayitOl", { adsoyad: adsoyad, kuladi: kuladi, mail: email, sifre: password }, function (data) {
+                                if (data.basari == 1) {
+                                    location.href = "/Home/Index";
+                                } else {
+                                    noti("Beklenmeyen bir hata oluştu", "error", "topLeft");
+                                    $("#kayit").html("Hesap Oluştur");
+                                }
+                            });
                         } else {
-                            noti("Beklenmeyen bir hata oluştu", "error", "topLeft");
+                            noti("Mail adresi doğru formatta değil", "error", "topLeft");
                             $("#kayit").html("Hesap Oluştur");
                         }
-                    });
+                        
+                    } else {
+                        noti("Şifre en az 6 karakter olmalıdır", "error", "topLeft");
+                        $("#kayit").html("Hesap Oluştur");
+                    }
+                   
                 }
                 else {
                     noti("Şifreler birbiriyle uyuşmuyor", "error", "topLeft");
