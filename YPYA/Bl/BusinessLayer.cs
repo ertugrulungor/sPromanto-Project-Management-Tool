@@ -168,6 +168,12 @@ namespace YPYA.Bl
         {
             using (projeyonetimvtEntities prj = new projeyonetimvtEntities())
             {
+                if (istakibi.surecNote != null)
+                {
+                    Surec src = prj.Surecs.Find(surecID);
+                    src.Note = istakibi.surecNote;
+                    prj.SaveChanges();
+                }
                 bool isAnaliz = false, isTable = false, isProcedure = false, isDllList = false, isDllIslem = false, isArayuz = false, isTest = false;
                 foreach (KullaniciSurec item in prj.KullaniciSurecs.Where(x => x.SurecId == surecID))
                 {

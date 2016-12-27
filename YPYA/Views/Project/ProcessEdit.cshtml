@@ -141,6 +141,7 @@
                 $("#projeAdi").val("");
                 $("#sureciOlusturan").val("");
                 $("#surecTamamlama").val("");
+                $("#not").val("");
             }
 
     
@@ -391,6 +392,8 @@
                 console.log("Tıkladı..");
                 var projeID = $("a#proje").attr("projeid");
   
+                var SurecNote = $("#not").val();
+
                 var  AnalizKisi= $("#analizKisi option:selected").text();
                 var  AnalizBaslangicTarihi = $("#analizBaslangicTarihi").val();
                 var  AnalizBitisTarihi= $("#analizBitisTarihi").val();
@@ -439,6 +442,7 @@
 
                 var SurecIstakibi = {
 
+                    surecNote: SurecNote,
                     analizKisi: AnalizKisi,
                     analizBaslangicTarihi: AnalizBaslangicTarihi,
                     analizBitisTarihi: AnalizBitisTarihi,

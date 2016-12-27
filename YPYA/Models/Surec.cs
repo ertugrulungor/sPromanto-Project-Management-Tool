@@ -40,9 +40,9 @@ namespace YPYA.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<KullaniciSurec> KullaniciSurecs { get; set; }
         public virtual Oncelik Oncelik { get; set; }
+        public virtual Proje Proje { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Surec> Surec1 { get; set; }
         public virtual Surec Surec2 { get; set; }
-        public virtual Proje Proje { get; set; }
     }
 }

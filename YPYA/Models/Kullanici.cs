@@ -18,12 +18,12 @@ namespace YPYA.Models
         public Kullanici()
         {
             this.Bildirims = new HashSet<Bildirim>();
+            this.Projes = new HashSet<Proje>();
             this.KullaniciSurecs = new HashSet<KullaniciSurec>();
             this.MusteriIsteris = new HashSet<MusteriIsteri>();
+            this.Projes1 = new HashSet<Proje>();
             this.ProjeKullanicis = new HashSet<ProjeKullanici>();
             this.Surecs = new HashSet<Surec>();
-            this.Projes = new HashSet<Proje>();
-            this.Projes1 = new HashSet<Proje>();
         }
     
         public int Id { get; set; }
@@ -36,16 +36,16 @@ namespace YPYA.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bildirim> Bildirims { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Proje> Projes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<KullaniciSurec> KullaniciSurecs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MusteriIsteri> MusteriIsteris { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Proje> Projes1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProjeKullanici> ProjeKullanicis { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Surec> Surecs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Proje> Projes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Proje> Projes1 { get; set; }
     }
 }

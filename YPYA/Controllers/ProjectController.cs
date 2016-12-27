@@ -17,7 +17,7 @@ namespace YPYA.Controllers
         Yardimci y = new Yardimci();
         private void sesAta()
         {
-            Session["id"] = 1;
+            Session["id"] = 3;
 
         }
 
