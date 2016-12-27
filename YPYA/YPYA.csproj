@@ -221,6 +221,7 @@
   <ItemGroup>
     <Content Include="Content\images\avatar.jpg" />
     <Content Include="Content\images\face1.jpg" />
+    <Content Include="Content\images\icon.png" />
     <Content Include="Content\images\logo-icon.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\logo_white.png" />

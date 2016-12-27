@@ -112,34 +112,34 @@
                                 if (data.basari == 1) {
                                     location.href = "/Home/Index";
                                 } else {
-                                    noti("Beklenmeyen bir hata oluştu", "error", "topLeft");
+                                    noti("Bu kullanıcı adı yada mail daha önce alınmış", "error", "topLeft");
                                     $("#kayit").html("Hesap Oluştur");
-                                    $(this).attr("disabled", false);
+                                    $("#kayit").attr("disabled", false);
                                 }
                             });
                         } else {
                             noti("Mail adresi doğru formatta değil", "error", "topLeft");
                             $("#kayit").html("Hesap Oluştur");
-                            $(this).attr("disabled", false);
+                            $("#kayit").attr("disabled", false);
                         }
                         
                     } else {
                         noti("Şifre en az 6 karakter olmalıdır", "error", "topLeft");
                         $("#kayit").html("Hesap Oluştur");
-                        $(this).attr("disabled", false);
+                        $("#kayit").attr("disabled", false);
                     }
                    
                 }
                 else {
                     noti("Şifreler birbiriyle uyuşmuyor", "error", "topLeft");
                     $("#kayit").html("Hesap Oluştur");
-                    $(this).attr("disabled", false);
+                    $("#kayit").attr("disabled", false);
                 }
             }
             else {
                 noti("Alanlar boş geçilemez", "error", "topLeft");
                 $("#kayit").html("Hesap Oluştur");
-                $(this).attr("disabled", false);
+                $("#kayit").attr("disabled", false);
             }
 
         });

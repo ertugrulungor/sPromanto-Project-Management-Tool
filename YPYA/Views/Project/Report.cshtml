@@ -73,10 +73,19 @@
                     <td>@ks.Kullanici.Adsoyad</td>
                     <td>@ks.IsTakibi.BaslangicTarihi.Value.ToString("dd-MM-yyyy")</td>
                     <td>@ks.IsTakibi.BitisTarihi.Value.ToString("dd-MM-yyyy")</td>
-                    <td>@ks.IsTakibi.TamamlanmaTarihi.Value.ToString("dd-MM-yyyy")</td>
+
+                    @{if (ks.IsTakibi.TamamlanmaTarihi == null)
+                        {
+                            <td>Tamamlanmadı</td>
+                        }
+                        else
+                        {
+                            <td>@ks.IsTakibi.TamamlanmaTarihi.Value.ToString("dd-MM-yyyy")</td>
+                        }
+                    }
                     <td>@ks.IsTakibi.TamamlanmaOranı</td>
                 </tr>
-            }
+                        }
         </table>
     </div>
     <script>

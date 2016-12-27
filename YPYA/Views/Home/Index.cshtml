@@ -17,24 +17,23 @@
 
 @section menu{
     <li>
-    <a href="~/Home/NewProject">
-        <i class="material-icons text-brown">add_box</i>
-        <span>Yeni proje oluştur</span>
-    </a>
-</li>
+        <a href="~/Home/NewProject">
+            <i class="material-icons text-brown">add_box</i>
+            <span>Yeni proje oluştur</span>
+        </a>
+    </li>
 }
 
 @section script{
     <script type="text/javascript">
         $(function () {
             $("#katil").click(function () {
-                var secili = $(this);
-                var projeId = secili.attr("projeId");
+                var secili = this;
+                var projeId = $(secili).attr("projeId");
+                var sinifId = $(secili).attr("sinifId");
                 $.post("../Home/AcceptProject", { projeId: projeId }, function () {
-                    secili.remove();
-                    $(".demo11").remove();
-                    $("#projKatil").append('<a href="/Project/Index/'+projeId+'" class="btn btn-danger">Projeye Git</a>');
-
+                    $(".btn" + sinifId).parent().append('<a href="/Project/Index/' + projeId + '" class="btn btn-danger">Projeye Git</a>');
+                    $(".btn" + sinifId).remove();
                 });
             });
         });
@@ -112,15 +111,17 @@
                 }
                 else
                 {
-                    <a projeId="@i.Proje.Id" id="katil" href="#" class="btn btn-success">
+                    string snf = "btn" + i.Id;
+
+                    <a projeId="@i.Proje.Id" id="katil" sinifId="@i.Id" href="#" class="btn btn-success @snf">
                         Projeye Katıl
                     </a>
-                    <a projeId="@i.Proje.Id" href="#" class="btn btn-danger demo11">
-                        Reddet
-                    </a>
+                        <a projeId="@i.Proje.Id" href="#" class="btn btn-danger demo11 @snf">
+                            Reddet
+                        </a>
                 }
 
             </div>
         </div>
     }
-</div>
+</div> 

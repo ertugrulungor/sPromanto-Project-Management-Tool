@@ -82,5 +82,11 @@ namespace YPYA.Controllers
                 return Json(jsonModel, JsonRequestBehavior.AllowGet);
             }
         }
+
+        public int CikisYap()
+        {
+            Session.Clear();
+            return 1;
+        }
     }
 }

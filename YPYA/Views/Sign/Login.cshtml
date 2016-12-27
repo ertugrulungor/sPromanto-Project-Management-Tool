@@ -86,14 +86,14 @@
                         } else {
                             noti("Kullanıcı adı yada şifre yanlış", "error", "topLeft");
                             $("#giris").html("Giriş Yap");
-                            $(this).attr("disabled", false);
+                            $("#giris").attr("disabled", false);
                         }
                     });
                 }
                 else {
                     noti("Alanlar boş geçilemez", "error", "topLeft");
                     $("#giris").html("Giriş Yap");
-                    $(this).attr("disabled", false);
+                    $("#giris").attr("disabled", false);
                 }
 
             });

@@ -16,10 +16,25 @@ namespace YPYA.Controllers
         BusinessLayer bl = new BusinessLayer();
         Yardimci y = new Yardimci();
        
+        public bool yetkiVarMi(int? projeId)
+        {
+            bool kontrol = false;
+            int ben = Convert.ToInt32(Session["id"]);
+            if (db.Projes.Any(x=>x.OlusturanKullaniciId == ben && x.Id == projeId))
+            {
+                kontrol = true;
+            }
+
+            if (db.ProjeKullanicis.Any(x=>x.ProjeId == projeId && x.KullaniciId == ben && x.Durum == true))
+            {
+                kontrol = true;
+            }
+
+            return kontrol;
+        }
 
         public ActionResult Index(int? id)
         {
-            
             if (Session["id"] != null)
             {
                 int kulId = Convert.ToInt32(Session["id"]);
@@ -27,11 +42,18 @@ namespace YPYA.Controllers
 
                 if (id != null)
                 {
-                    Proje p = db.Projes.FirstOrDefault(x => x.Id == id);
-                    ViewBag.proje = p;
-                    ViewBag.projeId = p.Id;
-                    ViewBag.projeAdi = p.Baslik;
-                    return View(db.Projes.FirstOrDefault(x => x.Id == id));
+                    if (yetkiVarMi(id))
+                    {
+                        Proje p = db.Projes.FirstOrDefault(x => x.Id == id);
+                        ViewBag.proje = p;
+                        ViewBag.projeId = p.Id;
+                        ViewBag.projeAdi = p.Baslik;
+                        return View(db.Projes.FirstOrDefault(x => x.Id == id));
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 else
                     return RedirectToAction("Index", "Home");
@@ -50,11 +72,18 @@ namespace YPYA.Controllers
 
                 if (id != null)
                 {
-                    Proje p = db.Projes.FirstOrDefault(x=>x.Id == id);
-                    ViewBag.proje = p;
-                    ViewBag.projeId = p.Id;
-                    ViewBag.projeAdi = p.Baslik;
-                    return View(db.Surecs.Where(x=>x.ProjeId == id && x.Kullanici.Id == kulId));
+                    if (yetkiVarMi(id))
+                    {
+                        Proje p = db.Projes.FirstOrDefault(x=>x.Id == id);
+                        ViewBag.proje = p;
+                        ViewBag.projeId = p.Id;
+                        ViewBag.projeAdi = p.Baslik;
+                        return View(db.Surecs.Where(x=>x.ProjeId == id && x.Kullanici.Id == kulId));
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 else
                     return RedirectToAction("Index", "Home");
@@ -72,11 +101,18 @@ namespace YPYA.Controllers
 
                 if (id != null)
                 {
-                    Proje p = db.Projes.FirstOrDefault(x => x.Id == id);
-                    ViewBag.proje = p;
-                    ViewBag.projeId = p.Id;
-                    ViewBag.projeAdi = p.Baslik;
-                    return View(db.ProjeKullanicis.Where(x=>x.ProjeId == id));
+                    if (yetkiVarMi(id))
+                    {
+                        Proje p = db.Projes.FirstOrDefault(x => x.Id == id);
+                        ViewBag.proje = p;
+                        ViewBag.projeId = p.Id;
+                        ViewBag.projeAdi = p.Baslik;
+                        return View(db.ProjeKullanicis.Where(x=>x.ProjeId == id));
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 else
                     return RedirectToAction("Index", "Home");
@@ -94,12 +130,19 @@ namespace YPYA.Controllers
 
                 if (id != null)
                 {
-                    Proje p = db.Projes.FirstOrDefault(x => x.Id == id);
-                    ViewBag.proje = p;
-                    ViewBag.projeId = p.Id;
-                    ViewBag.projeAdi = p.Baslik;
+                    if (yetkiVarMi(id))
+                    {
+                        Proje p = db.Projes.FirstOrDefault(x => x.Id == id);
+                        ViewBag.proje = p;
+                        ViewBag.projeId = p.Id;
+                        ViewBag.projeAdi = p.Baslik;
 
-                    return View(db.ProjeKullanicis.Where(x => x.ProjeId == id));
+                        return View(db.ProjeKullanicis.Where(x => x.ProjeId == id));
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 else
                     return RedirectToAction("Index", "Home");
@@ -117,11 +160,18 @@ namespace YPYA.Controllers
 
                 if (id != null)
                 {
-                    Proje p = db.Projes.FirstOrDefault(x => x.Id == id);
-                    ViewBag.proje = p;
-                    ViewBag.projeId = p.Id;
-                    ViewBag.projeAdi = p.Baslik;
-                    return View();
+                    if (yetkiVarMi(id))
+                    {
+                        Proje p = db.Projes.FirstOrDefault(x => x.Id == id);
+                        ViewBag.proje = p;
+                        ViewBag.projeId = p.Id;
+                        ViewBag.projeAdi = p.Baslik;
+                        return View();
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 else
                     return RedirectToAction("Index", "Home");
@@ -139,11 +189,18 @@ namespace YPYA.Controllers
 
                 if (id != null)
                 {
-                    Proje p = db.Projes.FirstOrDefault(x => x.Id == id);
-                    ViewBag.proje = p;
-                    ViewBag.projeId = p.Id;
-                    ViewBag.projeAdi = p.Baslik;
-                    return View(db.KullaniciSurecs.Where(x=>x.KullaniciId == kulId && x.Surec.Proje.Id == id));
+                    if (yetkiVarMi(id))
+                    {
+                        Proje p = db.Projes.FirstOrDefault(x => x.Id == id);
+                        ViewBag.proje = p;
+                        ViewBag.projeId = p.Id;
+                        ViewBag.projeAdi = p.Baslik;
+                        return View(db.KullaniciSurecs.Where(x=>x.KullaniciId == kulId && x.Surec.Proje.Id == id));
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 else
                     return RedirectToAction("Index", "Home");
@@ -160,8 +217,15 @@ namespace YPYA.Controllers
                 ViewBag.k = db.Kullanicis.FirstOrDefault(x => x.Id == kulId);
 
                 if (id != null)
-                {                
-                    return View(db.Surecs.Find(id));
+                {
+                    if (yetkiVarMi(id))
+                    {
+                        return View(db.Surecs.Find(id));
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 else
                     return RedirectToAction("Index", "Home");
@@ -210,7 +274,7 @@ namespace YPYA.Controllers
 
         public JsonResult AddPeopleProject(int id,int projeId)
         {
-            if (!db.ProjeKullanicis.Any(x => x.KullaniciId == id && x.ProjeId == projeId) && db.Projes.Find(projeId).Kullanici.Id != id)
+            if (!db.ProjeKullanicis.Any(x => x.KullaniciId == id && x.ProjeId == projeId) && db.Projes.Find(projeId).Kullanici1.Id != id)
             {
                 ProjeKullanici pk = new ProjeKullanici()
                 {
@@ -405,7 +469,7 @@ namespace YPYA.Controllers
             surecNote=y.PreventXSS(surecNote);
             if (bl.KullaniciSurecEkle(istakibiBilgi, surecID,projeID,surecBaslik,surecNote) == 1)
             {
-                snc.Add("Basarili");
+                snc.Add(db.Projes.Find(projeID).Tamamlanan.Value);
             }
             return Json(snc);
         }
