@@ -9,17 +9,6 @@ namespace YPYA.Bl
 
     public class BusinessLayer
     {
-        public int OranKontrol(int oran)
-        {
-            float fOran = 0, sncOran = 0;
-            if (oran < 0) 
-            {
-                oran = 0; 
-            }
-            fOran = oran * 100;
-            sncOran = fOran / 82;
-            return Convert.ToInt32(sncOran);
-        }
 
         public void SurecOranHesapla(int surecID)
         {
@@ -128,7 +117,7 @@ namespace YPYA.Bl
                 istkb.BaslangicTarihi = bslngc;
                 istkb.BitisTarihi = bts;
                 istkb.TamamlanmaTarihi = tmTarihi;
-                istkb.TamamlanmaOranı = OranKontrol(tmOrani);
+                istkb.TamamlanmaOranı = tmOrani;
                 prj.IsTakibis.Add(istkb);
                 prj.SaveChanges();
                 int id = istkb.IstakibiId;
@@ -157,7 +146,7 @@ namespace YPYA.Bl
                 guncelIstakibi.BaslangicTarihi = bslngc;
                 guncelIstakibi.BitisTarihi = bts;
                 guncelIstakibi.TamamlanmaTarihi = tmTarihi;
-                guncelIstakibi.TamamlanmaOranı = OranKontrol(tmOrani);
+                guncelIstakibi.TamamlanmaOranı = tmOrani;
                 prj.Entry(guncelIstakibi).State = System.Data.Entity.EntityState.Modified;
                 prj.SaveChanges();
             }

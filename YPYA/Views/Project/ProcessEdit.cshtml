@@ -83,7 +83,17 @@
             width:10px;
             height:10px;
         }
+        output {
+            display: block;
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+            margin: 30px 0;
+            width: 100%;
+        }
     </style>
+    <link href="~/Content/styles/rangeSlider-flat.css" rel="stylesheet" />
+
     }
 
     @section menu{
@@ -91,18 +101,13 @@
     }
 
     @section script{
-    <!-- page scripts -->
-    @*
-    <script src="~/Content/vendor/jquery.ui/ui/core.js"></script>*@
-    <script src="~/Content/vendor/jquery.ui/ui/widget.js"></script>
-    <script src="~/Content/vendor/jquery.ui/ui/mouse.js"></script>
-    <script src="~/Content/vendor/jquery.ui/ui/slider.js"></script>
-    <script src="~/Content/vendor/jqueryui-touch-punch/jquery.ui.touch-punch.js"></script>
+
     <!-- end page scripts -->
     <!-- initialize page scripts -->
     <script type="text/javascript">
         $(function () {
 
+            
             $(".anaEkran").hide();
 
             function noti(message, type, pos) {
@@ -238,9 +243,7 @@
                                         $("#analizBaslangicTarihi").val(data[i].surecDetayBaslangic);
                                         $("#analizBitisTarihi").val(data[i].surecDetayBitis);
                                         $("#analizTamamlanmaTarihi").val(data[i].surecDetayTamamlanma);
-                                        $("div#analizTamamlanmaOrani div.ui-slider-range").css("width", data[i].surecDetayTamamlanmaOrani);
-                                        $("div#analizTamamlanmaOrani span.ui-slider-handle").css("left", data[i].surecDetayTamamlanmaOrani);
-                                        $("#analizTamamlanmaOrani").attr("data-value", data[i].surecDetayTamamlanmaOrani);
+                                        $("#analizTamamlanmaOrani").val(data[i].surecDetayTamamlanmaOrani);
                                         $("#analizSil").attr("akisId", data[i].id);
                                     } else if (data[i].surecDetayRolAdi == "Table") {
 
@@ -259,9 +262,7 @@
                                         $("#tableBaslangicTarihi").val(data[i].surecDetayBaslangic);
                                         $("#tableBitisTarihi").val(data[i].surecDetayBitis);
                                         $("#tableTamamlanmaTarihi").val(data[i].surecDetayTamamlanma);
-                                        $("div#tableTamamlanmaOrani div.ui-slider-range").css("width", data[i].surecDetayTamamlanmaOrani);
-                                        $("div#tableTamamlanmaOrani span.ui-slider-handle").css("left", data[i].surecDetayTamamlanmaOrani);
-                                        $("#tableTamamlanmaOrani").attr("data-value", data[i].surecDetayTamamlanmaOrani);
+                                        $("#tableTamamlanmaOrani").val(data[i].surecDetayTamamlanmaOrani);
                                         $("#tableSil").attr("akisId", data[i].id);
                                     } else if (data[i].surecDetayRolAdi == "Procedure") {
 
@@ -280,8 +281,6 @@
                                         $("#procedureBaslangicTarihi").val(data[i].surecDetayBaslangic);
                                         $("#procedureBitisTarihi").val(data[i].surecDetayBitis);
                                         $("#procedureTamamlanmaTarihi").val(data[i].surecDetayTamamlanma);
-                                        $("div#procedureTamamlanmaOrani div.ui-slider-range").css("width", data[i].surecDetayTamamlanmaOrani);
-                                        $("div#procedureTamamlanmaOrani span.ui-slider-handle").css("left", data[i].surecDetayTamamlanmaOrani);
                                         $("#procedureTamamlanmaOrani").val(data[i].surecDetayTamamlanmaOrani);
                                         $("#procedureSil").attr("akisId", data[i].id);
                                     } else if (data[i].surecDetayRolAdi == "DLL List") {
@@ -304,8 +303,6 @@
                                         $("#dllListBaslangicTarihi").val(data[i].surecDetayBaslangic);
                                         $("#dllListBitisTarihi").val(data[i].surecDetayBitis);
                                         $("#dllListTamamlanmaTarihi").val(data[i].surecDetayTamamlanma);
-                                        $("div#dllListTamamlanmaOrani div.ui-slider-range").css("width", data[i].surecDetayTamamlanmaOrani);
-                                        $("div#dllListTamamlanmaOrani span.ui-slider-handle").css("left", data[i].surecDetayTamamlanmaOrani);
                                         $("#dllListTamamlanmaOrani").val(data[i].surecDetayTamamlanmaOrani);
                                         $("#dllListSil").attr("akisId", data[i].id);
                                     } else if (data[i].surecDetayRolAdi == "DLL Islem") {
@@ -328,8 +325,6 @@
                                         $("#dllIslemBaslangicTarihi").val(data[i].surecDetayBaslangic);
                                         $("#dllIslemBitisTarihi").val(data[i].surecDetayBitis);
                                         $("#dllIslemTamamlanmaTarihi").val(data[i].surecDetayTamamlanma);
-                                        $("div#dllIslemTamamlanmaOrani div.ui-slider-range").css("width", data[i].surecDetayTamamlanmaOrani);
-                                        $("div#dllIslemTamamlanmaOrani span.ui-slider-handle").css("left", data[i].surecDetayTamamlanmaOrani);
                                         $("#dllIslemTamamlanmaOrani").val(data[i].surecDetayTamamlanmaOrani);
                                         $("#dllIslemSil").attr("akisId", data[i].id);
                                     } else if (data[i].surecDetayRolAdi == "Arayüz") {
@@ -348,8 +343,6 @@
 
                                         $("#arayuzBaslangicTarihi").val(data[i].surecDetayBaslangic);
                                         $("#arayuzBitisTarihi").val(data[i].surecDetayBitis);
-                                        $("div#arayuzTamamlanmaOrani div.ui-slider-range").css("width", data[i].surecDetayTamamlanmaOrani);
-                                        $("div#arayuzTamamlanmaOrani span.ui-slider-handle").css("left", data[i].surecDetayTamamlanmaOrani);
                                         $("#arayuzTamamlanmaTarihi").val(data[i].surecDetayTamamlanma);
                                         $("#arayuzTamamlanmaOrani").val(data[i].surecDetayTamamlanmaOrani);
                                         $("#arayuzSil").attr("akisId", data[i].id);
@@ -369,8 +362,6 @@
 
                                         $("#testBaslangicTarihi").val(data[i].surecDetayBaslangic);
                                         $("#testBitisTarihi").val(data[i].surecDetayBitis);
-                                        $("div#testTamamlanmaOrani div.ui-slider-range").css("width", data[i].surecDetayTamamlanmaOrani);
-                                        $("div#testTamamlanmaOrani span.ui-slider-handle").css("left", data[i].surecDetayTamamlanmaOrani);
                                         $("#testTamamlanmaTarihi").val(data[i].surecDetayTamamlanma);
                                         $("#testTamamlanmaOrani").val(data[i].surecDetayTamamlanmaOrani);
                                         $("#testSil").attr("akisId", data[i].id);
@@ -402,43 +393,43 @@
                 var  AnalizBaslangicTarihi = $("#analizBaslangicTarihi").val();
                 var  AnalizBitisTarihi= $("#analizBitisTarihi").val();
                 var  AnalizTamamlanmaTarihi= $("#analizTamamlanmaTarihi").val();
-                var AnalizTamamlanmaOrani = $("div#analizTamamlanmaOrani div.ui-slider-range").width();
+                var AnalizTamamlanmaOrani = $("#analizTamamlanmaOrani").val() == "" ? 0 : $("#analizTamamlanmaOrani").val();
 
                 var TableKisi=  $("#tableKisi option:selected").text();
                 var TableBaslangicTarihi = $("#tableBaslangicTarihi").val();
                 var TableBitisTarihi=  $("#tableBitisTarihi").val();
                 var TableTamamlanmaTarihi= $("#tableTamamlanmaTarihi").val();
-                var TableTamamlanmaOrani= $("div#tableTamamlanmaOrani div.ui-slider-range").css("width");
+                var TableTamamlanmaOrani = $("#tableTamamlanmaOrani").val() == "" ? 0 : $("#tableTamamlanmaOrani").val();
 
                 var ProcedureKisi=  $("#procedureKisi option:selected").text();
                 var ProcedureBaslangicTarihi=  $("#procedureBaslangicTarihi").val();
                 var ProcedureBitisTarihi=  $("#procedureBitisTarihi").val();
                 var ProcedureTamamlanmaTarihi= $("#procedureTamamlanmaTarihi").val();
-                var ProcedureTamamlanmaOrani = $("div#procedureTamamlanmaOrani div.ui-slider-range").width();
+                var ProcedureTamamlanmaOrani = $("#procedureTamamlanmaOrani").val() == "" ? 0 : $("#procedureTamamlanmaOrani").val();
 
                 var DllListKisi=  $("#dllListKisi option:selected").text();
                 var DllListBaslangicTarihi=  $("#dllListBaslangicTarihi").val();
                 var DllListBitisTarihi = $("#dllListBitisTarihi").val();
                 var DllListTamamlanmaTarihi= $("#dllListTamamlanmaTarihi").val();
-                var DllListTamamlanmaOrani = $("div#dllListTamamlanmaOrani div.ui-slider-range").width();
+                var DllListTamamlanmaOrani = $("#dllListTamamlanmaOrani").val() == "" ? 0 : $("#dllListTamamlanmaOrani").val();
 
                 var DllIslemKisi=  $("#dllIslemKisi option:selected").text();
                 var DllIslemBaslangicTarihi=  $("#dllIslemBaslangicTarihi").val();
                 var DllIslemBitisTarihi=  $("#dllIslemBitisTarihi").val();
                 var DllIslemTamamlanmaTarihi= $("#dllIslemTamamlanmaTarihi").val();
-                var DllIslemTamamlanmaOrani = $("div#dllIslemTamamlanmaOrani div.ui-slider-range").width();
+                var DllIslemTamamlanmaOrani = $("#dllIslemTamamlanmaOrani").val() == "" ? 0 : $("#dllIslemTamamlanmaOrani").val();
 
                 var ArayuzKisi=  $("#arayuzKisi option:selected").text();
                 var ArayuzBaslangicTarihi=  $("#arayuzBaslangicTarihi").val();
                 var ArayuzBitisTarihi=  $("#arayuzBitisTarihi").val();
                 var ArayuzTamamlanmaTarihi= $("#arayuzTamamlanmaTarihi").val();
-                var ArayuzTamamlanmaOrani = $("div#arayuzTamamlanmaOrani div.ui-slider-range").width();
+                var ArayuzTamamlanmaOrani = $("#arayuzTamamlanmaOrani").val() == "" ? 0 : $("#arayuzTamamlanmaOrani").val();
 
                 var TestKisi=  $("#testKisi option:selected").text();
                 var TestBaslangicTarihi= $("#testBaslangicTarihi").val();
                 var TestBitisTarihi=  $("#testBitisTarihi").val();
                 var TestTamamlanmaTarihi= $("#testTamamlanmaTarihi").val();
-                var TestTamamlanmaOrani = $("div#testTamamlanmaOrani div.ui-slider-range").width();
+                var TestTamamlanmaOrani = $("#testTamamlanmaOrani").val() == "" ? 0 : $("#testTamamlanmaOrani").val();
 
                 var surecID = $(this).attr("surecID");
 
@@ -540,40 +531,46 @@
                     }
                 ];
 
-                $.post('@Url.Action("IsTakipTarih", "Home")', { dizi: surecTarih }, function (data) {
-                    if (data == 1) {
-                        $.ajax({
-                            type: "POST",//Metodu belirliyoruz POST veya GET olabilir.
-                            url: "/Project/IsTakibiKaydet",//Nereye post edileceğini belirliyoruz. Home controller altında "IndexPost" adlı metodumuza gideceğini söyledik
-                            data: { istakibiBilgi: SurecIstakibi, surecID: surecID, projeID: projeID },
-                            beforeSend: function () {
-                                noti("İşlem Gerçekleştiriliyor", "information", "topRight");
-                                // $("#isTakibiKaydet").append()  //loading simgesi gösterilecek
-                            },
-                            datatype: "json",//Geri dönecek değerin tipini belirliyoruz. xml, json, script, html bunlardan birini belirleyebiliriz.
-                            success: function (data) {//Eğer ajax post işlemi başarılı ise çalışacak fonksiyonumuz. function(data) kısmında ise data dönen değerimiz oluyor.
-                                // $('#result').html(data);//Burda ise dönen değeri $('#result') divini seçip .html(data) ile içine basıyoruz.
+                if (AnalizTamamlanmaOrani >= 0 && AnalizTamamlanmaOrani <= 100 && TableTamamlanmaOrani >= 0 && TableTamamlanmaOrani <= 100 && ProcedureTamamlanmaOrani >= 0 && ProcedureTamamlanmaOrani <= 100 && DllListTamamlanmaOrani >= 0 && DllListTamamlanmaOrani <= 100 && DllIslemTamamlanmaOrani >= 0 && DllIslemTamamlanmaOrani <= 100 && ArayuzTamamlanmaOrani >= 0 && ArayuzTamamlanmaOrani <= 100 && TestTamamlanmaOrani >= 0 && TestTamamlanmaOrani <= 100) {
+                    $.post('@Url.Action("IsTakipTarih", "Home")', { dizi: surecTarih }, function (data) {
+                        if (data == 1) {
+                            $.ajax({
+                                type: "POST",//Metodu belirliyoruz POST veya GET olabilir.
+                                url: "/Project/IsTakibiKaydet",//Nereye post edileceğini belirliyoruz. Home controller altında "IndexPost" adlı metodumuza gideceğini söyledik
+                                data: { istakibiBilgi: SurecIstakibi, surecID: surecID, projeID: projeID },
+                                beforeSend: function () {
+                                    noti("İşlem Gerçekleştiriliyor", "information", "topRight");
+                                    // $("#isTakibiKaydet").append()  //loading simgesi gösterilecek
+                                },
+                                datatype: "json",//Geri dönecek değerin tipini belirliyoruz. xml, json, script, html bunlardan birini belirleyebiliriz.
+                                success: function (data) {//Eğer ajax post işlemi başarılı ise çalışacak fonksiyonumuz. function(data) kısmında ise data dönen değerimiz oluyor.
+                                    // $('#result').html(data);//Burda ise dönen değeri $('#result') divini seçip .html(data) ile içine basıyoruz.
 
-                                noti("İşlem Gerçekleştirildi", "success", "topRight");
-                                $("#isTakibiKaydet").attr("disabled", false);
-                                $("#surecSil").attr("disabled", false);
-                                $("#RaporGit").attr("disabled", false);
-                                $(".akisSil").attr("disabled", false);
-                            }
+                                    noti("İşlem Gerçekleştirildi", "success", "topRight");
+                                    $("#isTakibiKaydet").attr("disabled", false);
+                                    $("#surecSil").attr("disabled", false);
+                                    $("#RaporGit").attr("disabled", false);
+                                    $(".akisSil").attr("disabled", false);
+                                }
 
-                        });
-                    } else {
-                        noti("Bu süreç, bir üst süreç yada projenin tarih aralığını aşıyor ", "error", "top");
-                        $("#isTakibiKaydet").attr("disabled", false);
-                        $("#surecSil").attr("disabled", false);
-                        $("#RaporGit").attr("disabled", false);
-                        $(".akisSil").attr("disabled", false);
-                    }
+                            });
+                        } else {
+                            noti("Bu süreç, bir üst süreç yada projenin tarih aralığını aşıyor ", "error", "top");
+                            $("#isTakibiKaydet").attr("disabled", false);
+                            $("#surecSil").attr("disabled", false);
+                            $("#RaporGit").attr("disabled", false);
+                            $(".akisSil").attr("disabled", false);
+                        }
 
-                });
-
-
-
+                    });
+                } else {
+                    noti("Oranlar 0 ile 100 arası olmalıdır", "warning", "topRight");
+                    $("#isTakibiKaydet").attr("disabled", false);
+                    $("#surecSil").attr("disabled", false);
+                    $("#RaporGit").attr("disabled", false);
+                    $(".akisSil").attr("disabled", false);
+                }
+                
 
 
             });
@@ -629,12 +626,12 @@
                 }
             });
 
-        });
+            
 
+        });
     </script>
     <!-- end initialize page scripts -->
     }
-
     <div class="layout-xs contacts-container">
         <div class="flexbox-xs layout-column-xs contacts-list b-r">
             <div class="contact-header bg-default">
@@ -813,7 +810,7 @@
                                             <th>Başlangıç tarihi</th>
                                             <th>Bitiş tarihi</th>
                                             <th>Tamamlanma tarihi</th>
-                                            <th style="width: 100px;">Tamamlanma oranı</th>
+                                            <th>Tamamlanma oranı</th>
                                             <th>Sil</th>
                                         </tr>
                                     </thead>
@@ -830,7 +827,7 @@
                                             <td><input id="analizBaslangicTarihi" class="form-control" type="date" /></td>
                                             <td><input id="analizBitisTarihi" class="form-control" type="date" /></td>
                                             <td><input id="analizTamamlanmaTarihi" class="form-control" type="date" /></td>
-                                            <td><div id="analizTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="0" data-range="min"></div></td>
+                                            <td><input class="form-control" type="number" min="0" max="100" id="analizTamamlanmaOrani" placeholder="Tamamlanma oranı"/></td>
                                             <td><button id="analizSil" akisid="0" type="button" class="btn btn-danger akisSil">Sil</button></td>
                                         </tr>
                                         <tr>
@@ -844,7 +841,7 @@
                                             <td><input id="tableBaslangicTarihi" class="form-control" type="date" /></td>
                                             <td><input id="tableBitisTarihi" class="form-control" type="date" /></td>
                                             <td><input id="tableTamamlanmaTarihi" class="form-control" type="date" /></td>
-                                            <td><div id="tableTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="0" data-range="min"></div></td>
+                                            <td><input class="form-control" type="number" min="0" max="100" id="tableTamamlanmaOrani" placeholder="Tamamlanma oranı" /></td>
                                             <td><button id="tableSil" akisid="0" type="button" class="btn btn-danger akisSil">Sil</button></td>
                                         </tr>
                                         <tr>
@@ -858,7 +855,7 @@
                                             <td><input id="procedureBaslangicTarihi" class="form-control" type="date" /></td>
                                             <td><input id="procedureBitisTarihi" class="form-control" type="date" /></td>
                                             <td><input id="procedureTamamlanmaTarihi" class="form-control" type="date" /></td>
-                                            <td><div id="procedureTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="0" data-range="min"></div></td>
+                                            <td><input class="form-control" type="number" min="0" max="100" id="procedureTamamlanmaOrani" placeholder="Tamamlanma oranı" /></td>
                                             <td><button id="procedureSil" akisid="0" type="button" class="btn btn-danger akisSil">Sil</button></td>
                                         </tr>
                                         <tr>
@@ -872,7 +869,7 @@
                                             <td><input id="dllListBaslangicTarihi" class="form-control" type="date" /></td>
                                             <td><input id="dllListBitisTarihi" class="form-control" type="date" /></td>
                                             <td><input id="dllListTamamlanmaTarihi" class="form-control" type="date" /></td>
-                                            <td><div id="dllListTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="0" data-range="min"></div></td>
+                                            <td><input class="form-control" type="number" min="0" max="100" id="dllListTamamlanmaOrani" placeholder="Tamamlanma oranı" /></td>
                                             <td><button id="dllListSil" akisid="0" type="button" class="btn btn-danger akisSil">Sil</button></td>
                                         </tr>
                                         <tr>
@@ -886,7 +883,7 @@
                                             <td><input id="dllIslemBaslangicTarihi" class="form-control" type="date" /></td>
                                             <td><input id="dllIslemBitisTarihi" class="form-control" type="date" /></td>
                                             <td><input id="dllIslemTamamlanmaTarihi" class="form-control" type="date" /></td>
-                                            <td><div id="dllIslemTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="0" data-range="min"></div></td>
+                                            <td><input class="form-control" type="number" min="0" max="100" id="dllIslemTamamlanmaOrani" placeholder="Tamamlanma oranı" /></td>
                                             <td><button id="dllIslemSil" akisid="0" type="button" class="btn btn-danger akisSil">Sil</button></td>
                                         </tr>
                                         <tr>
@@ -900,7 +897,7 @@
                                             <td><input id="arayuzBaslangicTarihi" class="form-control" type="date" /></td>
                                             <td><input id="arayuzBitisTarihi" class="form-control" type="date" /></td>
                                             <td><input id="arayuzTamamlanmaTarihi" class="form-control" type="date" /></td>
-                                            <td><div id="arayuzTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="0" data-range="min"></div></td>
+                                            <td><input class="form-control" type="number" min="0" max="100" id="arayuzTamamlanmaOrani" placeholder="Tamamlanma oranı" /></td>
                                             <td><button id="arayuzSil" akisid="0" type="button" class="btn btn-danger akisSil">Sil</button></td>
                                         </tr>
                                         <tr>
@@ -914,7 +911,7 @@
                                             <td><input id="testBaslangicTarihi" class="form-control" type="date" /></td>
                                             <td><input id="testBitisTarihi" class="form-control" type="date" /></td>
                                             <td><input id="testTamamlanmaTarihi" class="form-control" type="date" /></td>
-                                            <td><div id="testTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="0" data-range="min"></div></td>
+                                            <td><input class="form-control" type="number" min="0" max="100" id="testTamamlanmaOrani" placeholder="Tamamlanma oranı" /></td>
                                             <td><button id="testSil" akisid="0" type="button" class="btn btn-danger akisSil">Sil</button></td>
                                         </tr>
 
