@@ -117,6 +117,107 @@
                     }
                 });
             }
+
+
+            $("#surecKaydet").click(function () {
+                var projeID = $("input#proje").attr("projeid");
+                var surecID = $(this).attr("surecID");
+
+                var AnalizTamamlanmaTarihi = $("#analizTamamlanmaTarihi").val();
+                var AnalizTamamlanmaOrani = $("div#analizTamamlanmaOrani div.ui-slider-range").width();
+                if (AnalizTamamlanmaTarihi != null || AnalizTamamlanmaOrani != null) {
+                  var  AnalizKisi = $("#kisi").attr("isim");
+                }
+
+                var TableTamamlanmaTarihi = $("#tableTamamlanmaTarihi").val();
+                var TableTamamlanmaOrani = $("div#tableTamamlanmaOrani div.ui-slider-range").width();
+                if (TableTamamlanmaTarihi != null || TableTamamlanmaOrani != null) {
+                    var TableKisi = $("#kisi").attr("isim");
+                }
+
+                var ProcedureTamamlanmaTarihi = $("#procedureTamamlanmaTarihi").val();
+                var ProcedureTamamlanmaOrani = $("div#procedureTamamlanmaOrani div.ui-slider-range").width();
+                if (ProcedureTamamlanmaTarihi != null || ProcedureTamamlanmaOrani != null) {
+                    var ProcedureKisi = $("#kisi").attr("isim");
+                }
+
+                var DllListTamamlanmaTarihi = $("#dllListTamamlanmaTarihi").val();
+                var DllListTamamlanmaOrani = $("div#dllListTamamlanmaOrani div.ui-slider-range").width();
+                if (DllListTamamlanmaTarihi != null || DllListTamamlanmaOrani != null) {
+                    var DllListKisi = $("#kisi").attr("isim");
+                }
+
+                var DllIslemTamamlanmaTarihi = $("#dllIslemTamamlanmaTarihi").val();
+                var DllIslemTamamlanmaOrani = $("div#dllIslemTamamlanmaOrani div.ui-slider-range").width();
+                if (DllIslemTamamlanmaTarihi != null || DllIslemTamamlanmaOrani != null) {
+                    var DllIslemKisi = $("#kisi").attr("isim");
+                }
+
+                var ArayuzTamamlanmaTarihi = $("#arayuzTamamlanmaTarihi").val();
+                var ArayuzTamamlanmaOrani = $("div#arayuzTamamlanmaOrani div.ui-slider-range").width();
+                if (ArayuzTamamlanmaTarihi != null || ArayuzTamamlanmaOrani != null) {
+                    var ArayuzKisi = $("#kisi").attr("isim");
+                }
+
+                var TestTamamlanmaTarihi = $("#testTamamlanmaTarihi").val();
+                var TestTamamlanmaOrani = $("div#testTamamlanmaOrani div.ui-slider-range").width();
+                if (TestTamamlanmaTarihi != null || TestTamamlanmaOrani != null) {
+                   var TestKisi = $("#kisi").attr("isim");
+                }
+
+                var SurecIstakibi = {
+                    analizKisi: AnalizKisi,
+                    analizTamamlanmaTarihi: AnalizTamamlanmaTarihi,
+                    analizTamamlanmaOrani: AnalizTamamlanmaOrani,
+
+                    tableKisi: TableKisi,
+                    tableTamamlanmaTarihi: TableTamamlanmaTarihi,
+                    tableTamamlanmaOrani: TableTamamlanmaOrani,
+
+                    procedureKisi: ProcedureKisi,
+                    procedureTamamlanmaTarihi: ProcedureTamamlanmaTarihi,
+                    procedureTamamlanmaOrani: ProcedureTamamlanmaOrani,
+
+                    dllListKisi: DllListKisi,
+                    dllListTamamlanmaTarihi: DllListTamamlanmaTarihi,
+                    dllListTamamlanmaOrani: DllListTamamlanmaOrani,
+
+                    dllIslemKisi: DllIslemKisi,
+                    dllIslemTamamlanmaTarihi: DllIslemTamamlanmaTarihi,
+                    dllIslemTamamlanmaOrani: DllIslemTamamlanmaOrani,
+
+                    arayuzKisi: ArayuzKisi,
+                    arayuzTamamlanmaTarihi: ArayuzTamamlanmaTarihi,
+                    arayuzTamamlanmaOrani: ArayuzTamamlanmaOrani,
+
+                    testKisi: TestKisi,
+                    testTamamlanmaTarihi: TestTamamlanmaTarihi,
+                    testTamamlanmaOrani: TestTamamlanmaOrani,
+
+                };
+
+                
+                $.ajax({
+                    type: "POST",//Metodu belirliyoruz POST veya GET olabilir.
+                    url: "/Project/SurecBilgiKaydet",//Nereye post edileceğini belirliyoruz. Home controller altında "IndexPost" adlı metodumuza gideceğini söyledik
+                    data: { istakibiBilgi: SurecIstakibi, surecID: surecID, projeID: projeID },
+                    beforeSend: function () {
+                        noti("İşlem Gerçekleştiriliyor", "information", "topRight");
+                        // $("#isTakibiKaydet").append()  //loading simgesi gösterilecek
+                    },
+                    datatype: "json",//Geri dönecek değerin tipini belirliyoruz. xml, json, script, html bunlardan birini belirleyebiliriz.
+                    success: function (data) {//Eğer ajax post işlemi başarılı ise çalışacak fonksiyonumuz. function(data) kısmında ise data dönen değerimiz oluyor.
+                        // $('#result').html(data);//Burda ise dönen değeri $('#result') divini seçip .html(data) ile içine basıyoruz.
+
+                        noti("İşlem Gerçekleştirildi", "success", "topRight");
+                    }
+
+                });
+
+
+            });
+
+
         });
     </script>
     <!-- end initialize page scripts -->
@@ -128,10 +229,12 @@
     int surecId = 0;
     foreach (YPYA.Models.KullaniciSurec ks in Model)
     {
+       
         if (surecId != ks.SurecId)
         {
             surecId = ks.SurecId.Value;
-            
+            <input type="hidden" id="proje" projeid="@ks.Surec.ProjeId" name="name" value="" />
+            <input type="hidden" id="kisi" isim="@Session["id"]" name="name" value="" />
             <div class="card">
                 <div class="card-block">
                     <h5 style="margin-bottom: 17px;"><b>@ks.Surec.Baslik Süreci</b></h5>
@@ -149,14 +252,80 @@
                             <tbody>
                                 @foreach (YPYA.Models.KullaniciSurec i in Model.Where(x => x.SurecId == ks.SurecId))
                                 {
-                                    <tr>
-                                        <td style="padding-top: 25px;">@i.Rol.RolAdi</td>
-                                        <td style="padding-top: 25px;">@i.IsTakibi.BaslangicTarihi</td>
-                                        <td style="padding-top: 25px;">@i.IsTakibi.BitisTarihi</td>
-                                        <td><input type="date" class="form-control" value="@i.IsTakibi.TamamlanmaTarihi" /></td>
-                                        <td><div id="arayuzTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="0" data-range="min"></div></td>
-                                    </tr>
+                                    if (i.Rol.RolAdi=="Analiz")
+                                    {
+                                        <tr>
+                                            <td style="padding-top: 25px;">@i.Rol.RolAdi</td>
+                                            <td style="padding-top: 25px;">@i.IsTakibi.BaslangicTarihi.Value.ToString("dd-MM-yyyy")</td>
+                                            <td style="padding-top: 25px;">@i.IsTakibi.BitisTarihi.Value.ToString("dd-MM-yyyy")</td>
+                                            <td><input id="analizTamamlanmaTarihi" type="date" class="form-control" value="@i.IsTakibi.TamamlanmaTarihi.Value.ToString("dd-MM-yyyy")" /></td>
+                                            <td><div id="analizTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="@i.IsTakibi.TamamlanmaOranı" data-range="min"></div></td>
+                                        </tr>
+                                    }
+                                    if (i.Rol.RolAdi == "Table")
+                                    {
+                                        <tr>
+                                            <td style="padding-top: 25px;">@i.Rol.RolAdi</td>
+                                            <td style="padding-top: 25px;">@i.IsTakibi.BaslangicTarihi.Value.ToString("dd-MM-yyyy")</td>
+                                            <td style="padding-top: 25px;">@i.IsTakibi.BitisTarihi.Value.ToString("dd-MM-yyyy")</td>
+                                            <td><input id="tableTamamlanmaTarihi" type="date" class="form-control" value="@i.IsTakibi.TamamlanmaTarihi.Value.ToString("dd-MM-yyyy")" /></td>
+                                            <td><div id="tableTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="@i.IsTakibi.TamamlanmaOranı" data-range="min"></div></td>
+                                        </tr>
+                                    }
+                                    if (i.Rol.RolAdi == "Procedure")
+                                    {
+                                        <tr>
+                                            <td style="padding-top: 25px;">@i.Rol.RolAdi</td>
+                                            <td style="padding-top: 25px;">@i.IsTakibi.BaslangicTarihi.Value.ToString("dd-MM-yyyy")</td>
+                                            <td style="padding-top: 25px;">@i.IsTakibi.BitisTarihi.Value.ToString("dd-MM-yyyy")</td>
+                                            <td><input id="procedureTamamlanmaTarihi" type="date" class="form-control" value="@i.IsTakibi.TamamlanmaTarihi.Value.ToString("dd-MM-yyyy")" /></td>
+                                            <td><div id="procedureTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="@i.IsTakibi.TamamlanmaOranı" data-range="min"></div></td>
+                                        </tr>
+                                    }
+                                    if (i.Rol.RolAdi == "DLL List")
+                                    {
+                                        <tr>
+                                            <td style="padding-top: 25px;">@i.Rol.RolAdi</td>
+                                            <td style="padding-top: 25px;">@i.IsTakibi.BaslangicTarihi.Value.ToString("dd-MM-yyyy")</td>
+                                            <td style="padding-top: 25px;">@i.IsTakibi.BitisTarihi.Value.ToString("dd-MM-yyyy")</td>
+                                            <td><input id="dllListTamamlanmaTarihi" type="date" class="form-control" value="@i.IsTakibi.TamamlanmaTarihi.Value.ToString("dd-MM-yyyy")" /></td>
+                                            <td><div id="dllListTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="@i.IsTakibi.TamamlanmaOranı" data-range="min"></div></td>
+                                        </tr>
+                                    }
+                                    if (i.Rol.RolAdi == "DLL Islem")
+                                    {
+                                        <tr>
+                                            <td style="padding-top: 25px;">@i.Rol.RolAdi</td>
+                                            <td style="padding-top: 25px;">@i.IsTakibi.BaslangicTarihi.Value.ToString("dd-MM-yyyy")</td>
+                                            <td style="padding-top: 25px;">@i.IsTakibi.BitisTarihi.Value.ToString("dd-MM-yyyy")</td>
+                                            <td><input id="dllIslemTamamlanmaTarihi" type="date" class="form-control" value="@i.IsTakibi.TamamlanmaTarihi.Value.ToString("dd-MM-yyyy")" /></td>
+                                            <td><div id="dllIslemTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="@i.IsTakibi.TamamlanmaOranı" data-range="min"></div></td>
+                                        </tr>
+                                    }
+                                    if (i.Rol.RolAdi == "Arayüz")
+                                    {
+                                        <tr>
+                                            <td style="padding-top: 25px;">@i.Rol.RolAdi</td>
+                                            <td style="padding-top: 25px;">@i.IsTakibi.BaslangicTarihi.Value.ToString("dd-MM-yyyy")</td>
+                                            <td style="padding-top: 25px;">@i.IsTakibi.BitisTarihi.Value.ToString("dd-MM-yyyy")</td>
+                                            <td><input id="arayuzTamamlanmaTarihi" type="date" class="form-control" value="@i.IsTakibi.TamamlanmaTarihi.Value.ToString("dd-MM-yyyy")" /></td>
+                                            <td><div id="arayuzTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="@i.IsTakibi.TamamlanmaOranı" data-range="min"></div></td>
+                                        </tr>
+                                    }
+                                    if (i.Rol.RolAdi == "Test")
+                                    {
+                                        <tr>
+                                            <td style="padding-top: 25px;">@i.Rol.RolAdi</td>
+                                            <td style="padding-top: 25px;">@i.IsTakibi.BaslangicTarihi.Value.ToString("dd-MM-yyyy")</td>
+                                            <td style="padding-top: 25px;">@i.IsTakibi.BitisTarihi.Value.ToString("dd-MM-yyyy")</td>
+                                            <td><input id="testTamamlanmaTarihi" type="date" class="form-control" value="@i.IsTakibi.TamamlanmaTarihi.Value.ToString("dd-MM-yyyy")" /></td>
+                                            <td><div id="testTamamlanmaOrani" class="slider slider-success" style="margin-top: 20px;" data-value="@i.IsTakibi.TamamlanmaOranı" data-range="min"></div></td>
+                                        </tr>
+                                    }
                                 }
+                                <tr>
+                                    <td><button class="btn btn-success" surecID="@ks.SurecId" id="surecKaydet">SureÇ Bilgilerini Kaydet</button></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

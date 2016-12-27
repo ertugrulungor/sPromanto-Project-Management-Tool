@@ -130,6 +130,19 @@
                 else return false;
             }
 
+            function temizle() {
+                $("option#kisi").each(function () {
+                    $(this).remove("option#kisi")
+                });
+                $("input[type=date]").val('');
+                $("div.ui-slider-range").css("width", "0");
+                $("span.ui-slider-handle").css("left", "0");
+                $("#surecBaslik").val("");
+                $("#projeAdi").val("");
+                $("#sureciOlusturan").val("");
+                $("#surecTamamlama").val("");
+            }
+
     
             var surecID;
             
@@ -142,16 +155,7 @@
 
             $(".surec").click(function () {
                 
-                $("option#kisi").each(function () {
-                    $(this).remove("option#kisi")
-                });
-                $("input[type=date]").val('');
-                $("div.ui-slider-range").css("width", "0");
-                $("span.ui-slider-handle").css("left", "0");
-                $("#surecBaslik").val("");
-                $("#projeAdi").val("");
-                $("#sureciOlusturan").val("");
-                $("#surecTamamlama").val("");
+                temizle();
 
                 console.log("tıklama");
                 var projeID = $("a#proje").attr("projeid");
@@ -491,6 +495,7 @@
                         // $('#result').html(data);//Burda ise dönen değeri $('#result') divini seçip .html(data) ile içine basıyoruz.
                        
                         noti("İşlem Gerçekleştirildi", "success", "topRight");
+                        temizle();
                     }
 
                 });
@@ -514,6 +519,7 @@
                         // $('#result').html(data);//Burda ise dönen değeri $('#result') divini seçip .html(data) ile içine basıyoruz.
 
                         noti("İşlem Gerçekleştirildi", "success", "topRight");
+                        location.href = "/Project/ProcessEdit/" + projeID;
                     }
 
                 });
