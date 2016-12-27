@@ -405,74 +405,89 @@
                                     $("#not").val("");
                                     $(".custom-control-input").prop("checked", false);
                                     $(".altsurec").hide();
+                                    $("#surecKayit").attr("disabled",false);
                                 } else {
                                     noti("Beklenmeyen bir hata oluştu", "error", "top");
+                                    $("#surecKayit").attr("disabled",false);
                                 }
                             });
                         }else{
                             noti("Bu süreç, bir üst süreç yada projenin tarih aralığını aşıyor ", "error", "top");
+                            $("#surecKayit").attr("disabled",false);
                         }
                     });
                     
                 } else {
                     noti("En fazla üçüncü seviye alt süreç ekleyebilirsiniz", "error", "top");
+                    $("#surecKayit").attr("disabled",false);
                 }
             }
 
             $("#surecKayit").click(function () {
-                
+                $("#surecKayit").attr("disabled","disabled");
                 var baslik = $("#surecBaslik").val();
                 var baslangic = $("#surecbaslangic").val();
                 var bitis = $("#surecbitis").val();
                 var parentSurecId = 0;
                 var levelKontrol = true;
                 var not = $("#not").val();
-
+                var selectKontrol = true;
 
                 if (bosGecme(baslik) && bosGecme(baslangic) && bosGecme(bitis) && bosGecme(not) && antixss(baslik) && antixss(baslangic) && antixss(bitis) && antixss(not)) {
                     if (dateKontrol(baslangic, new Date())) {
                         if (dateKontrol(bitis, baslangic)) {
                             if ($(".custom-control-input").is(':checked')) {
                                 parentSurecId = $("#surecSelect").val();
-                                console.log(level);
+                                console.log("parent: " + parentSurecId);
                                 if (level == 3) {
                                     levelKontrol = false;
                                 }
-                            }
-                            $.post('@Url.Action("SurecKontrol","Home")',{surecId:parentSurecId},function(data){
-                                if(data == 1){
-                                    swal({
-                                        title: 'Dikkat?',
-                                        text: 'Bu sürecin is takip bilgileri bulunmaktadır',
-                                        type: 'warning',
-                                        showCancelButton: true,
-                                        confirmButtonColor: '#DD6B55',
-                                        confirmButtonText: 'Yeni sürece aktar',
-                                        cancelButtonText: 'Sil',
-                                        closeOnConfirm: true,
-                                        closeOnCancel: true,
-                                        html: true
-                                    }, function (isConfirm) {
-                                        if (isConfirm) {
-                                            VeriKaydet(levelKontrol, baslik, baslangic, bitis, parentSurecId, projeId,not,2);
-                                        } else {
-                                            VeriKaydet(levelKontrol, baslik, baslangic, bitis, parentSurecId, projeId,not,1);
-                                        }
-                                    });
-                                }else{
-                                    VeriKaydet(levelKontrol,baslik,baslangic,bitis,parentSurecId,projeId,not,0);
+
+                                if(parentSurecId == null){
+                                    selectKontrol = false;
                                 }
+                            }
+                            if(selectKontrol == true){
+                                $.post('@Url.Action("SurecKontrol","Home")',{surecId:parentSurecId},function(data){
+                                    if(data == 1){
+                                        swal({
+                                            title: 'Dikkat?',
+                                            text: 'Bu sürecin is takip bilgileri bulunmaktadır',
+                                            type: 'warning',
+                                            showCancelButton: true,
+                                            confirmButtonColor: '#DD6B55',
+                                            confirmButtonText: 'Yeni sürece aktar',
+                                            cancelButtonText: 'Sil',
+                                            closeOnConfirm: true,
+                                            closeOnCancel: true,
+                                            html: true
+                                        }, function (isConfirm) {
+                                            if (isConfirm) {
+                                                VeriKaydet(levelKontrol, baslik, baslangic, bitis, parentSurecId, projeId,not,2);
+                                            } else {
+                                                VeriKaydet(levelKontrol, baslik, baslangic, bitis, parentSurecId, projeId,not,1);
+                                            }
+                                        });
+                                    }else{
+                                        VeriKaydet(levelKontrol,baslik,baslangic,bitis,parentSurecId,projeId,not,0);
+                                    }
                                 
-                            });
-                            
+                                });
+                            }else{
+                                noti("Daha süreç eklemeden alt süreç ekleyemezsiniz", "error", "top");
+                                $("#surecKayit").attr("disabled",false);
+                            }
                         } else {
                             noti("Bitiş tarihi başlangıç tarihinden önce olamaz", "error", "top");
+                            $("#surecKayit").attr("disabled",false);
                         }
                     } else {
                         noti("Başlangıç tarihi bugünden önce olamaz", "error", "top");
+                        $("#surecKayit").attr("disabled",false);
                     }
                 } else {
                     noti("Alanlar boş geçilemez", "error", "top");
+                    $("#surecKayit").attr("disabled",false);
                 }
             });
         })

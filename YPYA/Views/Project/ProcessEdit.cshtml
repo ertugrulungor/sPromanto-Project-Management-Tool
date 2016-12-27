@@ -700,13 +700,6 @@
     }
     <div class="layout-xs contacts-container">
         <div class="flexbox-xs layout-column-xs contacts-list b-r">
-            <div class="contact-header bg-default">
-                <div class="contact-toolbar">
-                    <form class="form-inline">
-                        <input class="form-control" type="text" placeholder="Search" />
-                    </form>
-                </div>
-            </div>
             <div class="flex-xs scroll-y">
                 <!--Contact list item-->
                 @foreach (YPYA.Models.Surec i in Model.Where(x => x.ParentSurecId == null))
