@@ -397,7 +397,7 @@ namespace YPYA.Controllers
                     var jsonKisi = new
                     {
                         kisi = pk.Kullanici.Adsoyad,
-                        kisiID = pk.Id,
+                        kisiID = pk.Kullanici.Id,
                     };
 
                     Kisiler.Add(jsonKisi);

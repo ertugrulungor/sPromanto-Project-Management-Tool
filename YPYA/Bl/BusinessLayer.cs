@@ -95,13 +95,13 @@ namespace YPYA.Bl
             }
         }
 
-        public void KsurecEkle(string AdSoyad, string RolAdi, int surecID, DateTime bslngc, DateTime bts, DateTime tmTarihi, int tmOrani)
+        public void KsurecEkle(int kisiId, string RolAdi, int surecID, DateTime bslngc, DateTime bts, DateTime tmTarihi, int tmOrani)
         {
             using (projeyonetimvtEntities prj = new projeyonetimvtEntities())
             {
                 KullaniciSurec kl = new KullaniciSurec();
                 kl.SurecId = surecID;
-                kl.KullaniciId = prj.Kullanicis.Where(x => x.Adsoyad == AdSoyad).FirstOrDefault().Id;
+                kl.KullaniciId = prj.Kullanicis.Where(x => x.Id == kisiId).FirstOrDefault().Id;
                 kl.RolId = prj.Rols.Where(x => x.RolAdi == RolAdi).FirstOrDefault().Id;
                 kl.IstakibiId = isEkle(bslngc, bts, tmTarihi, tmOrani);
                 prj.KullaniciSurecs.Add(kl);
@@ -132,12 +132,12 @@ namespace YPYA.Bl
             }
         }
 
-        public void KsurecDuzenle(string AdSoyad, string RolAdi, int surecID, DateTime bslngc, DateTime bts, DateTime tmTarihi, int tmOrani)
+        public void KsurecDuzenle(int kisiId, string RolAdi, int surecID, DateTime bslngc, DateTime bts, DateTime tmTarihi, int tmOrani)
         {
             using (projeyonetimvtEntities prj = new projeyonetimvtEntities())
             {
                 KullaniciSurec kl = prj.KullaniciSurecs.Where(x => x.SurecId == surecID && x.Rol.RolAdi == RolAdi).FirstOrDefault();
-                kl.KullaniciId = prj.Kullanicis.Where(x => x.Adsoyad == AdSoyad).FirstOrDefault().Id;
+                kl.KullaniciId = prj.Kullanicis.Where(x => x.Id == kisiId).FirstOrDefault().Id;
                 isDuzenle(bslngc, bts, tmTarihi, tmOrani, kl.IstakibiId);
                 prj.Entry(kl).State = System.Data.Entity.EntityState.Modified;
                 prj.SaveChanges();
