@@ -100,7 +100,7 @@
     <script type="text/javascript">
         $(function () {
             function IcerikCek(isterId) {
-                $.post("../../Project/IstekCek",{isterId:isterId}, function (data) {
+                $.post("../../Project/IstekCek",{isterId:isterId,projeId:@p.Id}, function (data) {
                     $("#icerik").html(unescape(data.icerik));
                     $(".message-sender p").html('<b>' + data.kullanici + '</b> tarafından gönderildi');
                     $("#baslik").html(data.baslik);

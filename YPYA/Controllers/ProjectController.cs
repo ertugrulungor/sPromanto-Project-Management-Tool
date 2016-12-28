@@ -361,10 +361,10 @@ namespace YPYA.Controllers
             return Json(jsonList);
         }
 
-        public JsonResult IstekCek(int isterId)
+        public JsonResult IstekCek(int isterId, int projeId)
         {
             MusteriIsteri m;
-            if(isterId == 0) m = db.MusteriIsteris.OrderByDescending(x=>x.Id).FirstOrDefault();
+            if(isterId == 0) m = db.MusteriIsteris.OrderByDescending(x=>x.Id).FirstOrDefault(x=>x.ProjeId == projeId);
             else m = db.MusteriIsteris.Find(isterId);
             var jsonModel = new
             {
@@ -390,7 +390,7 @@ namespace YPYA.Controllers
             foreach (ProjeKullanici pk in db.ProjeKullanicis.Where(x => x.ProjeId == projeID && x.Durum == true))
             {
                
-                    if (pk.Id == musteriID)
+                    if (pk.Kullanici.Id == musteriID)
                     {
                         continue;
                     }
@@ -403,6 +403,14 @@ namespace YPYA.Controllers
                     Kisiler.Add(jsonKisi);
                
             }
+
+            var jsonOlusturan = new
+            {
+                kisi = db.Projes.FirstOrDefault(x=>x.Id == projeID).Kullanici1.Adsoyad,
+                kisiID = db.Projes.FirstOrDefault(x => x.Id == projeID).Kullanici1.Id
+            };
+            Kisiler.Add(jsonOlusturan);
+
             var jsonmodel = new {
                 surecDetayKisiler = Kisiler,
                 surecBaslik = surecBilgi.Baslik,

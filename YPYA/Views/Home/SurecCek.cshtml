@@ -31,7 +31,7 @@
                     @i.Baslik
                 </a>
                 <span class="text-muted">
-                    @i.OlusturmaTarihi
+                    @i.PlanBaslangic.Value.ToString("dd.MM.yyyy") - @i.PlanBitis.Value.ToString("dd.MM.yyyy")
                 </span>
             </div>
         </li>
@@ -48,7 +48,7 @@
                         @j.Baslik
                     </a>
                     <span class="text-muted">
-                        @j.OlusturmaTarihi
+                        @i.PlanBaslangic.Value.ToString("dd.MM.yyyy") - @i.PlanBitis.Value.ToString("dd.MM.yyyy")
                     </span>
                 </div>
             </li>
@@ -65,7 +65,7 @@
                             @k.Baslik
                         </a>
                         <span class="text-muted">
-                            @k.OlusturmaTarihi
+                            @i.PlanBaslangic.Value.ToString("dd.MM.yyyy") - @i.PlanBitis.Value.ToString("dd.MM.yyyy")
                         </span>
                     </div>
                 </li>

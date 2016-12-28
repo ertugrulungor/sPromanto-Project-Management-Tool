@@ -14,12 +14,18 @@ namespace YPYA.Controllers
         Yardimci y = new Yardimci();
         public ActionResult Login()
         {
-            return View();
+            if (Session["id"] == null)
+                return View();
+            else
+                return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Register()
         {
-            return View();
+            if (Session["id"] == null)
+                return View();
+            else
+                return RedirectToAction("Index", "Home");
         }
         
 

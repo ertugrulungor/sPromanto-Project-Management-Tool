@@ -107,16 +107,22 @@
             if (bosGecme(kuladi) && bosGecme(adsoyad) && bosGecme(email) && bosGecme(password) && bosGecme(cpassword) && antixss(kuladi) && antixss(adsoyad) && antixss(email) && antixss(password) && antixss(cpassword)) {
                 if (password == cpassword) {
                     if (password >= 6) {
-                        if(validateEmail(email)){
-                            $.post("../Sign/KayitOl", { adsoyad: adsoyad, kuladi: kuladi, mail: email, sifre: password }, function (data) {
-                                if (data.basari == 1) {
-                                    location.href = "/Home/Index";
-                                } else {
-                                    noti("Bu kullanıcı adı yada mail daha önce alınmış", "error", "topLeft");
-                                    $("#kayit").html("Hesap Oluştur");
-                                    $("#kayit").attr("disabled", false);
-                                }
-                            });
+                        if (validateEmail(email)) {
+                            if (kuladi.length > 3) {
+                                $.post("../Sign/KayitOl", { adsoyad: adsoyad, kuladi: kuladi, mail: email, sifre: password }, function (data) {
+                                    if (data.basari == 1) {
+                                        location.href = "/Home/Index";
+                                    } else {
+                                        noti("Bu kullanıcı adı yada mail daha önce alınmış", "error", "topLeft");
+                                        $("#kayit").html("Hesap Oluştur");
+                                        $("#kayit").attr("disabled", false);
+                                    }
+                                });
+                            } else {
+                                noti("Kullanıcı adı en az 4 karakter olmalıdır", "error", "topLeft");
+                                $("#kayit").html("Hesap Oluştur");
+                                $("#kayit").attr("disabled", false);
+                            }
                         } else {
                             noti("Mail adresi doğru formatta değil", "error", "topLeft");
                             $("#kayit").html("Hesap Oluştur");

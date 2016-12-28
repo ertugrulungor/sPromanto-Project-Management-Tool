@@ -107,6 +107,16 @@
     <script type="text/javascript">
         $(function () {
 
+            function antixss(deger) {
+                if (deger.indexOf("<script>") != -1 || deger.indexOf("</scrip") != -1) return false
+                else return true;
+            }
+
+            function bosGecme(deger) {
+                if (deger.length > 0) return true;
+                else return false;
+            }
+
             function AkisBosluk(s) {
                 var kontrol = true;
                 for (var i = 0; i < 7; i++) {
@@ -140,15 +150,6 @@
                         close: 'animated fadeOutUp', // Animate.css class names
                     }
                 });
-            }
-
-
-
-
-            function bosGecme(deger,deger2,deger3) {
-                if (deger.length > 0 && deger2.length > 0 && deger3.length > 0) return true;
-                else if (deger.length == 0 && deger2.length == 0 && deger3.length == 0) return true;
-                else return false;
             }
 
             function temizle() {
@@ -602,7 +603,7 @@
                     }
                 ];
 
-                if (AkisBosluk(surecDizi)) {
+                if (AkisBosluk(surecDizi) && bosGecme(SurecBaslik) && bosGecme(SurecNote) && antixss(SurecBaslik) && antixss(SurecNote)) {
                     $.post('@Url.Action("TarihKontrol", "Home")', { parentId: parentId, tip: tip, baslangic: SurecBaslangic, bitis: SurecBitis }, function (sonuc) {
                         if (sonuc == 1) {
                             if (AnalizTamamlanmaOrani >= 0 && AnalizTamamlanmaOrani <= 100 && TableTamamlanmaOrani >= 0 && TableTamamlanmaOrani <= 100 && ProcedureTamamlanmaOrani >= 0 && ProcedureTamamlanmaOrani <= 100 && DllListTamamlanmaOrani >= 0 && DllListTamamlanmaOrani <= 100 && DllIslemTamamlanmaOrani >= 0 && DllIslemTamamlanmaOrani <= 100 && ArayuzTamamlanmaOrani >= 0 && ArayuzTamamlanmaOrani <= 100 && TestTamamlanmaOrani >= 0 && TestTamamlanmaOrani <= 100) {
