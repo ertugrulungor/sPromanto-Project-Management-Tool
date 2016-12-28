@@ -474,7 +474,7 @@ namespace YPYA.Controllers
             bitis = y.PreventXSS(bitis);
             if (bl.KullaniciSurecEkle(istakibiBilgi, surecID,projeID,surecBaslik,surecNote,baslangic,bitis) == 1)
             {
-                snc.Add(db.Projes.Find(projeID).Tamamlanan.Value);
+                snc.Add(db.Surecs.Find(surecID).Tamamlanan.Value);
             }
             return Json(snc);
         }

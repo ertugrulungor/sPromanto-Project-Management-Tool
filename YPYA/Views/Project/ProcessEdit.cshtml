@@ -749,7 +749,7 @@
                     <div class="col v-align-middle contact-details p-l-1">
 
                         <span class="bold">@i.Baslik</span>
-                        <span class="small">@i.OlusturmaTarihi.Value.ToString("dd-MM-yyyy")</span>
+                        <span class="small">@i.PlanBaslangic.Value.ToString("dd.MM.yyyy") - @i.PlanBitis.Value.ToString("dd.MM.yyyy")</span>
                     </div>
                 </a>
                 foreach (YPYA.Models.Surec j in Model.Where(y => y.ParentSurecId == i.Id))
@@ -770,7 +770,7 @@
                     <div class="col v-align-middle contact-details p-l-1">
 
                         <span class="bold">@j.Baslik</span>
-                        <span class="small">@j.OlusturmaTarihi.Value.ToString("dd-MM-yyyy")</span>
+                        <span class="small">@j.PlanBaslangic.Value.ToString("dd.MM.yyyy") - @j.PlanBitis.Value.ToString("dd.MM.yyyy")</span>
                     </div>
                 </a>
                 foreach (YPYA.Models.Surec k in Model.Where(z => z.ParentSurecId == j.Id))
@@ -791,7 +791,7 @@
                     <div class="col v-align-middle contact-details p-l-1">
 
                         <span class="bold">@k.Baslik</span>
-                        <span class="small">@k.OlusturmaTarihi.Value.ToString("dd-MM-yyyy")</span>
+                        <span class="small">@k.PlanBaslangic.Value.ToString("dd.MM.yyyy") - @k.PlanBitis.Value.ToString("dd.MM.yyyy")</span>
                     </div>
                 </a>
                 }
